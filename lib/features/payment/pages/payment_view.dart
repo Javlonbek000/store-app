@@ -6,11 +6,13 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/colors.dart';
 import 'package:store_app/features/common/widgets/store_app_bar.dart';
 import 'package:store_app/features/common/widgets/store_app_button.dart';
+import 'package:store_app/features/common/widgets/store_app_button_with_logo.dart';
+import 'package:store_app/features/payment/widgets/store_card_item.dart';
 
 import '../../../core/routing/routes.dart';
+import '../../auth/pages/forgot_and_reset_password_view/store_app_dialog.dart';
 import '../managers/payment/payment_bloc.dart';
 import '../managers/payment/payment_state.dart';
-import '../widgets/radio_button.dart';
 
 class PaymentView extends StatefulWidget {
   const PaymentView({super.key});
@@ -20,8 +22,7 @@ class PaymentView extends StatefulWidget {
 }
 
 class _PaymentViewState extends State<PaymentView> {
-  late final int id;
-  bool isSelected = false;
+  int? selectedCardId;
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +42,7 @@ class _PaymentViewState extends State<PaymentView> {
         ],
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(15),
-          child: Divider(
-            color: Color(0xffE6E6E6),
-            thickness: 2,
-            height: 2,
-          ),
+          child: Divider(color: Color(0xffE6E6E6), thickness: 2, height: 2),
         ),
       ),
       extendBody: true,
@@ -53,9 +50,11 @@ class _PaymentViewState extends State<PaymentView> {
         builder: (context, state) {
           if (state.status == PaymentStatus.success) {
             return RefreshIndicator(
-              onRefresh: () async => context.read<PaymentBloc>().add(PaymentLoad()),
+              color: AppColors.blackMain,
+              onRefresh:
+                  () async => context.read<PaymentBloc>().add(PaymentLoad()),
               child: Padding(
-                padding: EdgeInsets.only(left: 24, right: 24, top: 13),
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 13.h),
                 child: Column(
                   spacing: 12.h,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,88 +74,82 @@ class _PaymentViewState extends State<PaymentView> {
                         itemCount: state.cards.length,
                         itemBuilder: (context, index) {
                           final card = state.cards[index];
+                          final isSelected = selectedCardId == card.id;
                           return Column(
                             children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 20.w,
-                                  vertical: 16.h,
-                                ),
-                                width: 341.w,
-                                height: 52.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: AppColors.greySub,
-                                    width: 1.2.w,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset("assets/icons/visa.svg"),
-                                    SizedBox(width: 12.w),
-                                    Expanded(
-                                      child: Text(
-                                        card.cardNumber,
-                                        style: TextStyle(
-                                          color: AppColors.blackMain,
-                                          fontSize: 14.sp,
-                                          fontFamily: "General Sans",
-                                          fontWeight: FontWeight.w600,
+                              StoreCardItem(
+                                card: card,
+                                isSelected: isSelected,
+                                onTap: () {
+                                  setState(() {
+                                    selectedCardId = card.id;
+                                  });
+                                },
+                                onDelete: () async {
+                                  final bloc = context.read<PaymentBloc>();
+                                  await showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) {
+                                      return BlocProvider.value(
+                                        value: bloc,
+                                        child: BlocBuilder<
+                                          PaymentBloc,
+                                          PaymentState
+                                        >(
+                                          builder:
+                                              (context, state) => Center(
+                                                child: StoreAppDialog(
+                                                  title: "Delete",
+                                                  buttonTitleColor:
+                                                      AppColors.white,
+                                                  buttonColor: Colors.red,
+                                                  image:
+                                                      "assets/icons/validation_error.svg",
+                                                  subTitle:
+                                                      "You trust delete this card?",
+                                                  buttonTitle: "Delete",
+                                                  hideButton: true,
+                                                  hideButtonTitle: "Cansel",
+                                                  callback: () {
+                                                    context
+                                                        .read<PaymentBloc>()
+                                                        .add(
+                                                          DeleteCard(
+                                                            id: card.id,
+                                                          ),
+                                                        );
+                                                    context.pop();
+                                                  },
+                                                ),
+                                              ),
                                         ),
-                                      ),
-                                    ),
-                                    ExampleRadio(
-                                      isSelected: isSelected,
-                                      onTap: () {
-                                        setState(() {
-                                          isSelected = !isSelected;
-                                          if (isSelected) {
-                                            id = card.id;
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                      );
+                                    },
+                                  );
+                                },
                               ),
-                              SizedBox(height: 12.h)
+                              SizedBox(height: 12.h),
                             ],
                           );
                         },
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
+                    StoreAppButtonWithIcon(
+                      image: "assets/icons/plus.svg",
+                      title: "Add New Card",
+                      iconWidth: 18.75,
+                      iconHeight: 18.75,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 84.w,
+                        vertical: 16.h,
+                      ),
+                      callback: () {
                         context.push(Routes.newCard);
                       },
-                      child: Container(
-                        width: 341.w,
-                        height: 54.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: AppColors.greySub,
-                            width: 1.2.w,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.add),
-                            SizedBox(width: 8),
-                            Text(
-                              "Add New Card",
-                              style: TextStyle(
-                                color: AppColors.blackMain,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "General Sans",
-                                fontSize: 16.sp,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      containerColor: AppColors.white,
+                      borderColor: AppColors.greyMain,
+                      titleColor: AppColors.blackMain,
                     ),
                   ],
                 ),
@@ -171,19 +164,27 @@ class _PaymentViewState extends State<PaymentView> {
         },
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 24.w,
-          vertical: 10.h,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
         child: StoreAppButton(
           containerColor: AppColors.blackMain,
           text: "Apply",
           callback: () {
-            if (isSelected) {
-              context.pop(id);
-            } else{
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("You did not selected a card!")));
-              context.pop();
+            print("Chiki chiki");
+            if (selectedCardId != null) {
+              print("Nimadir");
+              final selectedCard = context
+                  .read<PaymentBloc>()
+                  .state
+                  .cards
+                  .firstWhere((card) => card.id == selectedCardId);
+              context.go(
+                Routes.checkout,
+                extra: selectedCard,
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("You did not select a card!")),
+              );
             }
           },
         ),

@@ -4,12 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/utils/colors.dart';
+import 'package:store_app/data/model/address/address_model.dart';
 import 'package:store_app/features/common/widgets/store_icon_button_container.dart';
 
 class CheckoutDeliveryAddress extends StatelessWidget {
-  const CheckoutDeliveryAddress({
-    super.key,
-  });
+  const CheckoutDeliveryAddress({super.key, required this.address});
+
+  final AddressModel? address;
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +32,9 @@ class CheckoutDeliveryAddress extends StatelessWidget {
               ),
               RichText(
                 text: TextSpan(
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => context.push(
-                          Routes.address,
-                        ),
+                  recognizer:
+                      TapGestureRecognizer()
+                        ..onTap = () => context.push(Routes.address),
                   text: 'Change',
                   style: TextStyle(
                     color: AppColors.blackMain,
@@ -46,9 +46,7 @@ class CheckoutDeliveryAddress extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 10.h,
-          ),
+          SizedBox(height: 10.h),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -61,24 +59,27 @@ class CheckoutDeliveryAddress extends StatelessWidget {
               ),
               SizedBox(width: 5.w),
               Column(
+                spacing: 4.h,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Home",
+                    address?.title ?? "Select Address",
                     style: TextStyle(
                       color: AppColors.blackMain,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    "925 S Chugach St #APT 10, Alaska 99645",
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
+                  SizedBox(
+                    width: 256.w,
+                    child: Text(
+                      address?.fullAddress ?? "",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ],

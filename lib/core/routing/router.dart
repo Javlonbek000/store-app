@@ -1,8 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/routing/routes.dart';
+import 'package:store_app/data/model/payment/payment_model.dart';
 import 'package:store_app/features/account/pages/account_view.dart';
+import 'package:store_app/features/address/managers/address/address_bloc.dart';
+import 'package:store_app/features/address/managers/new_address/new_address_bloc.dart';
 import 'package:store_app/features/address/pages/address_view.dart';
+import 'package:store_app/features/address/pages/new_address.dart';
 import 'package:store_app/features/auth/manager/forgot_password/forgot_password_bloc.dart';
 import 'package:store_app/features/auth/manager/login/login_bloc.dart';
 import 'package:store_app/features/auth/manager/reset_password/reset_password_bloc.dart';
@@ -38,52 +42,44 @@ import 'package:store_app/features/saved_items/pages/saved_items_view.dart';
 import 'package:store_app/features/search/manager/search_bloc.dart';
 import 'package:store_app/features/search/pages/search_view.dart';
 
+import '../../data/model/address/address_model.dart';
 import '../../features/payment/managers/payment/payment_bloc.dart';
 
 final router = GoRouter(
   initialLocation: Routes.login,
   routes: [
-    GoRoute(
-      path: Routes.onboarding,
-      builder: (context, state) => Onboarding(),
-    ),
+    GoRoute(path: Routes.onboarding, builder: (context, state) => Onboarding()),
     GoRoute(
       path: Routes.login,
-      builder: (context, state) => BlocProvider(
-        create: (context) => LoginBloc(
-          repo: context.read(),
-        ),
-        child: LoginView(),
-      ),
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => LoginBloc(repo: context.read()),
+            child: LoginView(),
+          ),
     ),
     GoRoute(
       path: Routes.signUp,
-      builder: (context, state) => BlocProvider(
-        create: (context) => SignUpBloc(
-          repo: context.read(),
-        ),
-        child: SignUpView(),
-      ),
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => SignUpBloc(repo: context.read()),
+            child: SignUpView(),
+          ),
     ),
     GoRoute(
       path: Routes.forgotPass,
-      builder: (context, state) => BlocProvider(
-          create: (context) => ForgotPasswordBloc(
-                context.read(),
-              ),
-          child: ForgotPasswordView()),
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => ForgotPasswordBloc(context.read()),
+            child: ForgotPasswordView(),
+          ),
     ),
     GoRoute(
       path: Routes.verificationCode,
       builder: (context, state) {
         final email = state.extra as String;
         return BlocProvider(
-          create: (context) => VerificationBloc(
-            context.read(),
-          ),
-          child: VerificationCodeView(
-            email: email,
-          ),
+          create: (context) => VerificationBloc(context.read()),
+          child: VerificationCodeView(email: email),
         );
       },
     ),
@@ -95,131 +91,139 @@ final router = GoRouter(
         final code = extra['code'] as String;
 
         return BlocProvider(
-          create: (context) => ResetPasswordBloc(
-            context.read(),
-          ),
-          child: ResetPasswordView(
-            email: email,
-            code: code,
-          ),
+          create: (context) => ResetPasswordBloc(context.read()),
+          child: ResetPasswordView(email: email, code: code),
         );
       },
     ),
     GoRoute(
       path: Routes.home,
-      builder: (context, state) => BlocProvider(
-        create: (context) => HomeBloc(
-          repo: context.read(),
-          searchRepo: context.read(),
-          catRepo: context.read(),
-        ),
-        child: HomeView(),
-      ),
+      builder:
+          (context, state) => BlocProvider(
+            create:
+                (context) => HomeBloc(
+                  repo: context.read(),
+                  searchRepo: context.read(),
+                  catRepo: context.read(),
+                ),
+            child: HomeView(),
+          ),
     ),
     GoRoute(
       path: Routes.search,
-      builder: (context, state) => BlocProvider(
-        create: (context) => SearchBloc(
-          repo: context.read(),
-        ),
-        child: SearchView(),
-      ),
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => SearchBloc(repo: context.read()),
+            child: SearchView(),
+          ),
     ),
     GoRoute(
       path: Routes.savedItems,
-      builder: (context, state) => BlocProvider(
-        create: (context) => SavedItemsBloc(
-          repo: context.read(),
-        ),
-        child: SavedItemsView(),
-      ),
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => SavedItemsBloc(repo: context.read()),
+            child: SavedItemsView(),
+          ),
     ),
     GoRoute(
       path: Routes.detail,
-      builder: (context, state) => BlocProvider(
-        create: (context) => DetailsBloc(
-          repo: context.read(),
-          id: int.parse(state.pathParameters['productId']!),
-        ),
-        child: DetailsView(),
-      ),
+      builder:
+          (context, state) => BlocProvider(
+            create:
+                (context) => DetailsBloc(
+                  repo: context.read(),
+                  id: int.parse(state.pathParameters['productId']!),
+                ),
+            child: DetailsView(),
+          ),
     ),
     GoRoute(
       path: Routes.reviews,
-      builder: (context, state) => BlocProvider(
-        create: (context) => ReviewsBloc(
-          productId: int.parse(state.pathParameters['productId']!),
-          reviewsRepo: context.read(),
-        ),
-        child: ReviewsView(),
-      ),
+      builder:
+          (context, state) => BlocProvider(
+            create:
+                (context) => ReviewsBloc(
+                  productId: int.parse(state.pathParameters['productId']!),
+                  reviewsRepo: context.read(),
+                ),
+            child: ReviewsView(),
+          ),
     ),
     GoRoute(
       path: Routes.notification,
-      builder: (context, state) => BlocProvider(
-        create: (context) => NotificationBloc(
-          repo: context.read(),
-        ),
-        child: NotificationView(),
-      ),
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => NotificationBloc(repo: context.read()),
+            child: NotificationView(),
+          ),
     ),
     GoRoute(
       path: Routes.myCart,
-      builder: (context, state) => BlocProvider(
-          create: (context) => MyCartBloc(
-                repo: context.read(),
-              ),
-          child: MyCartView()),
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => MyCartBloc(repo: context.read()),
+            child: MyCartView(),
+          ),
     ),
     GoRoute(
       path: Routes.payment,
-      builder: (context, state) => BlocProvider(
-        create: (context) => PaymentBloc(
-          repo: context.read(),
-        ),
-        child: PaymentView(),
-      ),
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => PaymentBloc(repo: context.read()),
+            child: PaymentView(),
+          ),
     ),
     GoRoute(
       path: Routes.checkout,
-      builder: (context, state) => BlocProvider(
-          create: (context) => CheckoutBloc(
-                repo: context.read(),
-              ),
-          child: CheckoutView()),
+      builder: (context, state) {
+        PaymentModel? card;
+        AddressModel? address;
+        print("${state.extra}");
+        if (state.extra is PaymentModel) {
+          card = state.extra as PaymentModel?;
+        }
+        else if (state.extra is AddressModel) {
+          address=state.extra as AddressModel?;
+        }
+
+        print("$address $card");
+        return BlocProvider(
+          create: (context) => CheckoutBloc(repo: context.read(), card: card, address: address),
+          child: CheckoutView(),
+        );
+      },
     ),
     GoRoute(
       path: Routes.newCard,
-      builder: (context, state) => BlocProvider(
-        create: (context) => NewCardBloc(
-          repo: context.read(),
-        ),
-        child: NewCardView(),
-      ),
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => NewCardBloc(repo: context.read()),
+            child: NewCardView(),
+          ),
     ),
     GoRoute(
-      path: Routes.account,
-      builder: (context, state) => AccountView(),
+      path: Routes.address,
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => AddressBloc(repo: context.read()),
+            child: AddressView(),
+          ),
     ),
     GoRoute(
-      path: Routes.orders,
-      builder: (context, state) => OrdersView(),
+      path: Routes.newAddress,
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => NewAddressBloc(repo: context.read()),
+            child: NewAddress(),
+          ),
     ),
+    GoRoute(path: Routes.account, builder: (context, state) => AccountView()),
+    GoRoute(path: Routes.orders, builder: (context, state) => OrdersView()),
     GoRoute(
       path: Routes.helpCenter,
       builder: (context, state) => HelpCenterView(),
     ),
-    GoRoute(
-      path: Routes.faqs,
-      builder: (context, state) => FAQSView(),
-    ),
-    GoRoute(
-      path: Routes.myDetail,
-      builder: (context, state) => MyDetailView(),
-    ),
-    GoRoute(
-      path: Routes.address,
-      builder: (context, state) => AddressView(),
-    ),
+    GoRoute(path: Routes.faqs, builder: (context, state) => FAQSView()),
+    GoRoute(path: Routes.myDetail, builder: (context, state) => MyDetailView()),
   ],
 );

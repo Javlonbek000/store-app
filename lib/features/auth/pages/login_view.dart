@@ -139,7 +139,7 @@ class _LoginViewState extends State<LoginView> {
               SizedBox(height: 24.h),
               OrItem(),
               SizedBox(height: 24.h),
-              StoreAppButtonWithLogo(
+              StoreAppButtonWithIcon(
                 image: "assets/icons/google_logo.svg",
                 title: "Login with Google",
                 padding: EdgeInsets.symmetric(horizontal: 84.w),
@@ -149,7 +149,7 @@ class _LoginViewState extends State<LoginView> {
                 titleColor: AppColors.blackMain,
               ),
               SizedBox(height: 16.h),
-              StoreAppButtonWithLogo(
+              StoreAppButtonWithIcon(
                 image: "assets/icons/facebook_logo.svg",
                 title: "Login with Facebook",
                 padding: EdgeInsets.symmetric(horizontal: 71.w),

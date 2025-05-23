@@ -13,7 +13,6 @@ import 'package:store_app/features/common/widgets/store_app_bar.dart';
 import 'package:store_app/features/common/widgets/store_app_button.dart';
 import 'package:store_app/features/common/widgets/store_button_container.dart';
 import 'package:store_app/features/common/widgets/store_icon_button_container.dart';
-import 'package:store_app/features/common/widgets/store_text_form_field.dart';
 import 'package:store_app/features/my_cart/widgets/my_cart_price_item.dart';
 
 class CheckoutView extends StatefulWidget {
@@ -26,7 +25,6 @@ class CheckoutView extends StatefulWidget {
 class _CheckoutViewState extends State<CheckoutView> {
   String selectedPayment = 'Card';
   final promoController = TextEditingController();
-  final cardController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,17 +39,21 @@ class _CheckoutViewState extends State<CheckoutView> {
           ),
         ],
         bottom: PreferredSize(
-            preferredSize: Size(double.infinity, 24.h),
-            child: Divider(color: AppColors.whiteSub)),
+          preferredSize: Size(double.infinity, 24.h),
+          child: Divider(color: AppColors.whiteSub),
+        ),
       ),
       extendBody: true,
       body: BlocBuilder<CheckoutBloc, CheckoutState>(
         builder: (context, state) {
+          print("${state.address} lala");
+          print("${state.card} kakaka");
           if (state.status == CheckoutStatus.success) {
+
             return ListView(
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 1.h),
               children: [
-                CheckoutDeliveryAddress(),
+                CheckoutDeliveryAddress(address: state.address,),
                 Divider(color: AppColors.whiteSub),
                 SizedBox(
                   width: double.infinity,
@@ -78,15 +80,18 @@ class _CheckoutViewState extends State<CheckoutView> {
                                 selectedPayment = 'Card';
                               });
                             },
-                            color: selectedPayment == 'Card'
-                                ? AppColors.blackMain
-                                : AppColors.white,
-                            iconColor: selectedPayment == 'Card'
-                                ? Colors.white
-                                : AppColors.blackMain,
-                            titleColor: selectedPayment == 'Card'
-                                ? Colors.white
-                                : AppColors.blackMain,
+                            color:
+                                selectedPayment == 'Card'
+                                    ? AppColors.blackMain
+                                    : AppColors.white,
+                            iconColor:
+                                selectedPayment == 'Card'
+                                    ? Colors.white
+                                    : AppColors.blackMain,
+                            titleColor:
+                                selectedPayment == 'Card'
+                                    ? Colors.white
+                                    : AppColors.blackMain,
                           ),
                           PaymentButton(
                             image: "assets/icons/cash.svg",
@@ -96,15 +101,18 @@ class _CheckoutViewState extends State<CheckoutView> {
                                 selectedPayment = 'Cash';
                               });
                             },
-                            color: selectedPayment == 'Cash'
-                                ? AppColors.blackMain
-                                : AppColors.white,
-                            iconColor: selectedPayment == 'Cash'
-                                ? Colors.white
-                                : AppColors.blackMain,
-                            titleColor: selectedPayment == 'Cash'
-                                ? Colors.white
-                                : AppColors.blackMain,
+                            color:
+                                selectedPayment == 'Cash'
+                                    ? AppColors.blackMain
+                                    : AppColors.white,
+                            iconColor:
+                                selectedPayment == 'Cash'
+                                    ? Colors.white
+                                    : AppColors.blackMain,
+                            titleColor:
+                                selectedPayment == 'Cash'
+                                    ? Colors.white
+                                    : AppColors.blackMain,
                           ),
                         ],
                       ),
@@ -113,16 +121,27 @@ class _CheckoutViewState extends State<CheckoutView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           spacing: 5.h,
                           children: [
-                            StoreTextFormField(
-                              width: 290,
-                              validator: (value) => null,
-                              titleBool: false,
-                              title: "",
-                              hintText: "Enter your card",
-                              controller: cardController,
-                              isValid: null,
-                              keyboard: TextInputType.number,
-                              maxLength: 16,
+                            Container(
+                              alignment: Alignment.center,
+                              width: 290.w,
+                              height: 52.h,
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: AppColors.whiteSub,
+                                  width: 1.w,
+                                ),
+                              ),
+                              child: Text(
+                                state.card?.cardNumber ?? "Select card",
+                                style: TextStyle(
+                                  color: AppColors.blackMain,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                  decoration: TextDecoration.none,
+                                ),
+                              ),
                             ),
                             StoreIconButtonContainer(
                               image: "assets/icons/pencil.svg",
@@ -152,21 +171,28 @@ class _CheckoutViewState extends State<CheckoutView> {
                       ),
                     ),
                     MyCartPriceItem(
-                        price: state.cart!.subTotal, title: "Sub-total"),
+                      price: state.cart!.subTotal,
+                      title: "Sub-total",
+                    ),
                     MyCartPriceItem(price: state.cart!.vat, title: "VAT(%)"),
                     MyCartPriceItem(
-                        price: state.cart!.shippingFee, title: "Shipping fee"),
+                      price: state.cart!.shippingFee,
+                      title: "Shipping fee",
+                    ),
                     Divider(color: AppColors.whiteSub),
                     MyCartPriceItem(
-                        price: state.cart!.total,
-                        title: "Total",
-                        titleColor: AppColors.blackMain),
+                      price: state.cart!.total,
+                      title: "Total",
+                      titleColor: AppColors.blackMain,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 20.w, vertical: 14.h),
+                            horizontal: 20.w,
+                            vertical: 14.h,
+                          ),
                           width: 249.w,
                           height: 52.h,
                           decoration: BoxDecoration(
@@ -211,7 +237,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                           buttonColor: AppColors.blackMain,
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ],

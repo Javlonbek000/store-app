@@ -181,7 +181,7 @@ class _SignUpViewState extends State<SignUpView> {
             SizedBox(height: 24.h),
             OrItem(),
             SizedBox(height: 24.h),
-            StoreAppButtonWithLogo(
+            StoreAppButtonWithIcon(
               image: "assets/icons/google_logo.svg",
               title: "Login with Google",
               padding: EdgeInsets.symmetric(horizontal: 84.w),
@@ -191,7 +191,7 @@ class _SignUpViewState extends State<SignUpView> {
               titleColor: AppColors.blackMain,
             ),
             SizedBox(height: 10.h),
-            StoreAppButtonWithLogo(
+            StoreAppButtonWithIcon(
               image: "assets/icons/facebook_logo.svg",
               title: "Login with Facebook",
               padding: EdgeInsets.symmetric(horizontal: 77.w),

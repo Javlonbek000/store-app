@@ -11,6 +11,7 @@ class PaymentBloc extends Bloc<PaymentEvents, PaymentState> {
       : _repo = repo,
         super(PaymentState.initial()) {
     on<PaymentLoad>(_onLoad);
+    on<DeleteCard>(_onDelete);
     add(PaymentLoad());
   }
 
@@ -22,5 +23,9 @@ class PaymentBloc extends Bloc<PaymentEvents, PaymentState> {
     } catch (e) {
       emit(state.copyWith(status: PaymentStatus.error));
     }
+  }
+
+  Future _onDelete(DeleteCard event, Emitter<PaymentState> emit) async{
+    await _repo.deleteCard(event.id);
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/data/model/new_card_model.dart';
+import 'package:store_app/data/model/payment/new_card_model.dart';
 import 'package:store_app/data/repository/new_card_repository.dart';
 import 'package:store_app/features/payment/managers/new_card/new_card_state.dart';
 

@@ -12,124 +12,115 @@ part of 'new_card_state.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$NewCardState {
-  NewCardStatus get status;
-  String get errorMassage;
 
-  /// Create a copy of NewCardState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $NewCardStateCopyWith<NewCardState> get copyWith =>
-      _$NewCardStateCopyWithImpl<NewCardState>(
-          this as NewCardState, _$identity);
+ NewCardStatus get status; String get errorMassage;
+/// Create a copy of NewCardState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$NewCardStateCopyWith<NewCardState> get copyWith => _$NewCardStateCopyWithImpl<NewCardState>(this as NewCardState, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is NewCardState &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.errorMassage, errorMassage) ||
-                other.errorMassage == errorMassage));
-  }
 
-  @override
-  int get hashCode => Object.hash(runtimeType, status, errorMassage);
 
-  @override
-  String toString() {
-    return 'NewCardState(status: $status, errorMassage: $errorMassage)';
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NewCardState&&(identical(other.status, status) || other.status == status)&&(identical(other.errorMassage, errorMassage) || other.errorMassage == errorMassage));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,status,errorMassage);
+
+@override
+String toString() {
+  return 'NewCardState(status: $status, errorMassage: $errorMassage)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class $NewCardStateCopyWith<$Res> {
-  factory $NewCardStateCopyWith(
-          NewCardState value, $Res Function(NewCardState) _then) =
-      _$NewCardStateCopyWithImpl;
-  @useResult
-  $Res call({NewCardStatus status, String errorMassage});
-}
+abstract mixin class $NewCardStateCopyWith<$Res>  {
+  factory $NewCardStateCopyWith(NewCardState value, $Res Function(NewCardState) _then) = _$NewCardStateCopyWithImpl;
+@useResult
+$Res call({
+ NewCardStatus status, String errorMassage
+});
 
+
+
+
+}
 /// @nodoc
-class _$NewCardStateCopyWithImpl<$Res> implements $NewCardStateCopyWith<$Res> {
+class _$NewCardStateCopyWithImpl<$Res>
+    implements $NewCardStateCopyWith<$Res> {
   _$NewCardStateCopyWithImpl(this._self, this._then);
 
   final NewCardState _self;
   final $Res Function(NewCardState) _then;
 
-  /// Create a copy of NewCardState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? status = null,
-    Object? errorMassage = null,
-  }) {
-    return _then(_self.copyWith(
-      status: null == status
-          ? _self.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as NewCardStatus,
-      errorMassage: null == errorMassage
-          ? _self.errorMassage
-          : errorMassage // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Create a copy of NewCardState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? errorMassage = null,}) {
+  return _then(_self.copyWith(
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as NewCardStatus,errorMassage: null == errorMassage ? _self.errorMassage : errorMassage // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
+}
+
+
 /// @nodoc
+
 
 class _NewCardState implements NewCardState {
   const _NewCardState({required this.status, required this.errorMassage});
+  
 
-  @override
-  final NewCardStatus status;
-  @override
-  final String errorMassage;
+@override final  NewCardStatus status;
+@override final  String errorMassage;
 
-  /// Create a copy of NewCardState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$NewCardStateCopyWith<_NewCardState> get copyWith =>
-      __$NewCardStateCopyWithImpl<_NewCardState>(this, _$identity);
+/// Create a copy of NewCardState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$NewCardStateCopyWith<_NewCardState> get copyWith => __$NewCardStateCopyWithImpl<_NewCardState>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _NewCardState &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.errorMassage, errorMassage) ||
-                other.errorMassage == errorMassage));
-  }
 
-  @override
-  int get hashCode => Object.hash(runtimeType, status, errorMassage);
 
-  @override
-  String toString() {
-    return 'NewCardState(status: $status, errorMassage: $errorMassage)';
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NewCardState&&(identical(other.status, status) || other.status == status)&&(identical(other.errorMassage, errorMassage) || other.errorMassage == errorMassage));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,status,errorMassage);
+
+@override
+String toString() {
+  return 'NewCardState(status: $status, errorMassage: $errorMassage)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class _$NewCardStateCopyWith<$Res>
-    implements $NewCardStateCopyWith<$Res> {
-  factory _$NewCardStateCopyWith(
-          _NewCardState value, $Res Function(_NewCardState) _then) =
-      __$NewCardStateCopyWithImpl;
-  @override
-  @useResult
-  $Res call({NewCardStatus status, String errorMassage});
-}
+abstract mixin class _$NewCardStateCopyWith<$Res> implements $NewCardStateCopyWith<$Res> {
+  factory _$NewCardStateCopyWith(_NewCardState value, $Res Function(_NewCardState) _then) = __$NewCardStateCopyWithImpl;
+@override @useResult
+$Res call({
+ NewCardStatus status, String errorMassage
+});
 
+
+
+
+}
 /// @nodoc
 class __$NewCardStateCopyWithImpl<$Res>
     implements _$NewCardStateCopyWith<$Res> {
@@ -138,25 +129,17 @@ class __$NewCardStateCopyWithImpl<$Res>
   final _NewCardState _self;
   final $Res Function(_NewCardState) _then;
 
-  /// Create a copy of NewCardState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? status = null,
-    Object? errorMassage = null,
-  }) {
-    return _then(_NewCardState(
-      status: null == status
-          ? _self.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as NewCardStatus,
-      errorMassage: null == errorMassage
-          ? _self.errorMassage
-          : errorMassage // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Create a copy of NewCardState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? errorMassage = null,}) {
+  return _then(_NewCardState(
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as NewCardStatus,errorMassage: null == errorMassage ? _self.errorMassage : errorMassage // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
 }
 
 // dart format on

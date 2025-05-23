@@ -9,8 +9,6 @@ class CategoryRepository implements ICategoryRepository {
 
   CategoryRepository({required this.localRepo, required this.remoteRepo});
 
-  bool isBool = true;
-
   @override
   Future<List<CategoryModel>> getCategories() async {
     final categories = await localRepo.getCategories();

@@ -14,9 +14,9 @@ _ForgotPasswordModel _$ForgotPasswordModelFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$ForgotPasswordModelToJson(
-        _ForgotPasswordModel instance) =>
-    <String, dynamic>{
-      'email': instance.email,
-      'password': instance.password,
-      'code': instance.code,
-    };
+  _ForgotPasswordModel instance,
+) => <String, dynamic>{
+  'email': instance.email,
+  'password': instance.password,
+  'code': instance.code,
+};

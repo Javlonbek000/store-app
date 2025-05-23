@@ -16,4 +16,9 @@ class PaymentRepository {
     payment = response.map((item) => PaymentModel.fromJson(item)).toList();
     return payment;
   }
+
+  Future<bool> deleteCard(int cardId)async{
+    final response = await client.deleteRequest("/cards/delete/$cardId");
+    return response;
+  }
 }

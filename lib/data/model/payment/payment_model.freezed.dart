@@ -15,135 +15,118 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$PaymentModel {
-  int get id;
-  String get cardNumber;
 
-  /// Create a copy of PaymentModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $PaymentModelCopyWith<PaymentModel> get copyWith =>
-      _$PaymentModelCopyWithImpl<PaymentModel>(
-          this as PaymentModel, _$identity);
+ int get id; String get cardNumber;
+/// Create a copy of PaymentModel
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$PaymentModelCopyWith<PaymentModel> get copyWith => _$PaymentModelCopyWithImpl<PaymentModel>(this as PaymentModel, _$identity);
 
   /// Serializes this PaymentModel to a JSON map.
   Map<String, dynamic> toJson();
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is PaymentModel &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.cardNumber, cardNumber) ||
-                other.cardNumber == cardNumber));
-  }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, cardNumber);
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PaymentModel&&(identical(other.id, id) || other.id == id)&&(identical(other.cardNumber, cardNumber) || other.cardNumber == cardNumber));
+}
 
-  @override
-  String toString() {
-    return 'PaymentModel(id: $id, cardNumber: $cardNumber)';
-  }
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,cardNumber);
+
+@override
+String toString() {
+  return 'PaymentModel(id: $id, cardNumber: $cardNumber)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class $PaymentModelCopyWith<$Res> {
-  factory $PaymentModelCopyWith(
-          PaymentModel value, $Res Function(PaymentModel) _then) =
-      _$PaymentModelCopyWithImpl;
-  @useResult
-  $Res call({int id, String cardNumber});
-}
+abstract mixin class $PaymentModelCopyWith<$Res>  {
+  factory $PaymentModelCopyWith(PaymentModel value, $Res Function(PaymentModel) _then) = _$PaymentModelCopyWithImpl;
+@useResult
+$Res call({
+ int id, String cardNumber
+});
 
+
+
+
+}
 /// @nodoc
-class _$PaymentModelCopyWithImpl<$Res> implements $PaymentModelCopyWith<$Res> {
+class _$PaymentModelCopyWithImpl<$Res>
+    implements $PaymentModelCopyWith<$Res> {
   _$PaymentModelCopyWithImpl(this._self, this._then);
 
   final PaymentModel _self;
   final $Res Function(PaymentModel) _then;
 
-  /// Create a copy of PaymentModel
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? cardNumber = null,
-  }) {
-    return _then(_self.copyWith(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      cardNumber: null == cardNumber
-          ? _self.cardNumber
-          : cardNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Create a copy of PaymentModel
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? cardNumber = null,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,cardNumber: null == cardNumber ? _self.cardNumber : cardNumber // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
+
+}
+
 
 /// @nodoc
 @JsonSerializable()
+
 class _PaymentModel implements PaymentModel {
   const _PaymentModel({required this.id, required this.cardNumber});
-  factory _PaymentModel.fromJson(Map<String, dynamic> json) =>
-      _$PaymentModelFromJson(json);
+  factory _PaymentModel.fromJson(Map<String, dynamic> json) => _$PaymentModelFromJson(json);
 
-  @override
-  final int id;
-  @override
-  final String cardNumber;
+@override final  int id;
+@override final  String cardNumber;
 
-  /// Create a copy of PaymentModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$PaymentModelCopyWith<_PaymentModel> get copyWith =>
-      __$PaymentModelCopyWithImpl<_PaymentModel>(this, _$identity);
+/// Create a copy of PaymentModel
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PaymentModelCopyWith<_PaymentModel> get copyWith => __$PaymentModelCopyWithImpl<_PaymentModel>(this, _$identity);
 
-  @override
-  Map<String, dynamic> toJson() {
-    return _$PaymentModelToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$PaymentModelToJson(this, );
+}
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _PaymentModel &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.cardNumber, cardNumber) ||
-                other.cardNumber == cardNumber));
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentModel&&(identical(other.id, id) || other.id == id)&&(identical(other.cardNumber, cardNumber) || other.cardNumber == cardNumber));
+}
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, id, cardNumber);
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,cardNumber);
 
-  @override
-  String toString() {
-    return 'PaymentModel(id: $id, cardNumber: $cardNumber)';
-  }
+@override
+String toString() {
+  return 'PaymentModel(id: $id, cardNumber: $cardNumber)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class _$PaymentModelCopyWith<$Res>
-    implements $PaymentModelCopyWith<$Res> {
-  factory _$PaymentModelCopyWith(
-          _PaymentModel value, $Res Function(_PaymentModel) _then) =
-      __$PaymentModelCopyWithImpl;
-  @override
-  @useResult
-  $Res call({int id, String cardNumber});
-}
+abstract mixin class _$PaymentModelCopyWith<$Res> implements $PaymentModelCopyWith<$Res> {
+  factory _$PaymentModelCopyWith(_PaymentModel value, $Res Function(_PaymentModel) _then) = __$PaymentModelCopyWithImpl;
+@override @useResult
+$Res call({
+ int id, String cardNumber
+});
 
+
+
+
+}
 /// @nodoc
 class __$PaymentModelCopyWithImpl<$Res>
     implements _$PaymentModelCopyWith<$Res> {
@@ -152,25 +135,17 @@ class __$PaymentModelCopyWithImpl<$Res>
   final _PaymentModel _self;
   final $Res Function(_PaymentModel) _then;
 
-  /// Create a copy of PaymentModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? id = null,
-    Object? cardNumber = null,
-  }) {
-    return _then(_PaymentModel(
-      id: null == id
-          ? _self.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      cardNumber: null == cardNumber
-          ? _self.cardNumber
-          : cardNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
+/// Create a copy of PaymentModel
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? cardNumber = null,}) {
+  return _then(_PaymentModel(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,cardNumber: null == cardNumber ? _self.cardNumber : cardNumber // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
 }
 
 // dart format on

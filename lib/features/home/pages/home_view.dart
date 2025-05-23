@@ -35,7 +35,6 @@ class _HomeViewState extends State<HomeView> {
             state: state.categories,
             selectedCategory: 1,
           ),
-          extendBody: true,
           body: RefreshIndicator(
             color: AppColors.blackMain,
             onRefresh: () async {
