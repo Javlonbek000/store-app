@@ -20,6 +20,8 @@ import 'package:store_app/features/auth/pages/login_view.dart';
 import 'package:store_app/features/auth/pages/sign_up_view.dart';
 import 'package:store_app/features/checkout/manager/checkout_bloc.dart';
 import 'package:store_app/features/checkout/pages/checkout_view.dart';
+import 'package:store_app/features/customer_service/manager/customer_service_bloc.dart';
+import 'package:store_app/features/customer_service/pages/customer_service_view.dart';
 import 'package:store_app/features/details/maneger/details_bloc.dart';
 import 'package:store_app/features/details/pages/details_view.dart';
 import 'package:store_app/features/faqs/pages/faqs_view.dart';
@@ -237,5 +239,7 @@ final router = GoRouter(
     ),
     GoRoute(path: Routes.faqs, builder: (context, state) => FAQSView()),
     GoRoute(path: Routes.myDetail, builder: (context, state) => MyDetailView()),
+    GoRoute(path: Routes.customerService, builder: (context, state) => BlocProvider(create: ( context) => CustomerServiceBloc(),
+    child: CustomerServiceView()),)
   ],
 );

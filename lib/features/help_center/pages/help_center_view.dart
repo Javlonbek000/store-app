@@ -37,7 +37,7 @@ class HelpCenterView extends StatelessWidget {
               title: 'Customer Service',
               iconWidth: 20.25.w,
               iconHeight: 21.75.h,
-              callback: () {},
+              callback: () => context.push(Routes.customerService),
             ),
             HelpCenterItem(
               image: 'assets/icons/whatsapp.svg',

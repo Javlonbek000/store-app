@@ -23,6 +23,7 @@ class Routes {
   static const String faqs = '/faqs';
   static const String myDetail = '/my-detail';
   static const String settings = '/settings';
+  static const String customerService = '/customer-service';
 
   static getDetail(int productId) => '/detail/$productId';
 
