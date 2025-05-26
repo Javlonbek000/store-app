@@ -7,6 +7,7 @@ import 'package:store_app/data/repository/category/category_repository_local.dar
 import 'package:store_app/data/repository/category/category_repository_remote.dart';
 import 'package:store_app/data/repository/my_cart_repository.dart';
 import 'package:store_app/data/repository/new_card_repository.dart';
+import 'package:store_app/data/repository/order_repository.dart';
 import 'package:store_app/data/repository/payment_repository.dart';
 import 'package:store_app/data/repository/product/product_repository.dart';
 import 'package:store_app/data/repository/notification_repository.dart';
@@ -42,4 +43,5 @@ final List<SingleChildWidget> providers = [
   Provider(create: (context) => PaymentRepository(client: context.read())),
   Provider(create: (context) => NewCardRepository(client: context.read())),
   Provider(create: (context) => AddressRepository(client: context.read())),
+  Provider(create: (context) => OrderRepository(client: context.read())),
 ];

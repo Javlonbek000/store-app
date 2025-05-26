@@ -31,6 +31,7 @@ import 'package:store_app/features/my_cart/pages/my_cart_view.dart';
 import 'package:store_app/features/my_details/pages/my_details_view.dart';
 import 'package:store_app/features/notification/manager/notification_bloc.dart';
 import 'package:store_app/features/notification/pages/notification_view.dart';
+import 'package:store_app/features/orders/manager/order_bloc.dart';
 import 'package:store_app/features/orders/pages/orders_view.dart';
 import 'package:store_app/features/payment/managers/new_card/new_card_bloc.dart';
 import 'package:store_app/features/payment/pages/new_card_view.dart';
@@ -181,14 +182,18 @@ final router = GoRouter(
         print("${state.extra}");
         if (state.extra is PaymentModel) {
           card = state.extra as PaymentModel?;
-        }
-        else if (state.extra is AddressModel) {
-          address=state.extra as AddressModel?;
+        } else if (state.extra is AddressModel) {
+          address = state.extra as AddressModel?;
         }
 
         print("$address $card");
         return BlocProvider(
-          create: (context) => CheckoutBloc(repo: context.read(), card: card, address: address),
+          create:
+              (context) => CheckoutBloc(
+                repo: context.read(),
+                card: card,
+                address: address,
+              ),
           child: CheckoutView(),
         );
       },
@@ -218,7 +223,14 @@ final router = GoRouter(
           ),
     ),
     GoRoute(path: Routes.account, builder: (context, state) => AccountView()),
-    GoRoute(path: Routes.orders, builder: (context, state) => OrdersView()),
+    GoRoute(
+      path: Routes.orders,
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => OrderBloc(repo: context.read()),
+            child: OrdersView(),
+          ),
+    ),
     GoRoute(
       path: Routes.helpCenter,
       builder: (context, state) => HelpCenterView(),
