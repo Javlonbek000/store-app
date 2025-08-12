@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/data/repository/product/product_repository.dart';
+import 'package:store_app/data/repository/product_repository.dart';
 import 'package:store_app/data/repository/search_repository.dart';
 import 'package:store_app/features/home/manager/home_events.dart';
 import 'package:store_app/features/home/manager/home_state.dart';
 
-import '../../../data/repository/category/category_repository.dart';
+import '../../../data/repository/category_repository.dart';
 
 class HomeBloc extends Bloc<HomeEvents, HomeState> {
   final ProductRepository _repo;

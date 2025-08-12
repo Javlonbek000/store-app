@@ -12,7 +12,6 @@ import 'package:store_app/features/auth/manager/login/login_bloc.dart';
 import 'package:store_app/features/auth/manager/reset_password/reset_password_bloc.dart';
 import 'package:store_app/features/auth/manager/sign_up/sign_up_bloc.dart';
 import 'package:store_app/features/auth/manager/verification/verification_bloc.dart';
-import 'package:store_app/features/auth/onboarding/onboarding.dart';
 import 'package:store_app/features/auth/pages/forgot_and_reset_password_view/forgot_password_view.dart';
 import 'package:store_app/features/auth/pages/forgot_and_reset_password_view/reset_password_view.dart';
 import 'package:store_app/features/auth/pages/forgot_and_reset_password_view/verification_code_view.dart';
@@ -46,6 +45,7 @@ import 'package:store_app/features/search/manager/search_bloc.dart';
 import 'package:store_app/features/search/pages/search_view.dart';
 
 import '../../data/model/address/address_model.dart';
+import '../../features/auth/pages/onboarding/onboarding.dart';
 import '../../features/payment/managers/payment/payment_bloc.dart';
 
 final router = GoRouter(
@@ -181,14 +181,11 @@ final router = GoRouter(
       builder: (context, state) {
         PaymentModel? card;
         AddressModel? address;
-        print("${state.extra}");
         if (state.extra is PaymentModel) {
           card = state.extra as PaymentModel?;
         } else if (state.extra is AddressModel) {
           address = state.extra as AddressModel?;
         }
-
-        print("$address $card");
         return BlocProvider(
           create:
               (context) => CheckoutBloc(
@@ -239,7 +236,13 @@ final router = GoRouter(
     ),
     GoRoute(path: Routes.faqs, builder: (context, state) => FAQSView()),
     GoRoute(path: Routes.myDetail, builder: (context, state) => MyDetailView()),
-    GoRoute(path: Routes.customerService, builder: (context, state) => BlocProvider(create: ( context) => CustomerServiceBloc(),
-    child: CustomerServiceView()),)
+    GoRoute(
+      path: Routes.customerService,
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => CustomerServiceBloc(),
+            child: CustomerServiceView(),
+          ),
+    ),
   ],
 );

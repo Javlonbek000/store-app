@@ -18,7 +18,7 @@ class PaymentRepository {
   }
 
   Future<bool> deleteCard(int cardId)async{
-    final response = await client.deleteRequest("/cards/delete/$cardId");
+    final response = await client.genericDeleteRequest("/cards/delete/$cardId");
     return response;
   }
 }

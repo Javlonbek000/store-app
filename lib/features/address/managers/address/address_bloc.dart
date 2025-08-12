@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/data/repository/address/address_repository.dart';
+import 'package:store_app/data/repository/address_repository.dart';
 import 'package:store_app/features/address/managers/address/address_state.dart';
 
 part 'address_events.dart';

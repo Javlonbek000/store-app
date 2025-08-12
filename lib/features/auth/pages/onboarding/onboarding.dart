@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/routing/routes.dart';
 
-import '../../common/widgets/store_button_container.dart';
+import '../../../common/widgets/store_button_container.dart';
+
 
 class Onboarding extends StatelessWidget {
   const Onboarding({super.key});
