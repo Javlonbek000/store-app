@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MyCartState {
 
- CartModel? get cart; MyCartStatus get status;
+ CartModel? get cart; MyCartStatus get status; String? get errorMessage;
 /// Create a copy of MyCartState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $MyCartStateCopyWith<MyCartState> get copyWith => _$MyCartStateCopyWithImpl<MyCa
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MyCartState&&(identical(other.cart, cart) || other.cart == cart)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MyCartState&&(identical(other.cart, cart) || other.cart == cart)&&(identical(other.status, status) || other.status == status)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,cart,status);
+int get hashCode => Object.hash(runtimeType,cart,status,errorMessage);
 
 @override
 String toString() {
-  return 'MyCartState(cart: $cart, status: $status)';
+  return 'MyCartState(cart: $cart, status: $status, errorMessage: $errorMessage)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $MyCartStateCopyWith<$Res>  {
   factory $MyCartStateCopyWith(MyCartState value, $Res Function(MyCartState) _then) = _$MyCartStateCopyWithImpl;
 @useResult
 $Res call({
- CartModel? cart, MyCartStatus status
+ CartModel? cart, MyCartStatus status, String? errorMessage
 });
 
 
@@ -63,11 +63,12 @@ class _$MyCartStateCopyWithImpl<$Res>
 
 /// Create a copy of MyCartState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? cart = freezed,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? cart = freezed,Object? status = null,Object? errorMessage = freezed,}) {
   return _then(_self.copyWith(
 cart: freezed == cart ? _self.cart : cart // ignore: cast_nullable_to_non_nullable
 as CartModel?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as MyCartStatus,
+as MyCartStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of MyCartState
@@ -90,11 +91,12 @@ $CartModelCopyWith<$Res>? get cart {
 
 
 class _MyCartState implements MyCartState {
-  const _MyCartState({required this.cart, required this.status});
+  const _MyCartState({required this.cart, required this.status, required this.errorMessage});
   
 
 @override final  CartModel? cart;
 @override final  MyCartStatus status;
+@override final  String? errorMessage;
 
 /// Create a copy of MyCartState
 /// with the given fields replaced by the non-null parameter values.
@@ -106,16 +108,16 @@ _$MyCartStateCopyWith<_MyCartState> get copyWith => __$MyCartStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MyCartState&&(identical(other.cart, cart) || other.cart == cart)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MyCartState&&(identical(other.cart, cart) || other.cart == cart)&&(identical(other.status, status) || other.status == status)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,cart,status);
+int get hashCode => Object.hash(runtimeType,cart,status,errorMessage);
 
 @override
 String toString() {
-  return 'MyCartState(cart: $cart, status: $status)';
+  return 'MyCartState(cart: $cart, status: $status, errorMessage: $errorMessage)';
 }
 
 
@@ -126,7 +128,7 @@ abstract mixin class _$MyCartStateCopyWith<$Res> implements $MyCartStateCopyWith
   factory _$MyCartStateCopyWith(_MyCartState value, $Res Function(_MyCartState) _then) = __$MyCartStateCopyWithImpl;
 @override @useResult
 $Res call({
- CartModel? cart, MyCartStatus status
+ CartModel? cart, MyCartStatus status, String? errorMessage
 });
 
 
@@ -143,11 +145,12 @@ class __$MyCartStateCopyWithImpl<$Res>
 
 /// Create a copy of MyCartState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? cart = freezed,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? cart = freezed,Object? status = null,Object? errorMessage = freezed,}) {
   return _then(_MyCartState(
 cart: freezed == cart ? _self.cart : cart // ignore: cast_nullable_to_non_nullable
 as CartModel?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as MyCartStatus,
+as MyCartStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
