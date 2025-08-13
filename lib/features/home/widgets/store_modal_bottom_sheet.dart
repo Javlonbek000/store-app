@@ -9,16 +9,14 @@ import 'package:store_app/features/home/widgets/store_drop_down_button.dart';
 import 'filters_item.dart';
 
 class StoreModalBottomSheet extends StatelessWidget {
-  const StoreModalBottomSheet({
-    super.key,
-  });
+  const StoreModalBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
       width: double.infinity,
-      height: 405.h,
+      height: 350.h,
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -63,23 +61,15 @@ class StoreModalBottomSheet extends StatelessWidget {
                   children: [
                     StoreButtonContainer(title: "Relevance", callback: () {}),
                     StoreButtonContainer(
-                        title: "Price: Low - High", callback: () {}),
+                      title: "Price: Low - High",
+                      callback: () {},
+                    ),
                     StoreButtonContainer(
-                        title: "Price: High - Low", callback: () {}),
+                      title: "Price: High - Low",
+                      callback: () {},
+                    ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          Divider(color: AppColors.greySub),
-          Column(
-            spacing: 10.h,
-            children: [
-              FiltersItem(title: "Price", subTitle: "\$ 0 - \$ 19"),
-              Container(
-                width: double.infinity,
-                height: 20,
-                color: AppColors.blackMain,
               ),
             ],
           ),
@@ -101,6 +91,7 @@ class StoreModalBottomSheet extends StatelessWidget {
               ],
             ),
           ),
+          Spacer(),
           StoreButtonContainer(
             title: "Apply Filters",
             callback: () {},
