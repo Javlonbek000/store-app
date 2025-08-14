@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/utils/colors.dart';
 import 'package:store_app/data/model/detail/detail_model.dart';
+import 'package:store_app/data/model/size/size_model.dart';
 import 'package:store_app/features/common/widgets/store_app_button.dart';
 import 'package:store_app/features/details/maneger/details_bloc.dart';
 
@@ -11,10 +12,12 @@ class DetailBottomNavigationBar extends StatelessWidget {
     super.key,
     required this.selectedSize,
     required this.product,
+    required this.sizes,
   });
 
   final int selectedSize;
   final DetailModel? product;
+  final List<SizeModel> sizes;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +50,7 @@ class DetailBottomNavigationBar extends StatelessWidget {
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w600,
                 ),
-              )
+              ),
             ],
           ),
           StoreAppButton(
@@ -55,17 +58,21 @@ class DetailBottomNavigationBar extends StatelessWidget {
             callback: () {
               if (selectedSize == -1) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Please select a size first")),
+                  SnackBar(
+                    content: Text("Please select a size first"),
+                    duration: Duration(seconds: 1),
+                  ),
                 );
               } else {
+                final sizeId = sizes[selectedSize].id;
                 context.read<DetailsBloc>().add(
-                      DetailAddProduct(
-                        productId: product!.id,
-                        sizeId: selectedSize ,
-                      ),
-                    );
+                  DetailAddProduct(productId: product!.id, sizeId: sizeId),
+                );
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Mahsulot qo'shildi."), duration: Duration(seconds: 3),),
+                  SnackBar(
+                    content: Text("Mahsulot qo'shildi."),
+                    duration: Duration(seconds: 1),
+                  ),
                 );
               }
             },

@@ -1,36 +1,38 @@
 import 'package:store_app/core/client.dart';
-import 'package:store_app/data/interfaces/product_repository_interface.dart';
-import 'package:store_app/data/model/detail/detail_model.dart';
-import 'package:store_app/data/model/product/product_model.dart';
-import 'package:store_app/data/model/size/size_model.dart';
-import 'package:store_app/data/repository/product/product_repository_local.dart';
-import 'package:store_app/data/repository/product/product_repository_remote.dart';
 
-class ProductRepository implements IProductRepository {
-  ProductRepository({
-    required this.client,
-    required this.localRepo,
-    required this.remoteRepo,
-  });
+import '../model/detail/detail_model.dart';
+import '../model/product/product_model.dart';
+import '../model/size/size_model.dart';
+
+class ProductRepository {
+  ProductRepository({required this.client});
 
   final ApiClient client;
-  final ProductRepositoryLocal localRepo;
-  final ProductRepositoryRemote remoteRepo;
-
   List<ProductModel> products = [];
   List<ProductModel> savedItems = [];
   DetailModel? detail;
   List<SizeModel> sizes = [];
 
-  @override
-  Future<List<ProductModel>> getProducts({required int productId}) async {
-    final localProducts = await localRepo.getProducts(productId: productId);
-    final remoteProducts = await remoteRepo.getProducts(productId: productId);
-    if (localProducts.isEmpty || localProducts != remoteProducts) {
-      return remoteProducts;
-    } else {
-      return localProducts;
-    }
+  Future<List<ProductModel>> getProducts({
+    required int categoryId,
+    String? orderBy,
+    double? minPrice,
+    double? maxPrice,
+    int? sizeId,
+  }) async {
+    var rawProducts = await client.genericGetRequest<List<dynamic>>(
+      '/products/list',
+      queryParams: {
+        "CategoryId": categoryId,
+        "OrderBy": orderBy,
+        "MinPrice": minPrice,
+        "MaxPrice": maxPrice,
+        "SizeId": sizeId,
+      },
+    );
+    products =
+        rawProducts.map((category) => ProductModel.fromJson(category)).toList();
+    return products;
   }
 
   Future<List<ProductModel>> getSavedItems() async {

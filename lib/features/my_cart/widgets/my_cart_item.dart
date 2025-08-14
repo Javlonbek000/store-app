@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/data/model/my_cart/cart_item/cart_item_model.dart';
 import 'package:store_app/features/common/widgets/store_icon_button_container.dart';
+import 'package:store_app/features/my_cart/manager/my_cart_bloc.dart';
 
 import '../../../core/utils/colors.dart';
 
@@ -21,7 +21,7 @@ class MyCartItem extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap: () => context.push(Routes.getDetail(item.id)),
+          onTap: () {},
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 14.h),
             width: 342.w,
@@ -66,7 +66,10 @@ class MyCartItem extends StatelessWidget {
                           StoreIconButtonContainer(
                             image: "assets/icons/trash.svg",
                             iconColor: Colors.red,
-                            callback: () {},
+                            callback: () {
+                              context.read<MyCartBloc>().add(DeleteCart(id: item.id));
+                              context.read<MyCartBloc>().add(MyCartLoad());
+                            },
                           ),
                         ],
                       ),

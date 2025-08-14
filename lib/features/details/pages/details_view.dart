@@ -29,12 +29,19 @@ class _DetailsViewState extends State<DetailsView> {
     return BlocBuilder<DetailsBloc, DetailState>(
       builder: (context, state) {
         if (state.status == DetailStatus.loading) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
+          return Scaffold(body: Center(child: CircularProgressIndicator()));
         } else if (state.status == DetailStatus.error) {
-          return const Scaffold(
-            body: Center(child: Text("Xatolik yuz berdi")),
+          return Scaffold(
+            body: Center(
+              child: Text(
+                "Xatolik yuz berdi",
+                style: TextStyle(
+                  color: AppColors.blackMain,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
           );
         } else if (state.status == DetailStatus.success &&
             state.detail != null) {
@@ -70,18 +77,18 @@ class _DetailsViewState extends State<DetailsView> {
                             iconColor:
                                 isValid ? Colors.red : AppColors.blackMain,
                             callback: () {
-                              setState(() {
-                                isValid = !isValid;
-                              });
-
-                              if (isValid) {
+                              if (state.detail!.isLiked) {
                                 context.read<DetailsBloc>().add(
-                                    DetailSaveProduct(
-                                        productId: state.detail!.id));
+                                  DetailUnSaveProduct(
+                                    productId: state.detail!.id,
+                                  ),
+                                );
                               } else {
                                 context.read<DetailsBloc>().add(
-                                    DetailUnSaveProduct(
-                                        productId: state.detail!.id));
+                                  DetailSaveProduct(
+                                    productId: state.detail!.id,
+                                  ),
+                                );
                               }
                             },
                             containerWidth: 34.w,
@@ -109,9 +116,7 @@ class _DetailsViewState extends State<DetailsView> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  DetailToReview(
-                    detail: state.detail,
-                  ),
+                  DetailToReview(detail: state.detail),
                   Text(
                     state.detail!.description,
                     style: TextStyle(
@@ -137,34 +142,38 @@ class _DetailsViewState extends State<DetailsView> {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: state.sizes.length,
-                      itemBuilder: (context, index) => Row(
-                        children: [
-                          StoreButtonContainer(
-                            width: 50.h,
-                            title: state.sizes[index].title,
-                            callback: () {
-                              setState(() {
-                                selectedSize = index;
-                              });
-                            },
-                            textColor: selectedSize == index
-                                ? AppColors.white
-                                : AppColors.blackMain,
-                            buttonColor: selectedSize == index
-                                ? AppColors.blackMain
-                                : AppColors.white,
+                      itemBuilder:
+                          (context, index) => Row(
+                            children: [
+                              StoreButtonContainer(
+                                width: 50.h,
+                                title: state.sizes[index].title,
+                                callback: () {
+                                  setState(() {
+                                    selectedSize = index;
+                                  });
+                                },
+                                textColor:
+                                    selectedSize == index
+                                        ? AppColors.white
+                                        : AppColors.blackMain,
+                                buttonColor:
+                                    selectedSize == index
+                                        ? AppColors.blackMain
+                                        : AppColors.white,
+                              ),
+                              SizedBox(width: 10.h),
+                            ],
                           ),
-                          SizedBox(width: 10.h,),
-                        ],
-                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
             bottomNavigationBar: DetailBottomNavigationBar(
               selectedSize: selectedSize,
               product: state.detail,
+              sizes: state.sizes,
             ),
           );
         } else {

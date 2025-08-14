@@ -18,7 +18,7 @@ class StoreAppDialog extends StatelessWidget {
     this.hideButton = false,
     required this.callback,
     this.buttonColor = AppColors.blackMain,
-    this.buttonTitleColor = AppColors.blackMain,
+    this.buttonTitleColor = AppColors.white,
   });
 
   final double containerWidth, containerHeight;

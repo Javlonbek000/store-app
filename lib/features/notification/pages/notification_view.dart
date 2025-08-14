@@ -15,50 +15,58 @@ class NotificationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NotificationBloc, NotificationState>(
-      builder: (context, state) {
-        if (state.status == NotificationStatus.success) {
-          return Scaffold(
-            appBar: StoreAppBar(
-              title: "Notifications",
-              actions: [SvgPicture.asset("assets/icons/notification.svg")],
-              bottom: PreferredSize(
-                preferredSize: Size(double.infinity, 24.h),
-                child: Divider(
-                  color: AppColors.whiteSub,
-                ),
-              ),
-            ),
-            body: state.notifications.isEmpty
-                ? StoreNullBody(
-                    image: "assets/icons/no_notification.svg",
-                    title: "You haven’t gotten any notifications yet!",
-                    subTitle: "We’ll alert you when something cool happens.",
-                  )
-                : ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 1.h),
-                    itemCount: state.notifications.length,
-                    itemBuilder: (context, index) => NotificationItem(
+    return RefreshIndicator(
+      color: AppColors.blackMain,
+      onRefresh: () async {
+        context.read<NotificationBloc>().add(NotificationLoad());
+      },
+      child: Scaffold(
+        appBar: StoreAppBar(
+          title: "Notifications",
+          actions: [SvgPicture.asset("assets/icons/notification.svg")],
+          bottom: PreferredSize(
+            preferredSize: Size(double.infinity, 24.h),
+            child: Divider(color: AppColors.whiteSub),
+          ),
+        ),
+        body: BlocBuilder<NotificationBloc, NotificationState>(
+          builder: (context, state) {
+            if (state.status == NotificationStatus.success) {
+              return ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 1.h),
+                itemCount: state.notifications.length,
+                itemBuilder:
+                    (context, index) => NotificationItem(
                       image: state.notifications[index].icon,
                       title: state.notifications[index].title,
                       content: state.notifications[index].content,
                     ),
+              );
+            } else if (state.status == NotificationStatus.loading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state.status == NotificationStatus.idle ||
+                state.notifications.isEmpty) {
+              return StoreNullBody(
+                image: "assets/icons/no_notification.svg",
+                title: "You haven’t gotten any notifications yet!",
+                subTitle: "We’ll alert you when something cool happens.",
+              );
+            } else {
+              return Center(
+                child: Text(
+                  "${state.errorMessage}",
+                  style: TextStyle(
+                    color: AppColors.blackMain,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
                   ),
-            bottomNavigationBar: StoreBottomNavigationBar(),
-          );
-        }
-        else if (state.status == NotificationStatus.loading) {
-          return Center(child: CircularProgressIndicator());
-        }else if (state.status == NotificationStatus.idle) {
-          return StoreNullBody(
-            image: "assets/icons/no_notification.svg",
-            title: "You haven’t gotten any notifications yet!",
-            subTitle: "We’ll alert you when something cool happens.",
-          );
-        }else  {
-          return Center(child: Text("Xatooooo"));
-        }
-      },
+                ),
+              );
+            }
+          },
+        ),
+        bottomNavigationBar: StoreBottomNavigationBar(),
+      ),
     );
   }
 }

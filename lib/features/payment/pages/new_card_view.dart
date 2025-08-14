@@ -66,7 +66,10 @@ class _NewCardViewState extends State<NewCardView> {
                   subTitle: "Your new card has been added.",
                   buttonTitle: "Thanks",
                   buttonTitleColor: AppColors.white,
-                  callback: () => context.go(Routes.payment),
+                  callback: () {
+                    context.pop();
+                    context.pop();
+                  },
                   image: "assets/icons/dialog_success.svg",
                 ),
               ),
@@ -125,11 +128,9 @@ class _NewCardViewState extends State<NewCardView> {
                           if (value == null || value.isEmpty) {
                             return "Sana majburiy!";
                           }
-
                           try {
                             final inputDate = DateTime.parse(value);
                             final now = DateTime.now();
-
                             if (!inputDate.isAfter(now)) {
                               return "Sana hozirgi vaqtdan katta bo'lishi kerak!";
                             }

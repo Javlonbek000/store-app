@@ -49,7 +49,7 @@ import '../../data/model/address/address_model.dart';
 import '../../features/payment/managers/payment/payment_bloc.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.login,
+  initialLocation: Routes.home,
   routes: [
     GoRoute(path: Routes.onboarding, builder: (context, state) => Onboarding()),
     GoRoute(
@@ -181,20 +181,13 @@ final router = GoRouter(
       builder: (context, state) {
         PaymentModel? card;
         AddressModel? address;
-        print("${state.extra}");
-        if (state.extra is PaymentModel) {
-          card = state.extra as PaymentModel?;
-        } else if (state.extra is AddressModel) {
-          address = state.extra as AddressModel?;
-        }
-
-        print("$address $card");
         return BlocProvider(
           create:
               (context) => CheckoutBloc(
                 repo: context.read(),
                 card: card,
                 address: address,
+                checkRepo: context.read(),
               ),
           child: CheckoutView(),
         );
@@ -239,7 +232,13 @@ final router = GoRouter(
     ),
     GoRoute(path: Routes.faqs, builder: (context, state) => FAQSView()),
     GoRoute(path: Routes.myDetail, builder: (context, state) => MyDetailView()),
-    GoRoute(path: Routes.customerService, builder: (context, state) => BlocProvider(create: ( context) => CustomerServiceBloc(),
-    child: CustomerServiceView()),)
+    GoRoute(
+      path: Routes.customerService,
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => CustomerServiceBloc(),
+            child: CustomerServiceView(),
+          ),
+    ),
   ],
 );

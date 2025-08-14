@@ -70,14 +70,9 @@ class _HomeAppBarState extends State<HomeAppBar> {
           ],
         ),
         actions: [
-          IconButton(
-            onPressed: () => context.push(Routes.notification),
-            icon: SvgPicture.asset(
-              "assets/icons/notification.svg",
-              width: 18.75.w,
-              height: 20.25.h,
-              fit: BoxFit.cover,
-            ),
+          StoreIconButtonContainer(
+            image: "assets/icons/notification.svg",
+            callback: () => context.push(Routes.notification),
           ),
         ],
         bottom: PreferredSize(
@@ -94,8 +89,10 @@ class _HomeAppBarState extends State<HomeAppBar> {
                     height: 52.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      border:
-                          Border.all(color: Colors.grey.shade400, width: 1.2),
+                      border: Border.all(
+                        color: Colors.grey.shade400,
+                        width: 1.2,
+                      ),
                     ),
                     child: Row(
                       spacing: 8.w,
@@ -134,7 +131,15 @@ class _HomeAppBarState extends State<HomeAppBar> {
                     onTap: () {
                       showModalBottomSheet(
                         context: context,
-                        builder: (context) => StoreModalBottomSheet(),
+                        builder:
+                            (context) => BlocProvider.value(
+                              value: HomeBloc(
+                                repo: context.read(),
+                                searchRepo: context.read(),
+                                catRepo: context.read(),
+                              ),
+                              child: StoreModalBottomSheet(),
+                            ),
                       );
                     },
                     child: Container(
@@ -160,30 +165,33 @@ class _HomeAppBarState extends State<HomeAppBar> {
                 child: ListView.builder(
                   itemCount: widget.state.length,
                   scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) => Row(
-                    children: [
-                      StoreButtonContainer(
-                        title: widget.state[index].title,
-                        callback: () {
-                          context.read<HomeBloc>().add(
+                  itemBuilder:
+                      (BuildContext context, int index) => Row(
+                        children: [
+                          StoreButtonContainer(
+                            title: widget.state[index].title,
+                            callback: () {
+                              context.read<HomeBloc>().add(
                                 ChangeCategory(
                                   categoryId: widget.state[index].id,
                                 ),
                               );
-                          setState(() {
-                            selectedIndex = index;
-                          });
-                        },
-                        textColor: selectedIndex == index
-                            ? AppColors.white
-                            : AppColors.blackMain,
-                        buttonColor: selectedIndex == index
-                            ? AppColors.blackMain
-                            : AppColors.white,
+                              setState(() {
+                                selectedIndex = index;
+                              });
+                            },
+                            textColor:
+                                selectedIndex == index
+                                    ? AppColors.white
+                                    : AppColors.blackMain,
+                            buttonColor:
+                                selectedIndex == index
+                                    ? AppColors.blackMain
+                                    : AppColors.white,
+                          ),
+                          SizedBox(width: 10.w),
+                        ],
                       ),
-                      SizedBox(width: 10.w),
-                    ],
-                  ),
                 ),
               ),
             ],

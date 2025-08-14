@@ -11,6 +11,7 @@ class MyCartBloc extends Bloc<MyCartEvents, MyCartState> {
       : _repo = repo,
         super(MyCartState.initial()) {
     on<MyCartLoad>(_onLoad);
+    on<DeleteCart>(_onDelete);
     add(MyCartLoad());
   }
 
@@ -22,5 +23,9 @@ class MyCartBloc extends Bloc<MyCartEvents, MyCartState> {
     } catch (e) {
       emit(state.copyWith(status: MyCartStatus.error));
     }
+  }
+
+  Future<void> _onDelete(DeleteCart event, Emitter<MyCartState> emit)async{
+    await _repo.deleteCart(event.id);
   }
 }

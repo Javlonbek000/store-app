@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NotificationState {
 
- List<NotificationModel> get notifications; NotificationStatus get status;
+ List<NotificationModel> get notifications; NotificationStatus get status; String? get errorMessage;
 /// Create a copy of NotificationState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $NotificationStateCopyWith<NotificationState> get copyWith => _$NotificationStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationState&&const DeepCollectionEquality().equals(other.notifications, notifications)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationState&&const DeepCollectionEquality().equals(other.notifications, notifications)&&(identical(other.status, status) || other.status == status)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(notifications),status);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(notifications),status,errorMessage);
 
 @override
 String toString() {
-  return 'NotificationState(notifications: $notifications, status: $status)';
+  return 'NotificationState(notifications: $notifications, status: $status, errorMessage: $errorMessage)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $NotificationStateCopyWith<$Res>  {
   factory $NotificationStateCopyWith(NotificationState value, $Res Function(NotificationState) _then) = _$NotificationStateCopyWithImpl;
 @useResult
 $Res call({
- List<NotificationModel> notifications, NotificationStatus status
+ List<NotificationModel> notifications, NotificationStatus status, String? errorMessage
 });
 
 
@@ -63,11 +63,12 @@ class _$NotificationStateCopyWithImpl<$Res>
 
 /// Create a copy of NotificationState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? notifications = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? notifications = null,Object? status = null,Object? errorMessage = freezed,}) {
   return _then(_self.copyWith(
 notifications: null == notifications ? _self.notifications : notifications // ignore: cast_nullable_to_non_nullable
 as List<NotificationModel>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as NotificationStatus,
+as NotificationStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -78,7 +79,7 @@ as NotificationStatus,
 
 
 class _NotificationState implements NotificationState {
-  const _NotificationState({required final  List<NotificationModel> notifications, required this.status}): _notifications = notifications;
+  const _NotificationState({required final  List<NotificationModel> notifications, required this.status, required this.errorMessage}): _notifications = notifications;
   
 
  final  List<NotificationModel> _notifications;
@@ -89,6 +90,7 @@ class _NotificationState implements NotificationState {
 }
 
 @override final  NotificationStatus status;
+@override final  String? errorMessage;
 
 /// Create a copy of NotificationState
 /// with the given fields replaced by the non-null parameter values.
@@ -100,16 +102,16 @@ _$NotificationStateCopyWith<_NotificationState> get copyWith => __$NotificationS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationState&&const DeepCollectionEquality().equals(other._notifications, _notifications)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationState&&const DeepCollectionEquality().equals(other._notifications, _notifications)&&(identical(other.status, status) || other.status == status)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_notifications),status);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_notifications),status,errorMessage);
 
 @override
 String toString() {
-  return 'NotificationState(notifications: $notifications, status: $status)';
+  return 'NotificationState(notifications: $notifications, status: $status, errorMessage: $errorMessage)';
 }
 
 
@@ -120,7 +122,7 @@ abstract mixin class _$NotificationStateCopyWith<$Res> implements $NotificationS
   factory _$NotificationStateCopyWith(_NotificationState value, $Res Function(_NotificationState) _then) = __$NotificationStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<NotificationModel> notifications, NotificationStatus status
+ List<NotificationModel> notifications, NotificationStatus status, String? errorMessage
 });
 
 
@@ -137,11 +139,12 @@ class __$NotificationStateCopyWithImpl<$Res>
 
 /// Create a copy of NotificationState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? notifications = null,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? notifications = null,Object? status = null,Object? errorMessage = freezed,}) {
   return _then(_NotificationState(
 notifications: null == notifications ? _self._notifications : notifications // ignore: cast_nullable_to_non_nullable
 as List<NotificationModel>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as NotificationStatus,
+as NotificationStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

@@ -5,9 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:latlong2/latlong.dart';
+import "package:latlong2/latlong.dart" show LatLng;
 import 'package:store_app/data/model/address/address_model.dart';
-import 'package:store_app/data/repository/address/address_repository.dart';
+import 'package:store_app/data/repository/address_repository.dart';
 
 import 'new_address_events.dart';
 import 'new_address_state.dart';

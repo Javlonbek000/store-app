@@ -1,9 +1,9 @@
 class AuthException implements Exception{
-  final String massage;
-  AuthException({required this.massage});
+  final String message;
+  AuthException({required this.message});
 
   @override
   String toString(){
-    return massage;
+    return message;
   }
 }

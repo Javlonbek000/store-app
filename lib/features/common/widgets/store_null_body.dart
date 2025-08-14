@@ -29,8 +29,10 @@ class StoreNullBody extends StatelessWidget {
                 children: [
                   SvgPicture.asset(
                     image,
-                    colorFilter:
-                        ColorFilter.mode(AppColors.greySub, BlendMode.srcIn),
+                    colorFilter: ColorFilter.mode(
+                      AppColors.greySub,
+                      BlendMode.srcIn,
+                    ),
                     width: 48.w,
                     height: 52.h,
                     fit: BoxFit.cover,

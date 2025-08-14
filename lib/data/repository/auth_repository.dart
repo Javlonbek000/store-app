@@ -29,11 +29,7 @@ class AuthRepository {
     required String password,
   }) async {
     final result = await client.signUp(
-      UserModel(
-        fullName: fullName,
-        email: email,
-        password: password,
-      ),
+      UserModel(fullName: fullName, email: email, password: password),
     );
     return result;
   }
@@ -64,9 +60,12 @@ class AuthRepository {
     return result;
   }
 
-  Future<bool> resetPassword({required String email,required String code,required  String password}) async {
+  Future<bool> resetPassword({
+    required String email,
+    required String code,
+    required String password,
+  }) async {
     var result = await client.resetPassword(email, code, password);
     return result;
   }
-
 }

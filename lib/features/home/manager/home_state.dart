@@ -20,7 +20,7 @@ abstract class HomeState with _$HomeState {
       categories: [],
       products: [],
       status: HomeStatus.idle,
-      selectedCategory: null,
+      selectedCategory: 2,
     );
   }
 }

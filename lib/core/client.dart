@@ -8,7 +8,7 @@ import '../data/interfaces/serializable.dart';
 class ApiClient {
   final Dio dio = Dio(
     BaseOptions(
-      baseUrl: 'http://192.168.11.26:8888/api/v1',
+      baseUrl: 'http://192.168.100.139:8888/api/v1',
       validateStatus: (status) => true,
     ),
   )..interceptors.add(AuthInterceptor());
@@ -67,7 +67,7 @@ class ApiClient {
       return data['accessToken']!;
     } else {
       throw AuthException(
-        massage: "login qilib bo'lmadi, xullasi nimadur noto'g'ri ketgan.",
+        message: "login qilib bo'lmadi, xullasi nimadur noto'g'ri ketgan.",
       );
     }
   }

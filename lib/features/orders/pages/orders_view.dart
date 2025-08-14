@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:store_app/features/common/widgets/store_app_bar.dart';
 import 'package:store_app/features/orders/manager/order_bloc.dart';
 import 'package:store_app/features/orders/manager/order_state.dart';
-import 'package:store_app/features/orders/pages/order_item.dart';
+import 'package:store_app/features/orders/widgets/order_item.dart';
 
 import '../../../core/routing/routes.dart';
 import '../../../core/utils/colors.dart';

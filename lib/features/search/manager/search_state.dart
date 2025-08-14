@@ -1,34 +1,24 @@
 import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:store_app/data/model/product/product_model.dart';
 
+part 'search_state.freezed.dart';
 enum SearchStatus { idle, loading, success, error }
 
-class SearchState extends Equatable {
-  final List<ProductModel> products;
-  final SearchStatus status;
+@freezed
+abstract class SearchState with _$SearchState {
 
-  const SearchState({
-    required this.products,
-    required this.status,
-  });
+  const factory SearchState({
+    required List<ProductModel> products,
+    required SearchStatus status,
+    required String? errorMessage,
+  }) = _SearchState;
 
   factory SearchState.initial() {
     return SearchState(
       products: [],
       status: SearchStatus.idle,
+      errorMessage: null,
     );
   }
-
-  SearchState copyWith({
-    List<ProductModel>? products,
-    SearchStatus? status,
-  }) {
-    return SearchState(
-      products: products ?? this.products,
-      status: status ?? this.status,
-    );
-  }
-
-  @override
-  List<Object?> get props => [products, status];
 }
