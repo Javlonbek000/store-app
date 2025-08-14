@@ -45,11 +45,11 @@ class ProductRepository {
   }
 
   Future<void> savedItem({required productId}) async {
-    await client.saveItem(productId: productId);
+    await client.genericPostRequestV2('/auth/save/$productId');
   }
 
   Future<void> unSavedItem({required productId}) async {
-    await client.unSaveItem(productId: productId);
+    await client.genericPostRequestV2('/auth/unsave/$productId');
   }
 
   Future<DetailModel?> fetchProductDetail(int productId) async {
@@ -67,7 +67,10 @@ class ProductRepository {
   }
 
   Future<bool> addProduct({required int productId, required int sizeId}) async {
-    var result = await client.addProduct(productId: productId, sizeId: sizeId);
+    var result = await client.genericPostRequestV2(
+      '/my-cart/add-item',
+      data: {"productId": productId, "sizeId": sizeId},
+    );
     return result;
   }
 }

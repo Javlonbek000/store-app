@@ -15,7 +15,7 @@ class MyCartRepository{
   }
 
   Future<bool> deleteCart(int id)async{
-    final result = await client.deleteRequest('/my-cart/delete/$id');
+    final result = await client.genericDeleteRequest('/my-cart/delete/$id');
     return result;
   }
 }
