@@ -27,37 +27,52 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state.status==HomeStatus.idle) {
-          context.read<HomeBloc>().add(HomeLoad(categoryId: 2));
-        }
-        return Scaffold(
-          appBar: HomeAppBar(
-            state: state.categories,
-            selectedCategory: 1,
-          ),
-          body: RefreshIndicator(
+        if (state.status == HomeStatus.success) {
+          return RefreshIndicator(
             color: AppColors.blackMain,
             onRefresh: () async {
-              if (state.status==HomeStatus.success) {
-                context.read<HomeBloc>().add(HomeLoad(categoryId: state.selectedCategory!));
+              if (state.status == HomeStatus.success) {
+                context.read<HomeBloc>().add(
+                  HomeLoad(categoryId: state.selectedCategory!),
+                );
               }
             },
-            child: GridView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisExtent: 231.h,
-                crossAxisCount: 2,
-                mainAxisSpacing: 24.h,
-                crossAxisSpacing: 10.w,
+            child: Scaffold(
+              appBar: HomeAppBar(state: state.categories, selectedCategory: 1),
+              body: GridView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisExtent: 231.h,
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 24.h,
+                  crossAxisSpacing: 10.w,
+                ),
+                itemCount: state.products.length,
+                itemBuilder:
+                    (context, index) =>
+                        HomeProductItem(model: state.products[index]),
               ),
-              itemCount: state.products.length,
-              itemBuilder: (context, index) => HomeProductItem(
-                model: state.products[index],
+              bottomNavigationBar: StoreBottomNavigationBar(),
+            ),
+          );
+        } else if (state.status == HomeStatus.error) {
+          return Center(
+            child: Text(
+              "Xatolik yuz berdi!",
+              style: TextStyle(
+                color: AppColors.blackMain,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
               ),
             ),
-          ),
-          bottomNavigationBar: StoreBottomNavigationBar(),
-        );
+          );
+        } else {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(color: AppColors.blackMain),
+            ),
+          );
+        }
       },
     );
   }

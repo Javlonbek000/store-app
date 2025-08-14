@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CheckoutState {
 
- CartModel? get cart; CheckoutStatus get status; PaymentModel? get card; AddressModel? get address;
+ CartModel? get cart; CheckoutStatus get status; PaymentModel? get card; AddressModel? get address; String? get errorMessage;
 /// Create a copy of CheckoutState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $CheckoutStateCopyWith<CheckoutState> get copyWith => _$CheckoutStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CheckoutState&&(identical(other.cart, cart) || other.cart == cart)&&(identical(other.status, status) || other.status == status)&&(identical(other.card, card) || other.card == card)&&(identical(other.address, address) || other.address == address));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CheckoutState&&(identical(other.cart, cart) || other.cart == cart)&&(identical(other.status, status) || other.status == status)&&(identical(other.card, card) || other.card == card)&&(identical(other.address, address) || other.address == address)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,cart,status,card,address);
+int get hashCode => Object.hash(runtimeType,cart,status,card,address,errorMessage);
 
 @override
 String toString() {
-  return 'CheckoutState(cart: $cart, status: $status, card: $card, address: $address)';
+  return 'CheckoutState(cart: $cart, status: $status, card: $card, address: $address, errorMessage: $errorMessage)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $CheckoutStateCopyWith<$Res>  {
   factory $CheckoutStateCopyWith(CheckoutState value, $Res Function(CheckoutState) _then) = _$CheckoutStateCopyWithImpl;
 @useResult
 $Res call({
- CartModel? cart, CheckoutStatus status, PaymentModel? card, AddressModel? address
+ CartModel? cart, CheckoutStatus status, PaymentModel? card, AddressModel? address, String? errorMessage
 });
 
 
@@ -63,13 +63,14 @@ class _$CheckoutStateCopyWithImpl<$Res>
 
 /// Create a copy of CheckoutState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? cart = freezed,Object? status = null,Object? card = freezed,Object? address = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? cart = freezed,Object? status = null,Object? card = freezed,Object? address = freezed,Object? errorMessage = freezed,}) {
   return _then(_self.copyWith(
 cart: freezed == cart ? _self.cart : cart // ignore: cast_nullable_to_non_nullable
 as CartModel?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as CheckoutStatus,card: freezed == card ? _self.card : card // ignore: cast_nullable_to_non_nullable
 as PaymentModel?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
-as AddressModel?,
+as AddressModel?,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of CheckoutState
@@ -116,13 +117,14 @@ $AddressModelCopyWith<$Res>? get address {
 
 
 class _CheckoutState implements CheckoutState {
-  const _CheckoutState({required this.cart, required this.status, required this.card, required this.address});
+  const _CheckoutState({required this.cart, required this.status, required this.card, required this.address, required this.errorMessage});
   
 
 @override final  CartModel? cart;
 @override final  CheckoutStatus status;
 @override final  PaymentModel? card;
 @override final  AddressModel? address;
+@override final  String? errorMessage;
 
 /// Create a copy of CheckoutState
 /// with the given fields replaced by the non-null parameter values.
@@ -134,16 +136,16 @@ _$CheckoutStateCopyWith<_CheckoutState> get copyWith => __$CheckoutStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CheckoutState&&(identical(other.cart, cart) || other.cart == cart)&&(identical(other.status, status) || other.status == status)&&(identical(other.card, card) || other.card == card)&&(identical(other.address, address) || other.address == address));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CheckoutState&&(identical(other.cart, cart) || other.cart == cart)&&(identical(other.status, status) || other.status == status)&&(identical(other.card, card) || other.card == card)&&(identical(other.address, address) || other.address == address)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,cart,status,card,address);
+int get hashCode => Object.hash(runtimeType,cart,status,card,address,errorMessage);
 
 @override
 String toString() {
-  return 'CheckoutState(cart: $cart, status: $status, card: $card, address: $address)';
+  return 'CheckoutState(cart: $cart, status: $status, card: $card, address: $address, errorMessage: $errorMessage)';
 }
 
 
@@ -154,7 +156,7 @@ abstract mixin class _$CheckoutStateCopyWith<$Res> implements $CheckoutStateCopy
   factory _$CheckoutStateCopyWith(_CheckoutState value, $Res Function(_CheckoutState) _then) = __$CheckoutStateCopyWithImpl;
 @override @useResult
 $Res call({
- CartModel? cart, CheckoutStatus status, PaymentModel? card, AddressModel? address
+ CartModel? cart, CheckoutStatus status, PaymentModel? card, AddressModel? address, String? errorMessage
 });
 
 
@@ -171,13 +173,14 @@ class __$CheckoutStateCopyWithImpl<$Res>
 
 /// Create a copy of CheckoutState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? cart = freezed,Object? status = null,Object? card = freezed,Object? address = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? cart = freezed,Object? status = null,Object? card = freezed,Object? address = freezed,Object? errorMessage = freezed,}) {
   return _then(_CheckoutState(
 cart: freezed == cart ? _self.cart : cart // ignore: cast_nullable_to_non_nullable
 as CartModel?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as CheckoutStatus,card: freezed == card ? _self.card : card // ignore: cast_nullable_to_non_nullable
 as PaymentModel?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
-as AddressModel?,
+as AddressModel?,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

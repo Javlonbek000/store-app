@@ -1,16 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/utils/colors.dart';
 import 'package:store_app/data/model/address/address_model.dart';
 import 'package:store_app/features/common/widgets/store_icon_button_container.dart';
 
 class CheckoutDeliveryAddress extends StatelessWidget {
-  const CheckoutDeliveryAddress({super.key, required this.address});
+  const CheckoutDeliveryAddress({super.key, required this.address,required this.callback});
 
   final AddressModel? address;
+  final void Function()? callback;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class CheckoutDeliveryAddress extends StatelessWidget {
                 text: TextSpan(
                   recognizer:
                       TapGestureRecognizer()
-                        ..onTap = () => context.push(Routes.address),
+                        ..onTap = callback,
                   text: 'Change',
                   style: TextStyle(
                     color: AppColors.blackMain,

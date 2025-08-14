@@ -6,7 +6,7 @@ import '../../../data/model/payment/payment_model.dart';
 
 part 'checkout_state.freezed.dart';
 
-enum CheckoutStatus { idle, loading, success, error }
+enum CheckoutStatus { idle, loading, success, error, added, unAdded}
 
 @freezed
 abstract class CheckoutState with _$CheckoutState {
@@ -15,10 +15,12 @@ abstract class CheckoutState with _$CheckoutState {
     required CheckoutStatus status,
     required PaymentModel? card,
     required AddressModel? address,
+    required String? errorMessage,
   }) = _CheckoutState;
 
   factory CheckoutState.initial() {
     return CheckoutState(
+      errorMessage: null,
       cart: null,
       status: CheckoutStatus.idle,
       card: null,

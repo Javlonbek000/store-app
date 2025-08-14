@@ -23,16 +23,18 @@ class _SearchViewState extends State<SearchView> {
   final TextEditingController searchController = TextEditingController();
 
   @override
-  void initState(){
+  void initState() {
     searchController.addListener(_onSearchChanged);
     super.initState();
   }
 
-  void _onSearchChanged(){
+  void _onSearchChanged() {
     final text = searchController.text;
     if (text.isNotEmpty) {
-      context.read<SearchBloc>().add(SearchRequest(title: searchController.text));
-    }else{
+      context.read<SearchBloc>().add(
+        SearchRequest(title: searchController.text),
+      );
+    } else {
       context.read<SearchBloc>().add(SearchClear());
     }
   }
@@ -47,8 +49,14 @@ class _SearchViewState extends State<SearchView> {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
-        return Scaffold(
-          appBar: StoreAppBar(
+        return RefreshIndicator(
+          color: AppColors.blackMain,
+          onRefresh:
+              () async => context.read<SearchBloc>().add(
+            SearchRequest(title: searchController.text),
+          ),
+          child: Scaffold(
+            appBar: StoreAppBar(
               title: "Search",
               actions: [
                 StoreIconButtonContainer(
@@ -93,35 +101,39 @@ class _SearchViewState extends State<SearchView> {
                         image: "assets/icons/microphone.svg",
                         callback: () {},
                         iconColor: AppColors.greySub,
-                      )
-                    ],
-                  ),
-                ),
-              )),
-          extendBody: true,
-          body: state.products.isEmpty
-              ? StoreNullBody(
-                  image: "assets/icons/no_result.svg",
-                  title: "No Results Found!",
-                  subTitle: "Try a similar word or something more general.",
-                )
-              : Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 20),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: state.products.length,
-                          itemBuilder: (context, index) => SearchResultItem(
-                            product: state.products[index],
-                          ),
-                        ),
                       ),
                     ],
                   ),
                 ),
-          bottomNavigationBar: StoreBottomNavigationBar(),
+              ),
+            ),
+            extendBody: true,
+            body:
+                state.products.isEmpty
+                    ? StoreNullBody(
+                      image: "assets/icons/no_result.svg",
+                      title: "No Results Found!",
+                      subTitle: "Try a similar word or something more general.",
+                    )
+                    : Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24.w),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 20),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: state.products.length,
+                              itemBuilder:
+                                  (context, index) => SearchResultItem(
+                                    product: state.products[index],
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+            bottomNavigationBar: StoreBottomNavigationBar(),
+          ),
         );
       },
     );

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/utils/colors.dart';
 import 'package:store_app/features/address/managers/new_address/new_address_bloc.dart';
 import 'package:store_app/features/address/managers/new_address/new_address_events.dart';
 import 'package:store_app/features/address/managers/new_address/new_address_state.dart';
+import 'package:store_app/features/address/pages/new_address_map.dart';
+import 'package:store_app/features/address/pages/new_address_nickname.dart';
 import 'package:store_app/features/address/widgets/new_address_check_box.dart';
 import 'package:store_app/features/address/widgets/new_address_drop_down.dart';
 import 'package:store_app/features/auth/pages/forgot_and_reset_password_view/store_app_dialog.dart';
@@ -96,43 +96,7 @@ class NewAddress extends StatelessWidget {
                             },
                           ),
                         ),
-                        SizedBox(
-                          height: 78.h,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Address Nickname",
-                                style: TextStyle(
-                                  color: AppColors.blackMain,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                width: 341.w,
-                                height: 52.h,
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: AppColors.whiteSub,
-                                    width: 1.w,
-                                  ),
-                                ),
-                                child: Text(
-                                  state.address!,
-                                  style: TextStyle(
-                                    color: AppColors.blackMain,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        NewAddressNickname(address: state.address!),
                         NewAddressCheckBox(
                           onChanged: (bool value) {
                             isDefault = value;
@@ -141,6 +105,7 @@ class NewAddress extends StatelessWidget {
                         StoreAppButton(
                           text: "Add",
                           callback: () {
+                            context.pop();
                             bloc.add(
                               AddNewAddress(
                                 title: selectedValue,
@@ -161,19 +126,21 @@ class NewAddress extends StatelessWidget {
             );
           }
           if (state.status == NewAddressStatus.success) {
-            showDialog(
+            await showDialog(
               context: context,
-              builder:
-                  (context) => Center(
-                    child: StoreAppDialog(
-                      title: "Congratulations",
-                      subTitle: "Your new address has been added.",
-                      buttonTitle: "Thanks",
-                      buttonTitleColor: AppColors.white,
-                      callback: () => context.go(Routes.address),
-                    ),
+              builder: (context) {
+                return Center(
+                  child: StoreAppDialog(
+                    title: "Congratulations",
+                    subTitle: "Your new address has been added.",
+                    buttonTitle: "Thanks",
+                    buttonTitleColor: AppColors.white,
+                    callback: () => context.pop(),
                   ),
+                );
+              },
             );
+            context.pop();
           } else if (state.status == NewAddressStatus.error) {
             showDialog(
               context: context,
@@ -191,40 +158,7 @@ class NewAddress extends StatelessWidget {
             );
           }
         },
-        builder:
-            (context, state) => Column(
-              children: [
-                Expanded(
-                  child: FlutterMap(
-                    mapController: context.read<NewAddressBloc>().controller,
-                    options: MapOptions(
-                      initialCenter: LatLng(
-                        41.285799883900715,
-                        69.20363493014382,
-                      ),
-                      onTap: (tapPosition, point) {
-                        context.read<NewAddressBloc>().add(
-                          NewAddressChooseLocation(chosenLocation: point),
-                        );
-                      },
-                    ),
-                    children: [
-                      TileLayer(
-                        urlTemplate:
-                            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                        subdomains: ['a', 'b', 'c'],
-                        userAgentPackageName: 'com.example.app',
-                      ),
-                      MarkerLayer(markers: state.markers),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text('Address: ${state.address}'),
-                ),
-              ],
-            ),
+        builder: (context, state) => NewAddressMap(markers: state.markers, address: state.address,),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed:

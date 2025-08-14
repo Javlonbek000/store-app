@@ -21,18 +21,21 @@ class AddressView extends StatefulWidget {
 }
 
 class _AddressViewState extends State<AddressView> {
-
   int? selectedAddressId;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StoreAppBar(title: "Address", actions: [
-        StoreIconButtonContainer(
-          image: "assets/icons/notification.svg",
-          callback: () => context.push(Routes.notification),
-          iconHeight: 20.25,
-        ),
-      ]),
+      appBar: StoreAppBar(
+        title: "Address",
+        actions: [
+          StoreIconButtonContainer(
+            image: "assets/icons/notification.svg",
+            callback: () => context.push(Routes.notification),
+            iconHeight: 20.25,
+          ),
+        ],
+      ),
       extendBody: true,
       body: BlocBuilder<AddressBloc, AddressState>(
         builder: (context, state) {
@@ -82,15 +85,16 @@ class _AddressViewState extends State<AddressView> {
                     ),
                     StoreAppButtonWithIcon(
                       image: "assets/icons/plus.svg",
-                      title: "Add New Card",
+                      title: "Add New Address",
                       iconWidth: 18.75,
                       iconHeight: 18.75,
                       padding: EdgeInsets.symmetric(
                         horizontal: 84.w,
                         vertical: 16.h,
                       ),
-                      callback: () {
-                        context.push(Routes.newAddress);
+                      callback: () async {
+                        await context.push(Routes.newAddress);
+                        context.read<AddressBloc>().add(AddressLoad());
                       },
                       containerColor: AppColors.white,
                       borderColor: AppColors.greyMain,
@@ -120,10 +124,7 @@ class _AddressViewState extends State<AddressView> {
                   .state
                   .addresses
                   .firstWhere((address) => address.id == selectedAddressId);
-              context.go(
-                Routes.checkout,
-                extra: selectedAddress,
-              );
+              context.pop(selectedAddress);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text("You did not select a card!")),

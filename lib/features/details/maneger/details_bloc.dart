@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/data/repository/product_repository.dart';
+import '../../../data/repository/product_repository.dart';
 import 'details_state.dart';
 
 part 'details_event.dart';
@@ -32,13 +32,24 @@ class DetailsBloc extends Bloc<DetailEvent, DetailState> {
     }
   }
 
-  Future<void> _detailSaved(DetailSaveProduct event, Emitter<DetailState> emit) async{
+  Future<void> _detailSaved(DetailSaveProduct event, Emitter<DetailState> emit) async {
     await _repo.savedItem(productId: event.productId);
+
+    if (state.detail != null) {
+      final updatedDetail = state.detail!.copyWith(isLiked: true);
+      emit(state.copyWith(detail: updatedDetail));
+    }
   }
 
-  Future<void> _detailUnSaved(DetailUnSaveProduct event, Emitter<DetailState> emit) async{
+  Future<void> _detailUnSaved(DetailUnSaveProduct event, Emitter<DetailState> emit) async {
     await _repo.unSavedItem(productId: event.productId);
+
+    if (state.detail != null) {
+      final updatedDetail = state.detail!.copyWith(isLiked: false);
+      emit(state.copyWith(detail: updatedDetail));
+    }
   }
+
 
   Future<void> _addProduct(DetailAddProduct event, Emitter<DetailState> emit) async{
     await _repo.addProduct(productId: event.productId, sizeId: event.sizeId);

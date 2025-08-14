@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:latlong2/latlong.dart' show LatLng;
 import 'package:flutter_map/flutter_map.dart';
 
 part 'new_address_state.freezed.dart';

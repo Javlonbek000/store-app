@@ -6,8 +6,8 @@ part 'search_events.dart';
 
 class SearchBloc extends Bloc<SearchEvents, SearchState> {
   SearchBloc({required SearchRepository repo})
-      : _repo = repo,
-        super(SearchState.initial()) {
+    : _repo = repo,
+      super(SearchState.initial()) {
     on<SearchRequest>(_onLoad);
     on<SearchClear>(_onClear);
   }
@@ -18,18 +18,19 @@ class SearchBloc extends Bloc<SearchEvents, SearchState> {
     final query = event.title.trim();
     if (query.isEmpty) {
       emit(state.copyWith(products: [], status: SearchStatus.idle));
-      return;
     }
     emit(state.copyWith(products: [], status: SearchStatus.loading));
     try {
       final products = await _repo.getSearchResult(event.title);
       emit(state.copyWith(products: products, status: SearchStatus.success));
     } catch (e) {
-      emit(state.copyWith(status: SearchStatus.error));
+      emit(
+        state.copyWith(status: SearchStatus.error, errorMessage: e.toString()),
+      );
     }
   }
 
-  Future<void> _onClear(SearchClear event, Emitter<SearchState> emit)async{
+  Future<void> _onClear(SearchClear event, Emitter<SearchState> emit) async {
     emit(state.copyWith(products: [], status: SearchStatus.idle));
   }
 }

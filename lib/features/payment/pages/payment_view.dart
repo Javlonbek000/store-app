@@ -40,7 +40,7 @@ class _PaymentViewState extends State<PaymentView> {
             ),
           ),
         ],
-        bottom: const PreferredSize(
+        bottom: PreferredSize(
           preferredSize: Size.fromHeight(15),
           child: Divider(color: Color(0xffE6E6E6), thickness: 2, height: 2),
         ),
@@ -144,8 +144,9 @@ class _PaymentViewState extends State<PaymentView> {
                         horizontal: 84.w,
                         vertical: 16.h,
                       ),
-                      callback: () {
-                        context.push(Routes.newCard);
+                      callback: () async {
+                        await context.push(Routes.newCard);
+                        context.read<PaymentBloc>().add(PaymentLoad());
                       },
                       containerColor: AppColors.white,
                       borderColor: AppColors.greyMain,
@@ -158,7 +159,16 @@ class _PaymentViewState extends State<PaymentView> {
           } else if (state.status == PaymentStatus.loading) {
             return Center(child: CircularProgressIndicator());
           } else if (state.status == PaymentStatus.error) {
-            return Center(child: Text("Xatolik yuz berdi"));
+            return Center(
+              child: Text(
+                "Xatolik yuz berdi",
+                style: TextStyle(
+                  color: AppColors.blackMain,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            );
           }
           return Center(child: Text("Karta ma'lumotlari yo'q"));
         },
@@ -169,18 +179,13 @@ class _PaymentViewState extends State<PaymentView> {
           containerColor: AppColors.blackMain,
           text: "Apply",
           callback: () {
-            print("Chiki chiki");
             if (selectedCardId != null) {
-              print("Nimadir");
               final selectedCard = context
                   .read<PaymentBloc>()
                   .state
                   .cards
                   .firstWhere((card) => card.id == selectedCardId);
-              context.go(
-                Routes.checkout,
-                extra: selectedCard,
-              );
+              context.pop(selectedCard);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text("You did not select a card!")),

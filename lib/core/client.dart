@@ -79,7 +79,7 @@ class ApiClient {
       return data['accessToken']!;
     } else {
       throw AuthException(
-        massage: "login qilib bo'lmadi, xullasi nimadur noto'g'ri ketgan.",
+        message: "login qilib bo'lmadi, xullasi nimadur noto'g'ri ketgan.",
       );
     }
   }

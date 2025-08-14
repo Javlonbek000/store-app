@@ -1,32 +1,23 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:store_app/data/model/product/product_model.dart';
+
+part 'saved_items_state.freezed.dart';
 
 enum SavedItemsStatus { idle, loading, error, success }
 
-class SavedItemsState extends Equatable {
-  final List<ProductModel> savedItems;
-  final SavedItemsStatus status;
-
-  const SavedItemsState({
-    required this.savedItems,
-    required this.status,
-  });
+@freezed
+abstract class SavedItemsState with _$SavedItemsState {
+  const factory SavedItemsState({
+    required List<ProductModel> savedItems,
+    required SavedItemsStatus status,
+    required String? errorMessage,
+  }) = _SavedItemsState;
 
   factory SavedItemsState.initial() {
     return SavedItemsState(
       savedItems: [],
       status: SavedItemsStatus.idle,
+      errorMessage: null,
     );
   }
-
-  SavedItemsState copyWith(
-      {List<ProductModel>? savedItems, SavedItemsStatus? status}) {
-    return SavedItemsState(
-      savedItems: savedItems ?? this.savedItems,
-      status: status ?? this.status,
-    );
-  }
-
-  @override
-  List<Object?> get props => [savedItems, status];
 }

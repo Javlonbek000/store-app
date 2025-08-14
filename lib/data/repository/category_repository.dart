@@ -6,12 +6,16 @@ class CategoryRepository {
 
   CategoryRepository({required this.client});
 
+  List<CategoryModel> categories = [];
+
   Future<List<CategoryModel>> getCategories() async {
     var rawCategories = await client.genericGetRequest<List<dynamic>>(
       '/categories/list',
     );
-    return rawCategories
-        .map((category) => CategoryModel.fromJson(category))
-        .toList();
+    categories =
+        rawCategories
+            .map((category) => CategoryModel.fromJson(category))
+            .toList();
+    return categories;
   }
 }

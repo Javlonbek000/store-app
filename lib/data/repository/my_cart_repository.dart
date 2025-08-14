@@ -13,9 +13,9 @@ class MyCartRepository{
     cart = CartModel.fromJson(rawCart);
     return cart;
   }
-  
-  Future<bool> deleteCart({required int id})async{
-    final result = client.genericDeleteRequest('/my-cart/delete/$id');
+
+  Future<bool> deleteCart(int id)async{
+    final result = await client.deleteRequest('/my-cart/delete/$id');
     return result;
   }
 }

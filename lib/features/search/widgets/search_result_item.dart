@@ -70,7 +70,7 @@ class SearchResultItem extends StatelessWidget {
             ),
             Spacer(),
             StoreIconButtonContainer(
-                image: "assets/icons/export.svg", callback: () {})
+                image: "assets/icons/export.svg", callback: () {context.push(Routes.getDetail(product.id));})
           ],
         ),
       ),
