@@ -45,7 +45,7 @@ class ApiClient {
     }
   }
 
-  Future<bool> deleteRequest(
+  Future<bool> genericDeleteRequest(
     String path, {
     Map<String, dynamic>? queryParams,
   }) async {
@@ -54,6 +54,18 @@ class ApiClient {
       return true;
     } else {
       throw Exception(response.data);
+    }
+  }
+
+  Future<bool> genericPostRequestV2(
+    String path, {
+    Map<String, dynamic>? data,
+  }) async {
+    final response = await dio.post(path, data: data);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -80,73 +92,4 @@ class ApiClient {
       return false;
     }
   }
-
-  Future<bool> forgotPassword(String email) async {
-    var response = await dio.post(
-      "/auth/reset-password/email",
-      data: {"email": email},
-    );
-
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  Future<bool> enterCode(String email, String code) async {
-    var response = await dio.post(
-      "/auth/reset-password/verify",
-      data: {"email": email, "code": code},
-    );
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  Future<bool> resetPassword(String email, String code, String password) async {
-    var response = await dio.post(
-      "/auth/reset-password/reset",
-      data: {"email": email, "code": code, "password": password},
-    );
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  Future<bool> saveItem({required int productId}) async {
-    var response = await dio.post('/auth/save/$productId');
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  Future<bool> unSaveItem({required int productId}) async {
-    var response = await dio.post('/auth/unsave/$productId');
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  Future<bool> addProduct({required int productId, required int sizeId}) async {
-    var response = await dio.post(
-      '/my-cart/add-item',
-      data: {"productId": productId, "sizeId": sizeId},
-    );
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-
 }
