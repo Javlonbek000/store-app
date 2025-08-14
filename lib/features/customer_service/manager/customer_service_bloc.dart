@@ -17,7 +17,7 @@ class CustomerServiceBloc
   }
 
   Future<void> initializeWebSocket() async {
-    final uri = Uri.parse("ws://192.168.11.161:8888/chat");
+    final uri = Uri.parse("ws://192.168.100.139:8888/chat");
     websocket = WebSocketChannel.connect(uri);
     await websocket.ready;
     subscription = websocket.stream.listen((massage) {
