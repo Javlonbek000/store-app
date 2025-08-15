@@ -119,11 +119,6 @@ class _HomeAppBarState extends State<HomeAppBar> {
                             ),
                           ),
                         ),
-                        StoreIconButtonContainer(
-                          image: "assets/icons/microphone.svg",
-                          callback: () {},
-                          iconColor: AppColors.greySub,
-                        ),
                       ],
                     ),
                   ),
