@@ -188,7 +188,7 @@ class _PaymentViewState extends State<PaymentView> {
               context.pop(selectedCard);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("You did not select a card!")),
+                SnackBar(content: Text("Siz karta tanlamagansiz!")),
               );
             }
           },
