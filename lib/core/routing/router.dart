@@ -106,7 +106,6 @@ final router = GoRouter(
             create:
                 (context) => HomeBloc(
                   repo: context.read(),
-                  searchRepo: context.read(),
                   catRepo: context.read(),
                 ),
             child: HomeView(),

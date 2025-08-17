@@ -17,6 +17,7 @@ class StoreBottomNavigationBar extends StatelessWidget {
       width: double.infinity,
       height: 86.h,
       decoration: BoxDecoration(
+        color: AppColors.white,
         border: Border.symmetric(
           horizontal: BorderSide(
             width: 0.5.w,

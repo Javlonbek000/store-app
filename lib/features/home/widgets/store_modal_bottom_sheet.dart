@@ -51,7 +51,7 @@ class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
                     IconButton(
                       onPressed: () {
                         context.pop();
-                        context.read<HomeBloc>().add(HomeLoad(categoryId: state.selectedCategory ?? 2));
+                        context.read<HomeBloc>().add(HomeLoad());
                       },
                       icon: SvgPicture.asset(
                         "assets/icons/x.svg",
@@ -81,7 +81,6 @@ class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
                               });
                               context.read<HomeBloc>().add(
                                 HomeLoad(
-                                  categoryId: state.selectedCategory ?? 2,
                                 ),
                               );
                             },
@@ -110,8 +109,7 @@ class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
                               });
                               context.read<HomeBloc>().add(
                                 HomeLoad(
-                                  categoryId: state.selectedCategory ?? 2,
-                                  orderBy: "price",
+
                                 ),
                               );
                             },
@@ -132,8 +130,7 @@ class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
                               });
                               context.read<HomeBloc>().add(
                                 HomeLoad(
-                                  categoryId: state.selectedCategory ?? 2,
-                                  orderBy: "-price",
+
                                 ),
                               );
                             },

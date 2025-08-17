@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/data/repository/search_repository.dart';
 import 'package:store_app/features/home/manager/home_events.dart';
 import 'package:store_app/features/home/manager/home_state.dart';
 import '../../../data/repository/category_repository.dart';
@@ -7,35 +6,26 @@ import '../../../data/repository/product_repository.dart';
 
 class HomeBloc extends Bloc<HomeEvents, HomeState> {
   final ProductRepository _repo;
-  final SearchRepository _searchRepo;
   final CategoryRepository _catRepo;
 
   HomeBloc({
     required ProductRepository repo,
-    required SearchRepository searchRepo,
     required CategoryRepository catRepo,
-  }) : _catRepo = catRepo,
-       _repo = repo,
-       _searchRepo = searchRepo,
-       super(HomeState.initial()) {
+  })  : _catRepo = catRepo,
+        _repo = repo,
+        super(HomeState.initial()) {
     on<HomeLoad>(_onLoad);
-    on<HomeSearch>(_searchLoad);
     on<HomeSaved>(_homeSaved);
     on<HomeUnSaved>(_homeUnSaved);
-    on<ChangeCategory>(_changedCategory);
+    on<FilterProducts>(_changedCategory);
+    add(HomeLoad());
   }
 
   Future<void> _onLoad(HomeLoad event, Emitter<HomeState> emit) async {
-    emit(state.copyWith(status: HomeStatus.loading));
-    final products = await _repo.getProducts(
-      categoryId: event.categoryId,
-      orderBy: event.orderBy,
-      minPrice: event.minPrice,
-      maxPrice: event.maxPrice,
-      sizeId: event.sizeId,
-    );
+    final products = await _repo.getProducts();
     final categories = await _catRepo.getCategories();
     categories.sort((a, b) => a.id.compareTo(b.id));
+
     emit(
       state.copyWith(
         categories: categories,
@@ -46,11 +36,18 @@ class HomeBloc extends Bloc<HomeEvents, HomeState> {
   }
 
   Future<void> _changedCategory(
-    ChangeCategory event,
-    Emitter<HomeState> emit,
-  ) async {
-    emit(state.copyWith(status: HomeStatus.loading));
-    final products = await _repo.getProducts(categoryId: event.categoryId);
+      FilterProducts event,
+      Emitter<HomeState> emit,
+      ) async {
+    final products = await _repo.getProducts(
+      categoryId: event.categoryId,
+      orderBy: event.orderBy,
+      minPrice: event.minPrice,
+      maxPrice: event.maxPrice,
+      sizeId: event.sizeId,
+      title: event.title,
+    );
+
     emit(
       state.copyWith(
         selectedCategory: event.categoryId,
@@ -58,12 +55,6 @@ class HomeBloc extends Bloc<HomeEvents, HomeState> {
         status: HomeStatus.success,
       ),
     );
-  }
-
-  Future<void> _searchLoad(HomeSearch event, Emitter<HomeState> emit) async {
-    emit(state.copyWith(status: HomeStatus.loading));
-    final searchResult = await _searchRepo.getSearchResult(event.title);
-    emit(state.copyWith(status: HomeStatus.success, products: searchResult));
   }
 
   Future<void> _homeUnSaved(HomeUnSaved event, Emitter<HomeState> emit) async {
@@ -74,3 +65,4 @@ class HomeBloc extends Bloc<HomeEvents, HomeState> {
     await _repo.savedItem(productId: event.productId);
   }
 }
+

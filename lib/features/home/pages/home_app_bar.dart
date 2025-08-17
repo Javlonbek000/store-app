@@ -5,22 +5,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/utils/colors.dart';
-import 'package:store_app/data/model/category/category_model.dart';
 import 'package:store_app/features/common/widgets/store_button_container.dart';
 import 'package:store_app/features/common/widgets/store_icon_button_container.dart';
+import 'package:store_app/features/common/widgets/store_text_form_field.dart';
 import 'package:store_app/features/home/manager/home_bloc.dart';
 import 'package:store_app/features/home/manager/home_events.dart';
+import 'package:store_app/features/home/manager/home_state.dart';
 import 'package:store_app/features/home/widgets/store_modal_bottom_sheet.dart';
 
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const HomeAppBar({
-    super.key,
-    required this.state,
-    required this.selectedCategory,
-  });
+  const HomeAppBar({super.key, required this.categoryId});
 
-  final List<CategoryModel> state;
-  final int selectedCategory;
+  final int? categoryId;
 
   @override
   State<HomeAppBar> createState() => _HomeAppBarState();
@@ -31,17 +27,17 @@ class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _HomeAppBarState extends State<HomeAppBar> {
   final controller = TextEditingController();
-  int selectedIndex = -1;
 
   @override
   void initState() {
     super.initState();
     controller.addListener(_onSearchChanged);
-    selectedIndex = widget.selectedCategory;
   }
 
   void _onSearchChanged() {
-    context.read<HomeBloc>().add(HomeSearch(title: controller.text));
+    context.read<HomeBloc>().add(
+      FilterProducts(title: controller.text, categoryId: widget.categoryId),
+    );
   }
 
   @override
@@ -83,44 +79,16 @@ class _HomeAppBarState extends State<HomeAppBar> {
               Row(
                 spacing: 8.w,
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15.w),
-                    width: 281.w,
-                    height: 52.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Colors.grey.shade400,
-                        width: 1.2,
-                      ),
-                    ),
-                    child: Row(
-                      spacing: 8.w,
-                      children: [
-                        StoreIconButtonContainer(
-                          iconColor: AppColors.greySub,
-                          image: "assets/icons/search.svg",
-                          callback: () {},
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: controller,
-                            decoration: InputDecoration(
-                              hintText: 'Search for clothes...',
-                              filled: true,
-                              fillColor: Colors.white,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 14,
-                              ),
-                              border: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  StoreTextFormField(
+                    width: 280.h,
+                    validator: (value) {
+                      return null;
+                    },
+                    title: '',
+                    titleBool: false,
+                    hintText: "Search for clothes...",
+                    controller: controller,
+                    isValid: null,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -130,7 +98,6 @@ class _HomeAppBarState extends State<HomeAppBar> {
                             (context) => BlocProvider.value(
                               value: HomeBloc(
                                 repo: context.read(),
-                                searchRepo: context.read(),
                                 catRepo: context.read(),
                               ),
                               child: StoreModalBottomSheet(),
@@ -139,7 +106,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                     },
                     child: Container(
                       alignment: Alignment.center,
-                      width: 52.w,
+                      width: 50.w,
                       height: 52.h,
                       decoration: BoxDecoration(
                         color: AppColors.blackMain,
@@ -157,34 +124,56 @@ class _HomeAppBarState extends State<HomeAppBar> {
               ),
               SizedBox(
                 height: 36.h,
-                child: ListView.builder(
-                  itemCount: widget.state.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder:
-                      (BuildContext context, int index) => Row(
+                child: BlocBuilder<HomeBloc, HomeState>(
+                  builder:
+                      (context, state) => ListView(
+                        scrollDirection: Axis.horizontal,
                         children: [
                           StoreButtonContainer(
-                            title: widget.state[index].title,
+                            title: "All",
                             callback: () {
                               context.read<HomeBloc>().add(
-                                ChangeCategory(
-                                  categoryId: widget.state[index].id,
+                                FilterProducts(
+                                  categoryId: null,
+                                  title: controller.text.trim(),
                                 ),
                               );
-                              setState(() {
-                                selectedIndex = index;
-                              });
                             },
                             textColor:
-                                selectedIndex == index
+                                state.selectedCategory == null
                                     ? AppColors.white
                                     : AppColors.blackMain,
                             buttonColor:
-                                selectedIndex == index
+                                state.selectedCategory == null
                                     ? AppColors.blackMain
                                     : AppColors.white,
                           ),
                           SizedBox(width: 10.w),
+
+                          ...state.categories.map(
+                            (category) => Padding(
+                              padding: EdgeInsets.only(right: 10.w),
+                              child: StoreButtonContainer(
+                                title: category.title,
+                                callback: () {
+                                  context.read<HomeBloc>().add(
+                                    FilterProducts(
+                                      categoryId: category.id,
+                                      title: controller.text.trim(),
+                                    ),
+                                  );
+                                },
+                                textColor:
+                                    state.selectedCategory == category.id
+                                        ? AppColors.white
+                                        : AppColors.blackMain,
+                                buttonColor:
+                                    state.selectedCategory == category.id
+                                        ? AppColors.blackMain
+                                        : AppColors.white,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                 ),

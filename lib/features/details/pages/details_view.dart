@@ -32,6 +32,7 @@ class _DetailsViewState extends State<DetailsView> {
           return Scaffold(body: Center(child: CircularProgressIndicator()));
         } else if (state.status == DetailStatus.error) {
           return Scaffold(
+            appBar: StoreAppBar(title: "", actions: []),
             body: Center(
               child: Text(
                 "Xatolik yuz berdi",
@@ -57,7 +58,7 @@ class _DetailsViewState extends State<DetailsView> {
               ],
             ),
             body: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
               child: Column(
                 spacing: 10.h,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,7 +137,6 @@ class _DetailsViewState extends State<DetailsView> {
                       fontFamily: "General Sans",
                     ),
                   ),
-                  SizedBox(height: 2.h),
                   SizedBox(
                     height: 50.h,
                     child: ListView.builder(

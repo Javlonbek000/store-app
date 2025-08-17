@@ -51,7 +51,7 @@ class _AddressViewState extends State<AddressView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Saved Cards",
+                      "Saved Addresses",
                       style: TextStyle(
                         color: AppColors.blackMain,
                         fontWeight: FontWeight.w600,

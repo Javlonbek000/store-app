@@ -41,6 +41,7 @@ class SavedItemsView extends StatelessWidget {
               return GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
+                  mainAxisSpacing: 10.h
                 ),
                 itemCount: state.savedItems.length,
                 itemBuilder:
