@@ -49,6 +49,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<HomeBloc>();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: AppBar(
@@ -94,14 +95,14 @@ class _HomeAppBarState extends State<HomeAppBar> {
                     onTap: () {
                       showModalBottomSheet(
                         context: context,
-                        builder:
-                            (context) => BlocProvider.value(
-                              value: HomeBloc(
-                                repo: context.read(),
-                                catRepo: context.read(),
-                              ),
-                              child: StoreModalBottomSheet(),
+                        builder: (context) {
+                          return BlocProvider.value(
+                            value: bloc,
+                            child: StoreModalBottomSheet(
+                              categoryId: widget.categoryId,
                             ),
+                          );
+                        },
                       );
                     },
                     child: Container(

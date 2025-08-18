@@ -13,8 +13,6 @@ class ProductRepository {
     int? categoryId,
     String? title,
     String? orderBy,
-    double? minPrice,
-    double? maxPrice,
     int? sizeId,
   }) async {
     var rawProducts = await client.genericGetRequest<List<dynamic>>(
@@ -23,8 +21,6 @@ class ProductRepository {
         "Title": title,
         "CategoryId": categoryId,
         "OrderBy": orderBy,
-        "MinPrice": minPrice,
-        "MaxPrice": maxPrice,
         "SizeId": sizeId,
       },
     );

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState {
 
- List<CategoryModel> get categories; List<ProductModel> get products; int? get selectedCategory; HomeStatus get status;
+ List<CategoryModel> get categories; List<ProductModel> get products; int? get selectedCategory; String? get orderBy; int? get sizeId; HomeStatus get status;
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.products, products)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.products, products)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&(identical(other.orderBy, orderBy) || other.orderBy == orderBy)&&(identical(other.sizeId, sizeId) || other.sizeId == sizeId)&&(identical(other.status, status) || other.status == status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(products),selectedCategory,status);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(products),selectedCategory,orderBy,sizeId,status);
 
 @override
 String toString() {
-  return 'HomeState(categories: $categories, products: $products, selectedCategory: $selectedCategory, status: $status)';
+  return 'HomeState(categories: $categories, products: $products, selectedCategory: $selectedCategory, orderBy: $orderBy, sizeId: $sizeId, status: $status)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $HomeStateCopyWith<$Res>  {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
 @useResult
 $Res call({
- List<CategoryModel> categories, List<ProductModel> products, int? selectedCategory, HomeStatus status
+ List<CategoryModel> categories, List<ProductModel> products, int? selectedCategory, String? orderBy, int? sizeId, HomeStatus status
 });
 
 
@@ -62,11 +62,13 @@ class _$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? categories = null,Object? products = null,Object? selectedCategory = freezed,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? categories = null,Object? products = null,Object? selectedCategory = freezed,Object? orderBy = freezed,Object? sizeId = freezed,Object? status = null,}) {
   return _then(_self.copyWith(
 categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
 as List<CategoryModel>,products: null == products ? _self.products : products // ignore: cast_nullable_to_non_nullable
 as List<ProductModel>,selectedCategory: freezed == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
+as int?,orderBy: freezed == orderBy ? _self.orderBy : orderBy // ignore: cast_nullable_to_non_nullable
+as String?,sizeId: freezed == sizeId ? _self.sizeId : sizeId // ignore: cast_nullable_to_non_nullable
 as int?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as HomeStatus,
   ));
@@ -153,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<CategoryModel> categories,  List<ProductModel> products,  int? selectedCategory,  HomeStatus status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<CategoryModel> categories,  List<ProductModel> products,  int? selectedCategory,  String? orderBy,  int? sizeId,  HomeStatus status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.categories,_that.products,_that.selectedCategory,_that.status);case _:
+return $default(_that.categories,_that.products,_that.selectedCategory,_that.orderBy,_that.sizeId,_that.status);case _:
   return orElse();
 
 }
@@ -174,10 +176,10 @@ return $default(_that.categories,_that.products,_that.selectedCategory,_that.sta
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<CategoryModel> categories,  List<ProductModel> products,  int? selectedCategory,  HomeStatus status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<CategoryModel> categories,  List<ProductModel> products,  int? selectedCategory,  String? orderBy,  int? sizeId,  HomeStatus status)  $default,) {final _that = this;
 switch (_that) {
 case _HomeState():
-return $default(_that.categories,_that.products,_that.selectedCategory,_that.status);case _:
+return $default(_that.categories,_that.products,_that.selectedCategory,_that.orderBy,_that.sizeId,_that.status);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +196,10 @@ return $default(_that.categories,_that.products,_that.selectedCategory,_that.sta
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<CategoryModel> categories,  List<ProductModel> products,  int? selectedCategory,  HomeStatus status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<CategoryModel> categories,  List<ProductModel> products,  int? selectedCategory,  String? orderBy,  int? sizeId,  HomeStatus status)?  $default,) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.categories,_that.products,_that.selectedCategory,_that.status);case _:
+return $default(_that.categories,_that.products,_that.selectedCategory,_that.orderBy,_that.sizeId,_that.status);case _:
   return null;
 
 }
@@ -209,7 +211,7 @@ return $default(_that.categories,_that.products,_that.selectedCategory,_that.sta
 
 
 class _HomeState implements HomeState {
-  const _HomeState({required final  List<CategoryModel> categories, required final  List<ProductModel> products, required this.selectedCategory, required this.status}): _categories = categories,_products = products;
+  const _HomeState({required final  List<CategoryModel> categories, required final  List<ProductModel> products, required this.selectedCategory, required this.orderBy, required this.sizeId, required this.status}): _categories = categories,_products = products;
   
 
  final  List<CategoryModel> _categories;
@@ -227,6 +229,8 @@ class _HomeState implements HomeState {
 }
 
 @override final  int? selectedCategory;
+@override final  String? orderBy;
+@override final  int? sizeId;
 @override final  HomeStatus status;
 
 /// Create a copy of HomeState
@@ -239,16 +243,16 @@ _$HomeStateCopyWith<_HomeState> get copyWith => __$HomeStateCopyWithImpl<_HomeSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._products, _products)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._products, _products)&&(identical(other.selectedCategory, selectedCategory) || other.selectedCategory == selectedCategory)&&(identical(other.orderBy, orderBy) || other.orderBy == orderBy)&&(identical(other.sizeId, sizeId) || other.sizeId == sizeId)&&(identical(other.status, status) || other.status == status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_products),selectedCategory,status);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_products),selectedCategory,orderBy,sizeId,status);
 
 @override
 String toString() {
-  return 'HomeState(categories: $categories, products: $products, selectedCategory: $selectedCategory, status: $status)';
+  return 'HomeState(categories: $categories, products: $products, selectedCategory: $selectedCategory, orderBy: $orderBy, sizeId: $sizeId, status: $status)';
 }
 
 
@@ -259,7 +263,7 @@ abstract mixin class _$HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Re
   factory _$HomeStateCopyWith(_HomeState value, $Res Function(_HomeState) _then) = __$HomeStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<CategoryModel> categories, List<ProductModel> products, int? selectedCategory, HomeStatus status
+ List<CategoryModel> categories, List<ProductModel> products, int? selectedCategory, String? orderBy, int? sizeId, HomeStatus status
 });
 
 
@@ -276,11 +280,13 @@ class __$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? categories = null,Object? products = null,Object? selectedCategory = freezed,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? categories = null,Object? products = null,Object? selectedCategory = freezed,Object? orderBy = freezed,Object? sizeId = freezed,Object? status = null,}) {
   return _then(_HomeState(
 categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
 as List<CategoryModel>,products: null == products ? _self._products : products // ignore: cast_nullable_to_non_nullable
 as List<ProductModel>,selectedCategory: freezed == selectedCategory ? _self.selectedCategory : selectedCategory // ignore: cast_nullable_to_non_nullable
+as int?,orderBy: freezed == orderBy ? _self.orderBy : orderBy // ignore: cast_nullable_to_non_nullable
+as String?,sizeId: freezed == sizeId ? _self.sizeId : sizeId // ignore: cast_nullable_to_non_nullable
 as int?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as HomeStatus,
   ));

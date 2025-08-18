@@ -5,9 +5,9 @@ import 'package:store_app/core/dependencies.dart';
 import 'package:store_app/core/routing/router.dart';
 import 'package:store_app/core/utils/themes.dart';
 
-
 final navigatorKey = GlobalKey<NavigatorState>();
-void main() async{
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(StoreApp());
 }
@@ -20,13 +20,12 @@ class StoreApp extends StatelessWidget {
     ScreenUtil.init(context, designSize: Size(390, 844));
     return MultiProvider(
       providers: providers,
-      builder:(context, child) =>  MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        theme: AppThemes.lightTheme,
-        routerConfig: router,
-      ),
+      builder:
+          (context, child) => MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            theme: AppThemes.lightTheme,
+            routerConfig: router,
+          ),
     );
   }
 }
-
-

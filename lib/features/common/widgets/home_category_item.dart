@@ -37,7 +37,7 @@ class _HomeProductItemState extends State<HomeProductItem> {
             onTap: () async {
               final bloc = context.read<HomeBloc>();
               await context.push(Routes.getDetail(widget.model.id));
-              bloc.add(HomeLoad());
+              bloc.add(CategoryLoad());
             },
             child: Container(
               color: AppColors.white,

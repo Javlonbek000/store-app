@@ -13,14 +13,16 @@ import 'package:store_app/features/home/widgets/store_drop_down_button.dart';
 import 'filters_item.dart';
 
 class StoreModalBottomSheet extends StatefulWidget {
-  const StoreModalBottomSheet({super.key});
+  const StoreModalBottomSheet({super.key, required this.categoryId});
+
+  final int? categoryId;
 
   @override
   State<StoreModalBottomSheet> createState() => _StoreModalBottomSheetState();
 }
 
 class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
-  bool? select;
+  int select = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
             child: Column(
-              spacing: 7.h,
+              spacing: 15.h,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +53,6 @@ class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
                     IconButton(
                       onPressed: () {
                         context.pop();
-                        context.read<HomeBloc>().add(HomeLoad());
                       },
                       icon: SvgPicture.asset(
                         "assets/icons/x.svg",
@@ -77,78 +78,52 @@ class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
                             title: "Relevance",
                             callback: () {
                               setState(() {
-                                select = null;
+                                select = 1;
                               });
-                              context.read<HomeBloc>().add(
-                                HomeLoad(
-                                ),
-                              );
                             },
                             buttonColor:
-                                select == null
+                                select == 1
                                     ? AppColors.blackMain
                                     : AppColors.white,
                             textColor:
-                                select == null
+                                select == 1
                                     ? AppColors.white
                                     : AppColors.blackMain,
                           ),
                           StoreButtonContainer(
                             title: "Price: Low - High",
                             buttonColor:
-                                select == true
+                                select == 2
                                     ? AppColors.blackMain
                                     : AppColors.white,
                             textColor:
-                                select == true
+                                select == 2
                                     ? AppColors.white
                                     : AppColors.blackMain,
                             callback: () {
                               setState(() {
-                                select = true;
+                                select = 2;
                               });
-                              context.read<HomeBloc>().add(
-                                HomeLoad(
-
-                                ),
-                              );
                             },
                           ),
                           StoreButtonContainer(
                             title: "Price: High - Low",
                             buttonColor:
-                            select == false
-                                ? AppColors.blackMain
-                                : AppColors.white,
+                                select == 3
+                                    ? AppColors.blackMain
+                                    : AppColors.white,
                             textColor:
-                            select == false
-                                ? AppColors.white
-                                : AppColors.blackMain,
+                                select == 3
+                                    ? AppColors.white
+                                    : AppColors.blackMain,
                             callback: () {
                               setState(() {
-                                select = false;
+                                select = 3;
                               });
-                              context.read<HomeBloc>().add(
-                                HomeLoad(
-
-                                ),
-                              );
                             },
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                Divider(color: AppColors.greySub),
-                Column(
-                  spacing: 10.h,
-                  children: [
-                    FiltersItem(title: "Price", subTitle: "\$ 0 - \$ 19"),
-                    Container(
-                      width: double.infinity,
-                      height: 20,
-                      color: AppColors.blackMain,
                     ),
                   ],
                 ),
@@ -170,9 +145,31 @@ class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
                     ],
                   ),
                 ),
+                Spacer(),
                 StoreButtonContainer(
                   title: "Apply Filters",
-                  callback: () {},
+                  callback: () {
+                    if (select == 2) {
+                      context.read<HomeBloc>().add(
+                        FilterProducts(
+                          categoryId: widget.categoryId,
+                          orderBy: "price",
+                        ),
+                      );
+                    } else if (select == 3) {
+                      context.read<HomeBloc>().add(
+                        FilterProducts(
+                          categoryId: widget.categoryId,
+                          orderBy: "-price",
+                        ),
+                      );
+                    } else {
+                      context.read<HomeBloc>().add(
+                        FilterProducts(categoryId: widget.categoryId),
+                      );
+                    }
+                    context.pop();
+                  },
                   width: 341.w,
                   height: 54.h,
                   buttonColor: AppColors.blackMain,

@@ -12,6 +12,8 @@ abstract class HomeState with _$HomeState {
     required List<CategoryModel> categories,
     required List<ProductModel> products,
     required int? selectedCategory,
+    required String? orderBy,
+    required int? sizeId,
     required HomeStatus status,
   }) = _HomeState;
 
@@ -21,6 +23,8 @@ abstract class HomeState with _$HomeState {
       products: [],
       status: HomeStatus.loading,
       selectedCategory: null,
+      orderBy: null,
+      sizeId: null,
     );
   }
 }

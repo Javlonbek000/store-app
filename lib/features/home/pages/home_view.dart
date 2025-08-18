@@ -17,7 +17,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,15 +27,19 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
+          print("${state.status}        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
           if (state.status == HomeStatus.success) {
             return RefreshIndicator(
               color: AppColors.blackMain,
               onRefresh: () async {
-                if (state.status == HomeStatus.success) {
-                  context.read<HomeBloc>().add(
-                    HomeLoad(),
-                  );
-                }
+                context.read<HomeBloc>().add(
+                  FilterProducts(
+                    categoryId: state.selectedCategory,
+                    sizeId: state.sizeId,
+                    orderBy: state.orderBy,
+                  ),
+                );
+                print("${state.orderBy} nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
               },
               child: Padding(
                 padding: EdgeInsets.only(right: 24.w, left: 24.w, top: 10.h),

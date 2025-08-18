@@ -1,20 +1,17 @@
 sealed class HomeEvents {}
 
-final class HomeLoad extends HomeEvents {}
+final class CategoryLoad extends HomeEvents {}
 
 final class FilterProducts extends HomeEvents {
   final int? categoryId;
   final String? orderBy, title;
   final int? sizeId;
-  final double? minPrice, maxPrice;
 
   FilterProducts({
     this.categoryId,
     this.title,
     this.orderBy,
     this.sizeId,
-    this.minPrice,
-    this.maxPrice,
   });
 }
 
