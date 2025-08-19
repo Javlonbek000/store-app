@@ -72,7 +72,7 @@ class SavedItemsView extends StatelessWidget {
             );
           },
         ),
-        bottomNavigationBar: StoreBottomNavigationBar(),
+        bottomNavigationBar: StoreBottomNavigationBar(select: 3),
       ),
     );
   }

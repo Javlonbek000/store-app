@@ -1,22 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:store_app/core/routing/routes.dart';
-import 'package:store_app/core/utils/colors.dart';
 import 'package:store_app/features/address/managers/new_address/new_address_bloc.dart';
 import 'package:store_app/features/address/managers/new_address/new_address_events.dart';
-import 'package:store_app/features/address/managers/new_address/new_address_state.dart';
-import 'package:store_app/features/address/pages/new_address_nickname.dart';
-import 'package:store_app/features/address/widgets/new_address_check_box.dart';
-import 'package:store_app/features/address/widgets/new_address_drop_down.dart';
-import 'package:store_app/features/auth/pages/forgot_and_reset_password_view/store_app_dialog.dart';
-import 'package:store_app/features/common/widgets/store_app_bar.dart';
-import 'package:store_app/features/common/widgets/store_app_button.dart';
-import 'package:store_app/features/common/widgets/store_icon_button_container.dart';
 
 class NewAddressMap extends StatelessWidget {
   const NewAddressMap({super.key, required this.markers, required this.address});

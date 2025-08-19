@@ -104,7 +104,7 @@ class MyCartView extends StatelessWidget {
             );
           },
         ),
-        bottomNavigationBar: StoreBottomNavigationBar(),
+        bottomNavigationBar: StoreBottomNavigationBar(select: 4),
       ),
     );
   }

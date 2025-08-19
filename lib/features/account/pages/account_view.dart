@@ -29,33 +29,29 @@ class AccountView extends StatelessWidget {
         ],
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(25),
-          child: Divider(
-            color: AppColors.greyMain,
-            thickness: 1,
-          ),
+          child: Divider(color: AppColors.greyMain, thickness: 1),
         ),
       ),
       body: Column(
         spacing: 8,
         children: [
           AccountItem(
-              image: "assets/icons/no_order.svg",
-              title: "My Order",
-              callback: () => context.push(Routes.orders),
-              imageWidth: 20,
-              imageHeight: 21),
-          SizedBox(height: 6),
-          Divider(
-            color: AppColors.greySub,
-            thickness: 6,
+            image: "assets/icons/no_order.svg",
+            title: "My Order",
+            callback: () => context.push(Routes.orders),
+            imageWidth: 20,
+            imageHeight: 21,
           ),
           SizedBox(height: 6),
+          Divider(color: AppColors.greySub, thickness: 6),
+          SizedBox(height: 6),
           AccountItem(
-              image: "assets/icons/my_detail.svg",
-              title: "My Details",
-              callback: () => context.push(Routes.myDetail),
-              imageWidth: 23,
-              imageHeight: 16),
+            image: "assets/icons/my_detail.svg",
+            title: "My Details",
+            callback: () => context.push(Routes.myDetail),
+            imageWidth: 23,
+            imageHeight: 16,
+          ),
           SizedBox(height: 6),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -70,17 +66,15 @@ class AccountView extends StatelessWidget {
             imageHeight: 15,
           ),
           SizedBox(height: 6),
-          Divider(
-            color: AppColors.greySub,
-            thickness: 6,
-          ),
+          Divider(color: AppColors.greySub, thickness: 6),
           SizedBox(height: 6),
           AccountItem(
-              image: ("assets/icons/question_mark.svg"),
-              title: "FAQs",
-              callback: () => context.push(Routes.faqs),
-              imageWidth: 20,
-              imageHeight: 20),
+            image: ("assets/icons/question_mark.svg"),
+            title: "FAQs",
+            callback: () => context.push(Routes.faqs),
+            imageWidth: 20,
+            imageHeight: 20,
+          ),
           SizedBox(height: 6),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -88,16 +82,14 @@ class AccountView extends StatelessWidget {
           ),
           SizedBox(height: 6),
           AccountItem(
-              image: ("assets/icons/headphones.svg"),
-              title: "Help Center",
-              callback: () => context.push(Routes.helpCenter),
-              imageWidth: 20,
-              imageHeight: 21),
-          SizedBox(height: 6),
-          Divider(
-            color: AppColors.greySub,
-            thickness: 6,
+            image: ("assets/icons/headphones.svg"),
+            title: "Help Center",
+            callback: () => context.push(Routes.helpCenter),
+            imageWidth: 20,
+            imageHeight: 21,
           ),
+          SizedBox(height: 6),
+          Divider(color: AppColors.greySub, thickness: 6),
           SizedBox(height: 6),
           AccountItem(
             image: "assets/icons/logout.svg",
@@ -107,18 +99,19 @@ class AccountView extends StatelessWidget {
               showDialog(
                 context: context,
                 barrierDismissible: false,
-                builder: (context) => Center(
-                  child: StoreAppDialog(
-                    title: "Logout",
-                    subTitle: "Are you sure you want to logout?",
-                    buttonTitle: "Yes, Logout",
-                    callback: () => context.go(Routes.login),
-                    image: "assets/icons/warning.svg",
-                    hideButton: true,
-                    buttonColor: Colors.red,
-                    buttonTitleColor: AppColors.white,
-                  ),
-                ),
+                builder:
+                    (context) => Center(
+                      child: StoreAppDialog(
+                        title: "Logout",
+                        subTitle: "Are you sure you want to logout?",
+                        buttonTitle: "Yes, Logout",
+                        callback: () => context.go(Routes.login),
+                        image: "assets/icons/warning.svg",
+                        hideButton: true,
+                        buttonColor: Colors.red,
+                        buttonTitleColor: AppColors.white,
+                      ),
+                    ),
               );
             },
             imageWidth: 18,
@@ -128,7 +121,7 @@ class AccountView extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: StoreBottomNavigationBar(),
+      bottomNavigationBar: StoreBottomNavigationBar(select: 5),
     );
   }
 }

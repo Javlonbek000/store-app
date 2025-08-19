@@ -186,7 +186,7 @@ class _SearchViewState extends State<SearchView> {
           );
         },
       ),
-      bottomNavigationBar: StoreBottomNavigationBar(),
+      bottomNavigationBar: StoreBottomNavigationBar(select: 2),
     );
   }
 }

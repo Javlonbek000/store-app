@@ -27,7 +27,9 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          print("${state.status}        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+          print(
+            "${state.status}        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          );
           if (state.status == HomeStatus.success) {
             return RefreshIndicator(
               color: AppColors.blackMain,
@@ -75,7 +77,7 @@ class _HomeViewState extends State<HomeView> {
           }
         },
       ),
-      bottomNavigationBar: StoreBottomNavigationBar(),
+      bottomNavigationBar: StoreBottomNavigationBar(select: 1),
     );
   }
 }
