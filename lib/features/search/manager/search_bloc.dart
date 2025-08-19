@@ -18,6 +18,7 @@ class SearchBloc extends Bloc<SearchEvents, SearchState> {
     final query = event.title.trim();
     if (query.isEmpty) {
       emit(state.copyWith(products: [], status: SearchStatus.idle));
+      return;
     }
     emit(state.copyWith(products: [], status: SearchStatus.loading));
     try {
