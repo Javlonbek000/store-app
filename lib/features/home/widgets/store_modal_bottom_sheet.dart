@@ -4,24 +4,31 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/colors.dart';
+import 'package:store_app/data/model/size/size_model.dart';
+import 'package:store_app/features/common/widgets/drop_down_selector.dart';
 import 'package:store_app/features/common/widgets/store_button_container.dart';
 import 'package:store_app/features/home/manager/home_bloc.dart';
 import 'package:store_app/features/home/manager/home_events.dart';
 import 'package:store_app/features/home/manager/home_state.dart';
-import 'package:store_app/features/home/widgets/store_drop_down_button.dart';
 
 import 'filters_item.dart';
 
 class StoreModalBottomSheet extends StatefulWidget {
-  const StoreModalBottomSheet({super.key, required this.categoryId});
+  const StoreModalBottomSheet({
+    super.key,
+    required this.categoryId,
+    required this.sizes,
+  });
 
   final int? categoryId;
+  final List<SizeModel> sizes;
 
   @override
   State<StoreModalBottomSheet> createState() => _StoreModalBottomSheetState();
 }
 
 class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
+  SizeModel? sizeModel;
   int select = 1;
 
   @override
@@ -141,7 +148,26 @@ class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      StoreDropDownButton(),
+                      DropdownSelector<SizeModel>(
+                        menuEntries:
+                            widget.sizes
+                                .map(
+                                  (e) => DropdownMenuEntry<SizeModel>(
+                                    value: e,
+                                    label: e.title,
+                                  ),
+                                )
+                                .toList(),
+                        callback: (value) {
+                          setState(() {
+                            sizeModel = value;
+                          });
+                        },
+                        validator: (p0) {
+                          return null;
+                        },
+                        width: 125.w,
+                      ),
                     ],
                   ),
                 ),
@@ -154,6 +180,7 @@ class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
                         FilterProducts(
                           categoryId: widget.categoryId,
                           orderBy: "price",
+                          sizeId: sizeModel?.id,
                         ),
                       );
                     } else if (select == 3) {
@@ -161,11 +188,15 @@ class _StoreModalBottomSheetState extends State<StoreModalBottomSheet> {
                         FilterProducts(
                           categoryId: widget.categoryId,
                           orderBy: "-price",
+                          sizeId: sizeModel?.id,
                         ),
                       );
                     } else {
                       context.read<HomeBloc>().add(
-                        FilterProducts(categoryId: widget.categoryId),
+                        FilterProducts(
+                          categoryId: widget.categoryId,
+                          sizeId: sizeModel?.id,
+                        ),
                       );
                     }
                     context.pop();

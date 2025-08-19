@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/data/repository/size_repository.dart';
 import 'package:store_app/features/home/manager/home_events.dart';
 import 'package:store_app/features/home/manager/home_state.dart';
 import '../../../data/repository/category_repository.dart';
@@ -7,12 +8,15 @@ import '../../../data/repository/product_repository.dart';
 class HomeBloc extends Bloc<HomeEvents, HomeState> {
   final ProductRepository _repo;
   final CategoryRepository _catRepo;
+  final SizeRepository _sizeRepo;
 
   HomeBloc({
     required ProductRepository repo,
     required CategoryRepository catRepo,
+    required SizeRepository sizeRepo,
   }) : _catRepo = catRepo,
        _repo = repo,
+       _sizeRepo = sizeRepo,
        super(HomeState.initial()) {
     on<CategoryLoad>(_onLoad);
     on<HomeSaved>(_homeSaved);
@@ -23,6 +27,7 @@ class HomeBloc extends Bloc<HomeEvents, HomeState> {
 
   Future<void> _onLoad(CategoryLoad event, Emitter<HomeState> emit) async {
     final products = await _repo.getProducts();
+    final sizes = await _sizeRepo.fetchSizes();
     final categories = await _catRepo.getCategories();
     categories.sort((a, b) => a.id.compareTo(b.id));
 
@@ -30,6 +35,7 @@ class HomeBloc extends Bloc<HomeEvents, HomeState> {
       state.copyWith(
         categories: categories,
         products: products,
+        sizes: sizes,
         status: HomeStatus.success,
       ),
     );

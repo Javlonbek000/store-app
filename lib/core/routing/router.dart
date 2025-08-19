@@ -105,6 +105,7 @@ final router = GoRouter(
           (context, state) => BlocProvider(
             create:
                 (context) => HomeBloc(
+                  sizeRepo: context.read(),
                   repo: context.read(),
                   catRepo: context.read(),
                 ),

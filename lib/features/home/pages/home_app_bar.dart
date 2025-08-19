@@ -99,6 +99,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                           return BlocProvider.value(
                             value: bloc,
                             child: StoreModalBottomSheet(
+                              sizes: bloc.state.sizes,
                               categoryId: widget.categoryId,
                             ),
                           );
