@@ -18,62 +18,66 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   @override
-  void initState() {
-    context.read<HomeBloc>().add(HomeLoad(categoryId: 2));
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state.status == HomeStatus.success) {
-          return RefreshIndicator(
-            color: AppColors.blackMain,
-            onRefresh: () async {
-              if (state.status == HomeStatus.success) {
+    return Scaffold(
+      appBar: HomeAppBar(
+        categoryId: context.select(
+          (HomeBloc bloc) => bloc.state.selectedCategory,
+        ),
+      ),
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          print(
+            "${state.status}        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          );
+          if (state.status == HomeStatus.success) {
+            return RefreshIndicator(
+              color: AppColors.blackMain,
+              onRefresh: () async {
                 context.read<HomeBloc>().add(
-                  HomeLoad(categoryId: state.selectedCategory!),
+                  FilterProducts(
+                    categoryId: state.selectedCategory,
+                    sizeId: state.sizeId,
+                    orderBy: state.orderBy,
+                  ),
                 );
-              }
-            },
-            child: Scaffold(
-              appBar: HomeAppBar(state: state.categories, selectedCategory: 1),
-              body: GridView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisExtent: 231.h,
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 24.h,
-                  crossAxisSpacing: 10.w,
+                print("${state.orderBy} nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+              },
+              child: Padding(
+                padding: EdgeInsets.only(right: 24.w, left: 24.w, top: 10.h),
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisExtent: 231.h,
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 24.h,
+                    crossAxisSpacing: 10.w,
+                  ),
+                  itemCount: state.products.length,
+                  itemBuilder:
+                      (context, index) =>
+                          HomeProductItem(model: state.products[index]),
                 ),
-                itemCount: state.products.length,
-                itemBuilder:
-                    (context, index) =>
-                        HomeProductItem(model: state.products[index]),
               ),
-              bottomNavigationBar: StoreBottomNavigationBar(),
-            ),
-          );
-        } else if (state.status == HomeStatus.error) {
-          return Center(
-            child: Text(
-              "Xatolik yuz berdi!",
-              style: TextStyle(
-                color: AppColors.blackMain,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
+            );
+          } else if (state.status == HomeStatus.error) {
+            return Center(
+              child: Text(
+                "Xatolik yuz berdi!",
+                style: TextStyle(
+                  color: AppColors.blackMain,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-          );
-        } else {
-          return Scaffold(
-            body: Center(
+            );
+          } else {
+            return Center(
               child: CircularProgressIndicator(color: AppColors.blackMain),
-            ),
-          );
-        }
-      },
+            );
+          }
+        },
+      ),
+      bottomNavigationBar: StoreBottomNavigationBar(select: 1),
     );
   }
 }

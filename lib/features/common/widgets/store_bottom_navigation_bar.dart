@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/utils/colors.dart';
+import 'package:store_app/features/common/widgets/store_bottom_navigation_bar_item.dart';
 
-class StoreBottomNavigationBar extends StatelessWidget {
-  const StoreBottomNavigationBar({
-    super.key,
-  });
+class StoreBottomNavigationBar extends StatefulWidget {
+  const StoreBottomNavigationBar({super.key, this.select});
 
+  final int? select;
+
+  @override
+  State<StoreBottomNavigationBar> createState() =>
+      _StoreBottomNavigationBarState();
+}
+
+class _StoreBottomNavigationBarState extends State<StoreBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,11 +23,9 @@ class StoreBottomNavigationBar extends StatelessWidget {
       width: double.infinity,
       height: 86.h,
       decoration: BoxDecoration(
+        color: AppColors.white,
         border: Border.symmetric(
-          horizontal: BorderSide(
-            width: 0.5.w,
-            color: AppColors.greySub,
-          ),
+          horizontal: BorderSide(width: 0.5.w, color: AppColors.greySub),
         ),
       ),
       child: SizedBox(
@@ -30,127 +34,60 @@ class StoreBottomNavigationBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              height: 42.h,
-              child: GestureDetector(
-                onTap: () => context.go(Routes.home),
-                child: Column(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/home.svg",
-                      width: 18.75.w,
-                      height: 19.5.h,
-                      fit: BoxFit.cover,
-                    ),
-                    Text(
-                      "Home",
-                      style: TextStyle(
-                        color: AppColors.grey,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            StoreBottomNavigationBarItem(
+              callback: () => context.go(Routes.home),
+              icon: "assets/icons/home.svg",
+              iconHeight: 19.5,
+              iconWidth: 18.75,
+              title: "Home",
+              titleColor:
+                  widget.select == 1 ? AppColors.blackMain : AppColors.grey,
+              iconColor:
+                  widget.select == 1 ? AppColors.blackMain : AppColors.grey,
             ),
-            SizedBox(
-              height: 42.h,
-              child: GestureDetector(
-                onTap: () => context.go(Routes.search),
-                child: Column(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/search.svg",
-                      width: 20.75.w,
-                      height: 20.75.h,
-                      fit: BoxFit.cover,
-                    ),
-                    Text(
-                      "Search",
-                      style: TextStyle(
-                        color: AppColors.grey,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            StoreBottomNavigationBarItem(
+              callback: () => context.go(Routes.search),
+              icon: "assets/icons/search.svg",
+              iconHeight: 20.75,
+              iconWidth: 20.75,
+              title: "Search",
+              titleColor:
+                  widget.select == 2 ? AppColors.blackMain : AppColors.grey,
+              iconColor:
+                  widget.select == 2 ? AppColors.blackMain : AppColors.grey,
             ),
-            SizedBox(
-              height: 42.h,
-              child: GestureDetector(
-                onTap: () => context.go(Routes.savedItems),
-                child: Column(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/heart.svg",
-                      width: 21.75.w,
-                      height: 18.75.h,
-                      colorFilter:
-                          ColorFilter.mode(AppColors.grey, BlendMode.srcIn),
-                      fit: BoxFit.cover,
-                    ),
-                    Text(
-                      "Saved",
-                      style: TextStyle(
-                        color: AppColors.grey,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            StoreBottomNavigationBarItem(
+              callback: () => context.go(Routes.savedItems),
+              icon: "assets/icons/heart.svg",
+              iconHeight: 21.75,
+              iconWidth: 18.75,
+              title: "Saved",
+              titleColor:
+                  widget.select == 3 ? AppColors.blackMain : AppColors.grey,
+              iconColor:
+                  widget.select == 3 ? AppColors.blackMain : AppColors.grey,
             ),
-            SizedBox(
-              height: 42.h,
-              child: GestureDetector(
-                onTap: () => context.go(Routes.myCart),
-                child: Column(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/cart.svg",
-                      width: 22.13.w,
-                      height: 20.25.h,
-                      fit: BoxFit.cover,
-                    ),
-                    Text(
-                      "Cart",
-                      style: TextStyle(
-                        color: AppColors.grey,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            StoreBottomNavigationBarItem(
+              callback: () => context.go(Routes.myCart),
+              icon: "assets/icons/cart.svg",
+              iconHeight: 22.13,
+              iconWidth: 20.25,
+              title: "Cart",
+              titleColor:
+                  widget.select == 4 ? AppColors.blackMain : AppColors.grey,
+              iconColor:
+                  widget.select == 4 ? AppColors.blackMain : AppColors.grey,
             ),
-            SizedBox(
-              height: 42.h,
-              child: GestureDetector(
-                onTap: () => context.go(Routes.account),
-                child: Column(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/profile.svg",
-                      width: 20.25.w,
-                      height: 20.25.h,
-                      fit: BoxFit.cover,
-                    ),
-                    Text(
-                      "Account",
-                      style: TextStyle(
-                        color: AppColors.grey,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            StoreBottomNavigationBarItem(
+              callback: () => context.go(Routes.account),
+              icon: "assets/icons/profile.svg",
+              iconHeight: 20.25,
+              iconWidth: 20.25,
+              title: "Account",
+              titleColor:
+                  widget.select == 5 ? AppColors.blackMain : AppColors.grey,
+              iconColor:
+                  widget.select == 5 ? AppColors.blackMain : AppColors.grey,
             ),
           ],
         ),

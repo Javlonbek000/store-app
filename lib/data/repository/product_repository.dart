@@ -8,62 +8,50 @@ class ProductRepository {
   ProductRepository({required this.client});
 
   final ApiClient client;
-  List<ProductModel> products = [];
-  List<ProductModel> savedItems = [];
-  DetailModel? detail;
-  List<SizeModel> sizes = [];
 
   Future<List<ProductModel>> getProducts({
-    required int categoryId,
+    int? categoryId,
+    String? title,
     String? orderBy,
-    double? minPrice,
-    double? maxPrice,
     int? sizeId,
   }) async {
     var rawProducts = await client.genericGetRequest<List<dynamic>>(
       '/products/list',
       queryParams: {
+        "Title": title,
         "CategoryId": categoryId,
         "OrderBy": orderBy,
-        "MinPrice": minPrice,
-        "MaxPrice": maxPrice,
         "SizeId": sizeId,
       },
     );
-    products =
-        rawProducts.map((category) => ProductModel.fromJson(category)).toList();
-    return products;
+    return rawProducts
+        .map((category) => ProductModel.fromJson(category))
+        .toList();
   }
 
   Future<List<ProductModel>> getSavedItems() async {
     var rawSavedItems = await client.genericGetRequest<List<dynamic>>(
       '/products/saved-products',
     );
-    products =
-        rawSavedItems.map((item) => ProductModel.fromJson(item)).toList();
-    return products;
+    return rawSavedItems.map((item) => ProductModel.fromJson(item)).toList();
   }
 
-  Future<void> savedItem({required productId}) async {
-    await client.genericPostRequestV2('/auth/save/$productId');
-  }
+  Future<void> savedItem({required int productId}) async =>
+      await client.genericPostRequestV2('/auth/save/$productId');
 
-  Future<void> unSavedItem({required productId}) async {
-    await client.genericPostRequestV2('/auth/unsave/$productId');
-  }
+  Future<void> unSavedItem({required int productId}) async =>
+      await client.genericPostRequestV2('/auth/unsave/$productId');
 
   Future<DetailModel?> fetchProductDetail(int productId) async {
     final rawDetail = await client.genericGetRequest<Map<String, dynamic>>(
       '/products/detail/$productId',
     );
-    detail = DetailModel.fromJson(rawDetail);
-    return detail!;
+    return DetailModel.fromJson(rawDetail);
   }
 
   Future<List<SizeModel>> fetchSizes() async {
     var rawSizes = await client.genericGetRequest<List<dynamic>>('/sizes/list');
-    sizes = rawSizes.map((size) => SizeModel.fromJson(size)).toList();
-    return sizes;
+    return rawSizes.map((size) => SizeModel.fromJson(size)).toList();
   }
 
   Future<bool> addProduct({required int productId, required int sizeId}) async {

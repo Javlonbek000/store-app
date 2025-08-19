@@ -25,7 +25,12 @@ class DetailBottomNavigationBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
       height: 105.h,
       width: double.infinity,
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.fromBorderSide(
+          BorderSide(strokeAlign: 1, color: AppColors.greySub),
+        ),
+      ),
       child: Row(
         spacing: 14.w,
         children: [

@@ -35,11 +35,9 @@ class _HomeProductItemState extends State<HomeProductItem> {
         children: [
           GestureDetector(
             onTap: () async {
+              final bloc = context.read<HomeBloc>();
               await context.push(Routes.getDetail(widget.model.id));
-              final selectedCategory = context.read<HomeBloc>().state.selectedCategory ?? 2;
-              context
-                  .read<HomeBloc>()
-                  .add(HomeLoad(categoryId: selectedCategory));
+              bloc.add(CategoryLoad());
             },
             child: Container(
               color: AppColors.white,
