@@ -28,6 +28,10 @@ class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Size(double.infinity, height);
   }
 
+  bool canPop(BuildContext context) {
+    return GoRouter.of(context).canPop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,13 +41,13 @@ class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: AppBar(
         toolbarHeight: toolbarHeight,
-        leading: Align(
+        leading: canPop(context) ? Align(
           alignment: Alignment.centerLeft,
           child: StoreIconButtonContainer(
             image: "assets/icons/back-arrow.svg",
             callback: () => context.pop(),
           ),
-        ),
+        ) : null,
         centerTitle: centerTitle,
         title: Text(
           title,
