@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DetailState {
 
- DetailModel? get detail; DetailStatus get status; List<SizeModel> get sizes;
+ DetailModel? get detail; DetailStatus get status; String? get errorMessage;
 /// Create a copy of DetailState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $DetailStateCopyWith<DetailState> get copyWith => _$DetailStateCopyWithImpl<Deta
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DetailState&&(identical(other.detail, detail) || other.detail == detail)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.sizes, sizes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DetailState&&(identical(other.detail, detail) || other.detail == detail)&&(identical(other.status, status) || other.status == status)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,detail,status,const DeepCollectionEquality().hash(sizes));
+int get hashCode => Object.hash(runtimeType,detail,status,errorMessage);
 
 @override
 String toString() {
-  return 'DetailState(detail: $detail, status: $status, sizes: $sizes)';
+  return 'DetailState(detail: $detail, status: $status, errorMessage: $errorMessage)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $DetailStateCopyWith<$Res>  {
   factory $DetailStateCopyWith(DetailState value, $Res Function(DetailState) _then) = _$DetailStateCopyWithImpl;
 @useResult
 $Res call({
- DetailModel? detail, DetailStatus status, List<SizeModel> sizes
+ DetailModel? detail, DetailStatus status, String? errorMessage
 });
 
 
@@ -62,12 +62,12 @@ class _$DetailStateCopyWithImpl<$Res>
 
 /// Create a copy of DetailState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? detail = freezed,Object? status = null,Object? sizes = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? detail = freezed,Object? status = null,Object? errorMessage = freezed,}) {
   return _then(_self.copyWith(
 detail: freezed == detail ? _self.detail : detail // ignore: cast_nullable_to_non_nullable
 as DetailModel?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as DetailStatus,sizes: null == sizes ? _self.sizes : sizes // ignore: cast_nullable_to_non_nullable
-as List<SizeModel>,
+as DetailStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of DetailState
@@ -164,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DetailModel? detail,  DetailStatus status,  List<SizeModel> sizes)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DetailModel? detail,  DetailStatus status,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DetailState() when $default != null:
-return $default(_that.detail,_that.status,_that.sizes);case _:
+return $default(_that.detail,_that.status,_that.errorMessage);case _:
   return orElse();
 
 }
@@ -185,10 +185,10 @@ return $default(_that.detail,_that.status,_that.sizes);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DetailModel? detail,  DetailStatus status,  List<SizeModel> sizes)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DetailModel? detail,  DetailStatus status,  String? errorMessage)  $default,) {final _that = this;
 switch (_that) {
 case _DetailState():
-return $default(_that.detail,_that.status,_that.sizes);case _:
+return $default(_that.detail,_that.status,_that.errorMessage);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +205,10 @@ return $default(_that.detail,_that.status,_that.sizes);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DetailModel? detail,  DetailStatus status,  List<SizeModel> sizes)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DetailModel? detail,  DetailStatus status,  String? errorMessage)?  $default,) {final _that = this;
 switch (_that) {
 case _DetailState() when $default != null:
-return $default(_that.detail,_that.status,_that.sizes);case _:
+return $default(_that.detail,_that.status,_that.errorMessage);case _:
   return null;
 
 }
@@ -220,18 +220,12 @@ return $default(_that.detail,_that.status,_that.sizes);case _:
 
 
 class _DetailState implements DetailState {
-  const _DetailState({required this.detail, required this.status, required final  List<SizeModel> sizes}): _sizes = sizes;
+  const _DetailState({required this.detail, required this.status, required this.errorMessage});
   
 
 @override final  DetailModel? detail;
 @override final  DetailStatus status;
- final  List<SizeModel> _sizes;
-@override List<SizeModel> get sizes {
-  if (_sizes is EqualUnmodifiableListView) return _sizes;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_sizes);
-}
-
+@override final  String? errorMessage;
 
 /// Create a copy of DetailState
 /// with the given fields replaced by the non-null parameter values.
@@ -243,16 +237,16 @@ _$DetailStateCopyWith<_DetailState> get copyWith => __$DetailStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DetailState&&(identical(other.detail, detail) || other.detail == detail)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other._sizes, _sizes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DetailState&&(identical(other.detail, detail) || other.detail == detail)&&(identical(other.status, status) || other.status == status)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,detail,status,const DeepCollectionEquality().hash(_sizes));
+int get hashCode => Object.hash(runtimeType,detail,status,errorMessage);
 
 @override
 String toString() {
-  return 'DetailState(detail: $detail, status: $status, sizes: $sizes)';
+  return 'DetailState(detail: $detail, status: $status, errorMessage: $errorMessage)';
 }
 
 
@@ -263,7 +257,7 @@ abstract mixin class _$DetailStateCopyWith<$Res> implements $DetailStateCopyWith
   factory _$DetailStateCopyWith(_DetailState value, $Res Function(_DetailState) _then) = __$DetailStateCopyWithImpl;
 @override @useResult
 $Res call({
- DetailModel? detail, DetailStatus status, List<SizeModel> sizes
+ DetailModel? detail, DetailStatus status, String? errorMessage
 });
 
 
@@ -280,12 +274,12 @@ class __$DetailStateCopyWithImpl<$Res>
 
 /// Create a copy of DetailState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? detail = freezed,Object? status = null,Object? sizes = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? detail = freezed,Object? status = null,Object? errorMessage = freezed,}) {
   return _then(_DetailState(
 detail: freezed == detail ? _self.detail : detail // ignore: cast_nullable_to_non_nullable
 as DetailModel?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as DetailStatus,sizes: null == sizes ? _self._sizes : sizes // ignore: cast_nullable_to_non_nullable
-as List<SizeModel>,
+as DetailStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DetailModel {
 
- int get id; int get reviewsCount; String get title; String get description; bool get isLiked; double get rating; List<ProductImageModel> get productImages; double get price;
+ int get id; int get reviewsCount; String get title; String get description; bool get isLiked; double get rating; List<ProductImageModel> get productImages; List<SizeModel> get productSizes; double get price;
 /// Create a copy of DetailModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $DetailModelCopyWith<DetailModel> get copyWith => _$DetailModelCopyWithImpl<Deta
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DetailModel&&(identical(other.id, id) || other.id == id)&&(identical(other.reviewsCount, reviewsCount) || other.reviewsCount == reviewsCount)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isLiked, isLiked) || other.isLiked == isLiked)&&(identical(other.rating, rating) || other.rating == rating)&&const DeepCollectionEquality().equals(other.productImages, productImages)&&(identical(other.price, price) || other.price == price));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DetailModel&&(identical(other.id, id) || other.id == id)&&(identical(other.reviewsCount, reviewsCount) || other.reviewsCount == reviewsCount)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isLiked, isLiked) || other.isLiked == isLiked)&&(identical(other.rating, rating) || other.rating == rating)&&const DeepCollectionEquality().equals(other.productImages, productImages)&&const DeepCollectionEquality().equals(other.productSizes, productSizes)&&(identical(other.price, price) || other.price == price));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,reviewsCount,title,description,isLiked,rating,const DeepCollectionEquality().hash(productImages),price);
+int get hashCode => Object.hash(runtimeType,id,reviewsCount,title,description,isLiked,rating,const DeepCollectionEquality().hash(productImages),const DeepCollectionEquality().hash(productSizes),price);
 
 @override
 String toString() {
-  return 'DetailModel(id: $id, reviewsCount: $reviewsCount, title: $title, description: $description, isLiked: $isLiked, rating: $rating, productImages: $productImages, price: $price)';
+  return 'DetailModel(id: $id, reviewsCount: $reviewsCount, title: $title, description: $description, isLiked: $isLiked, rating: $rating, productImages: $productImages, productSizes: $productSizes, price: $price)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $DetailModelCopyWith<$Res>  {
   factory $DetailModelCopyWith(DetailModel value, $Res Function(DetailModel) _then) = _$DetailModelCopyWithImpl;
 @useResult
 $Res call({
- int id, int reviewsCount, String title, String description, bool isLiked, double rating, List<ProductImageModel> productImages, double price
+ int id, int reviewsCount, String title, String description, bool isLiked, double rating, List<ProductImageModel> productImages, List<SizeModel> productSizes, double price
 });
 
 
@@ -65,7 +65,7 @@ class _$DetailModelCopyWithImpl<$Res>
 
 /// Create a copy of DetailModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? reviewsCount = null,Object? title = null,Object? description = null,Object? isLiked = null,Object? rating = null,Object? productImages = null,Object? price = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? reviewsCount = null,Object? title = null,Object? description = null,Object? isLiked = null,Object? rating = null,Object? productImages = null,Object? productSizes = null,Object? price = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,reviewsCount: null == reviewsCount ? _self.reviewsCount : reviewsCount // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,8 @@ as String,description: null == description ? _self.description : description // 
 as String,isLiked: null == isLiked ? _self.isLiked : isLiked // ignore: cast_nullable_to_non_nullable
 as bool,rating: null == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as double,productImages: null == productImages ? _self.productImages : productImages // ignore: cast_nullable_to_non_nullable
-as List<ProductImageModel>,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
+as List<ProductImageModel>,productSizes: null == productSizes ? _self.productSizes : productSizes // ignore: cast_nullable_to_non_nullable
+as List<SizeModel>,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as double,
   ));
 }
@@ -160,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int reviewsCount,  String title,  String description,  bool isLiked,  double rating,  List<ProductImageModel> productImages,  double price)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int reviewsCount,  String title,  String description,  bool isLiked,  double rating,  List<ProductImageModel> productImages,  List<SizeModel> productSizes,  double price)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DetailModel() when $default != null:
-return $default(_that.id,_that.reviewsCount,_that.title,_that.description,_that.isLiked,_that.rating,_that.productImages,_that.price);case _:
+return $default(_that.id,_that.reviewsCount,_that.title,_that.description,_that.isLiked,_that.rating,_that.productImages,_that.productSizes,_that.price);case _:
   return orElse();
 
 }
@@ -181,10 +182,10 @@ return $default(_that.id,_that.reviewsCount,_that.title,_that.description,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int reviewsCount,  String title,  String description,  bool isLiked,  double rating,  List<ProductImageModel> productImages,  double price)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int reviewsCount,  String title,  String description,  bool isLiked,  double rating,  List<ProductImageModel> productImages,  List<SizeModel> productSizes,  double price)  $default,) {final _that = this;
 switch (_that) {
 case _DetailModel():
-return $default(_that.id,_that.reviewsCount,_that.title,_that.description,_that.isLiked,_that.rating,_that.productImages,_that.price);case _:
+return $default(_that.id,_that.reviewsCount,_that.title,_that.description,_that.isLiked,_that.rating,_that.productImages,_that.productSizes,_that.price);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +202,10 @@ return $default(_that.id,_that.reviewsCount,_that.title,_that.description,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int reviewsCount,  String title,  String description,  bool isLiked,  double rating,  List<ProductImageModel> productImages,  double price)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int reviewsCount,  String title,  String description,  bool isLiked,  double rating,  List<ProductImageModel> productImages,  List<SizeModel> productSizes,  double price)?  $default,) {final _that = this;
 switch (_that) {
 case _DetailModel() when $default != null:
-return $default(_that.id,_that.reviewsCount,_that.title,_that.description,_that.isLiked,_that.rating,_that.productImages,_that.price);case _:
+return $default(_that.id,_that.reviewsCount,_that.title,_that.description,_that.isLiked,_that.rating,_that.productImages,_that.productSizes,_that.price);case _:
   return null;
 
 }
@@ -216,7 +217,7 @@ return $default(_that.id,_that.reviewsCount,_that.title,_that.description,_that.
 @JsonSerializable()
 
 class _DetailModel implements DetailModel {
-  const _DetailModel({required this.id, required this.reviewsCount, required this.title, required this.description, required this.isLiked, required this.rating, required final  List<ProductImageModel> productImages, required this.price}): _productImages = productImages;
+  const _DetailModel({required this.id, required this.reviewsCount, required this.title, required this.description, required this.isLiked, required this.rating, required final  List<ProductImageModel> productImages, required final  List<SizeModel> productSizes, required this.price}): _productImages = productImages,_productSizes = productSizes;
   factory _DetailModel.fromJson(Map<String, dynamic> json) => _$DetailModelFromJson(json);
 
 @override final  int id;
@@ -230,6 +231,13 @@ class _DetailModel implements DetailModel {
   if (_productImages is EqualUnmodifiableListView) return _productImages;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_productImages);
+}
+
+ final  List<SizeModel> _productSizes;
+@override List<SizeModel> get productSizes {
+  if (_productSizes is EqualUnmodifiableListView) return _productSizes;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_productSizes);
 }
 
 @override final  double price;
@@ -247,16 +255,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DetailModel&&(identical(other.id, id) || other.id == id)&&(identical(other.reviewsCount, reviewsCount) || other.reviewsCount == reviewsCount)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isLiked, isLiked) || other.isLiked == isLiked)&&(identical(other.rating, rating) || other.rating == rating)&&const DeepCollectionEquality().equals(other._productImages, _productImages)&&(identical(other.price, price) || other.price == price));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DetailModel&&(identical(other.id, id) || other.id == id)&&(identical(other.reviewsCount, reviewsCount) || other.reviewsCount == reviewsCount)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isLiked, isLiked) || other.isLiked == isLiked)&&(identical(other.rating, rating) || other.rating == rating)&&const DeepCollectionEquality().equals(other._productImages, _productImages)&&const DeepCollectionEquality().equals(other._productSizes, _productSizes)&&(identical(other.price, price) || other.price == price));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,reviewsCount,title,description,isLiked,rating,const DeepCollectionEquality().hash(_productImages),price);
+int get hashCode => Object.hash(runtimeType,id,reviewsCount,title,description,isLiked,rating,const DeepCollectionEquality().hash(_productImages),const DeepCollectionEquality().hash(_productSizes),price);
 
 @override
 String toString() {
-  return 'DetailModel(id: $id, reviewsCount: $reviewsCount, title: $title, description: $description, isLiked: $isLiked, rating: $rating, productImages: $productImages, price: $price)';
+  return 'DetailModel(id: $id, reviewsCount: $reviewsCount, title: $title, description: $description, isLiked: $isLiked, rating: $rating, productImages: $productImages, productSizes: $productSizes, price: $price)';
 }
 
 
@@ -267,7 +275,7 @@ abstract mixin class _$DetailModelCopyWith<$Res> implements $DetailModelCopyWith
   factory _$DetailModelCopyWith(_DetailModel value, $Res Function(_DetailModel) _then) = __$DetailModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int reviewsCount, String title, String description, bool isLiked, double rating, List<ProductImageModel> productImages, double price
+ int id, int reviewsCount, String title, String description, bool isLiked, double rating, List<ProductImageModel> productImages, List<SizeModel> productSizes, double price
 });
 
 
@@ -284,7 +292,7 @@ class __$DetailModelCopyWithImpl<$Res>
 
 /// Create a copy of DetailModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? reviewsCount = null,Object? title = null,Object? description = null,Object? isLiked = null,Object? rating = null,Object? productImages = null,Object? price = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? reviewsCount = null,Object? title = null,Object? description = null,Object? isLiked = null,Object? rating = null,Object? productImages = null,Object? productSizes = null,Object? price = null,}) {
   return _then(_DetailModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,reviewsCount: null == reviewsCount ? _self.reviewsCount : reviewsCount // ignore: cast_nullable_to_non_nullable
@@ -293,7 +301,8 @@ as String,description: null == description ? _self.description : description // 
 as String,isLiked: null == isLiked ? _self.isLiked : isLiked // ignore: cast_nullable_to_non_nullable
 as bool,rating: null == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as double,productImages: null == productImages ? _self._productImages : productImages // ignore: cast_nullable_to_non_nullable
-as List<ProductImageModel>,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
+as List<ProductImageModel>,productSizes: null == productSizes ? _self._productSizes : productSizes // ignore: cast_nullable_to_non_nullable
+as List<SizeModel>,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as double,
   ));
 }
