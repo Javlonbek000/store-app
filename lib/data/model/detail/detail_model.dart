@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:store_app/data/interfaces/serializable.dart';
+import 'package:store_app/data/model/size/size_model.dart';
 
 import 'product_image_model.dart';
 
@@ -16,6 +17,7 @@ abstract class DetailModel with _$DetailModel implements IJsonSerializable {
     required bool isLiked,
     required double rating,
     required List<ProductImageModel> productImages,
+    required List<SizeModel> productSizes,
     required double price,
   }) = _DetailModel;
 

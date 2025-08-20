@@ -8,15 +8,14 @@ class MyCartBloc extends Bloc<MyCartEvents, MyCartState> {
   final MyCartRepository _repo;
 
   MyCartBloc({required MyCartRepository repo})
-      : _repo = repo,
-        super(MyCartState.initial()) {
+    : _repo = repo,
+      super(MyCartState.initial()) {
     on<MyCartLoad>(_onLoad);
     on<DeleteCart>(_onDelete);
     add(MyCartLoad());
   }
 
   Future<void> _onLoad(MyCartLoad event, Emitter<MyCartState> emit) async {
-    emit(state.copyWith(status: MyCartStatus.loading));
     try {
       final cart = await _repo.fetchCarts();
       emit(state.copyWith(cart: cart, status: MyCartStatus.success));
@@ -25,7 +24,18 @@ class MyCartBloc extends Bloc<MyCartEvents, MyCartState> {
     }
   }
 
-  Future<void> _onDelete(DeleteCart event, Emitter<MyCartState> emit)async{
-    await _repo.deleteCart(event.id);
+  Future<void> _onDelete(DeleteCart event, Emitter<MyCartState> emit) async {
+    try {
+      final result = await _repo.deleteCart(event.id);
+      if (result) {
+        add(MyCartLoad());
+      } else {
+        emit(state.copyWith(status: MyCartStatus.canceled));
+      }
+    } catch (e) {
+      emit(
+        state.copyWith(status: MyCartStatus.error, errorMessage: e.toString()),
+      );
+    }
   }
 }

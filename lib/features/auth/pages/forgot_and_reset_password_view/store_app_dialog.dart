@@ -30,62 +30,64 @@ class StoreAppDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(24),
-      width: containerWidth.w,
-      height: hideButton ? containerHeight.h : 336.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: AppColors.white,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SvgPicture.asset(
-            image,
-            width: 63.38.w,
-            height: 63.38.h,
-            fit: BoxFit.cover,
-          ),
-          Text(
-            title,
-            style: TextStyle(
-              color: AppColors.blackMain,
-              fontSize: 20.sp,
-              fontWeight: FontWeight.w600,
-              decoration: TextDecoration.none,
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.all(24),
+        width: containerWidth.w,
+        height: hideButton ? containerHeight.h : 336.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: AppColors.white,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SvgPicture.asset(
+              image,
+              width: 63.38.w,
+              height: 63.38.h,
+              fit: BoxFit.cover,
             ),
-          ),
-          Text(
-            textAlign: TextAlign.center,
-            subTitle,
-            style: TextStyle(
-              color: AppColors.blackMain,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
-              decoration: TextDecoration.none,
-            ),
-          ),
-          StoreAppButton(
-            text: buttonTitle,
-            textColor: buttonTitleColor,
-            callback: callback,
-            containerColor: buttonColor,
-            containerWidth: 293.w,
-            containerHeight: 54.h,
-          ),
-          if (hideButton)
-            StoreAppButton(
-              textColor: AppColors.blackMain,
-              text: hideButtonTitle,
-              callback: () => context.pop(),
-              containerColor: AppColors.white,
-              border: Border.all(
+            Text(
+              title,
+              style: TextStyle(
                 color: AppColors.blackMain,
-                width: 1.w,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w600,
+                decoration: TextDecoration.none,
               ),
             ),
-        ],
+            Text(
+              textAlign: TextAlign.center,
+              subTitle,
+              style: TextStyle(
+                color: AppColors.blackMain,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                decoration: TextDecoration.none,
+              ),
+            ),
+            StoreAppButton(
+              text: buttonTitle,
+              textColor: buttonTitleColor,
+              callback: callback,
+              containerColor: buttonColor,
+              containerWidth: 293.w,
+              containerHeight: 54.h,
+            ),
+            if (hideButton)
+              StoreAppButton(
+                textColor: AppColors.blackMain,
+                text: hideButtonTitle,
+                callback: () => context.pop(),
+                containerColor: AppColors.white,
+                border: Border.all(
+                  color: AppColors.blackMain,
+                  width: 1.w,
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

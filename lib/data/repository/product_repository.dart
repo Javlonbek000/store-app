@@ -2,7 +2,6 @@ import 'package:store_app/core/client.dart';
 
 import '../model/detail/detail_model.dart';
 import '../model/product/product_model.dart';
-import '../model/size/size_model.dart';
 
 class ProductRepository {
   ProductRepository({required this.client});
@@ -47,11 +46,6 @@ class ProductRepository {
       '/products/detail/$productId',
     );
     return DetailModel.fromJson(rawDetail);
-  }
-
-  Future<List<SizeModel>> fetchSizes() async {
-    var rawSizes = await client.genericGetRequest<List<dynamic>>('/sizes/list');
-    return rawSizes.map((size) => SizeModel.fromJson(size)).toList();
   }
 
   Future<bool> addProduct({required int productId, required int sizeId}) async {

@@ -17,6 +17,10 @@ _DetailModel _$DetailModelFromJson(Map<String, dynamic> json) => _DetailModel(
       (json['productImages'] as List<dynamic>)
           .map((e) => ProductImageModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+  productSizes:
+      (json['productSizes'] as List<dynamic>)
+          .map((e) => SizeModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
   price: (json['price'] as num).toDouble(),
 );
 
@@ -29,5 +33,6 @@ Map<String, dynamic> _$DetailModelToJson(_DetailModel instance) =>
       'isLiked': instance.isLiked,
       'rating': instance.rating,
       'productImages': instance.productImages,
+      'productSizes': instance.productSizes,
       'price': instance.price,
     };

@@ -26,14 +26,37 @@ class _DetailsViewState extends State<DetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DetailsBloc, DetailState>(
-      builder: (context, state) {
-        if (state.status == DetailStatus.loading) {
-          return Scaffold(body: Center(child: CircularProgressIndicator()));
-        } else if (state.status == DetailStatus.error) {
-          return Scaffold(
-            appBar: StoreAppBar(title: "", actions: []),
-            body: Center(
+    return Scaffold(
+      appBar: StoreAppBar(
+        title: "Details",
+        actions: [
+          StoreIconButtonContainer(
+            image: 'assets/icons/notification.svg',
+            callback: () => context.push(Routes.notification),
+          ),
+        ],
+      ),
+      body: BlocConsumer<DetailsBloc, DetailState>(
+        listener: (context, state) {
+          if (state.status == DetailStatus.added) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Mahsulot qo'shildi."),
+                duration: Duration(seconds: 1),
+              ),
+            );
+          } else if (state.status == DetailStatus.notAdded) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Mahsulot qo'shilmadi, nimadur xato!"),
+                duration: Duration(seconds: 1),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state.status == DetailStatus.error) {
+            return Center(
               child: Text(
                 "Xatolik yuz berdi",
                 style: TextStyle(
@@ -42,22 +65,14 @@ class _DetailsViewState extends State<DetailsView> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-            ),
-          );
-        } else if (state.status == DetailStatus.success &&
-            state.detail != null) {
-          bool isValid = state.detail!.isLiked;
-          return Scaffold(
-            appBar: StoreAppBar(
-              title: "Details",
-              actions: [
-                StoreIconButtonContainer(
-                  image: 'assets/icons/notification.svg',
-                  callback: () => context.push(Routes.notification),
-                ),
-              ],
-            ),
-            body: SingleChildScrollView(
+            );
+          } else if (state.status == DetailStatus.loading) {
+            return Center(
+              child: CircularProgressIndicator(color: AppColors.blackMain),
+            );
+          } else {
+            bool isValid = state.detail!.isLiked;
+            return SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
               child: Column(
                 spacing: 10.h,
@@ -141,13 +156,13 @@ class _DetailsViewState extends State<DetailsView> {
                     height: 50.h,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: state.sizes.length,
+                      itemCount: state.detail!.productSizes.length,
                       itemBuilder:
                           (context, index) => Row(
                             children: [
                               StoreButtonContainer(
                                 width: 50.h,
-                                title: state.sizes[index].title,
+                                title: state.detail!.productSizes[index].title,
                                 callback: () {
                                   setState(() {
                                     selectedSize = index;
@@ -169,17 +184,20 @@ class _DetailsViewState extends State<DetailsView> {
                   ),
                 ],
               ),
-            ),
-            bottomNavigationBar: DetailBottomNavigationBar(
-              selectedSize: selectedSize,
-              product: state.detail,
-              sizes: state.sizes,
-            ),
+            );
+          }
+        },
+      ),
+      bottomNavigationBar: BlocBuilder<DetailsBloc, DetailState>(
+        builder: (context, state) {
+          if (state.detail == null) return SizedBox.shrink();
+          return DetailBottomNavigationBar(
+            selectedSize: selectedSize,
+            product: state.detail,
+            sizes: state.detail!.productSizes,
           );
-        } else {
-          return const SizedBox();
-        }
-      },
+        },
+      ),
     );
   }
 }

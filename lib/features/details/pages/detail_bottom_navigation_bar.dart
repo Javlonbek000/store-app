@@ -73,12 +73,6 @@ class DetailBottomNavigationBar extends StatelessWidget {
                 context.read<DetailsBloc>().add(
                   DetailAddProduct(productId: product!.id, sizeId: sizeId),
                 );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("Mahsulot qo'shildi."),
-                    duration: Duration(seconds: 1),
-                  ),
-                );
               }
             },
             containerColor: AppColors.blackMain,

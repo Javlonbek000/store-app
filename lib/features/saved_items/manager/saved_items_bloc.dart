@@ -21,7 +21,6 @@ class SavedItemsBloc extends Bloc<SavedItemsEvents, SavedItemsState> {
     SavedItemsLoad event,
     Emitter<SavedItemsState> emit,
   ) async {
-    emit(state.copyWith(status: SavedItemsStatus.loading));
     try {
       final savedItems = await _repo.getSavedItems();
       emit(

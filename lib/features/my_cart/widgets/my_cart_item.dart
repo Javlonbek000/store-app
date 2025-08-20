@@ -68,7 +68,6 @@ class MyCartItem extends StatelessWidget {
                             iconColor: Colors.red,
                             callback: () {
                               context.read<MyCartBloc>().add(DeleteCart(id: item.id));
-                              context.read<MyCartBloc>().add(MyCartLoad());
                             },
                           ),
                         ],
