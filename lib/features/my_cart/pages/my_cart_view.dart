@@ -20,30 +20,85 @@ class MyCartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      color: AppColors.blackMain,
-      onRefresh: () async => context.read<MyCartBloc>().add(MyCartLoad()),
-      child: Scaffold(
-        appBar: StoreAppBar(
-          title: "My Cart",
-          actions: [
-            StoreIconButtonContainer(
-              image: "assets/icons/notification.svg",
-              callback: () => context.push(Routes.notification),
-              iconHeight: 20.25,
-            ),
-          ],
-        ),
-        extendBody: true,
-        body: BlocBuilder<MyCartBloc, MyCartState>(
-          builder: (context, state) {
-            if (state.status == MyCartStatus.loading) {
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                  backgroundColor: AppColors.white,
+    return Scaffold(
+      appBar: StoreAppBar(
+        title: "My Cart",
+        actions: [
+          StoreIconButtonContainer(
+            image: "assets/icons/notification.svg",
+            callback: () => context.push(Routes.notification),
+            iconHeight: 20.25,
+          ),
+        ],
+      ),
+      extendBody: true,
+      body: RefreshIndicator(
+        color: AppColors.blackMain,
+        onRefresh: () async => context.read<MyCartBloc>().add(MyCartLoad()),
+        child: BlocConsumer<MyCartBloc, MyCartState>(
+          listener: (context, state) {
+            if (state.status == MyCartStatus.canceled) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    """Mahsulotni o'chirib bo'lmadi iltimos qayta login qiling,
+                     bo'lmasa operatorlar bilan bog'laning!""",
+                  ),
                 ),
               );
+            }
+          },
+          builder: (context, state) {
+            if (state.status == MyCartStatus.success) {
+              return state.cart == null || state.cart!.items.isEmpty
+                  ? StoreNullBody(
+                    image: "assets/icons/cart.svg",
+                    title: "Your Cart Is Empty!",
+                    subTitle: "When you add products, they’ll appear here.",
+                  )
+                  : Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity.w,
+                        height: 363.h,
+                        child: ListView.builder(
+                          itemCount: state.cart!.items.length,
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          itemBuilder:
+                              (context, index) =>
+                                  MyCartItem(item: state.cart!.items[index]),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 24.w),
+                        child: Column(
+                          spacing: 16.h,
+                          children: [
+                            MyCartPriceItem(
+                              price: state.cart!.subTotal,
+                              title: 'Sub-total',
+                            ),
+                            MyCartPriceItem(
+                              price: state.cart!.vat,
+                              title: "VAT (%)",
+                            ),
+                            MyCartPriceItem(
+                              price: state.cart!.shippingFee,
+                              title: 'Shipping fee',
+                            ),
+                            Divider(color: AppColors.whiteSub),
+                            MyCartPriceItem(
+                              price: state.cart!.total,
+                              title: 'Total',
+                              titleColor: AppColors.blackMain,
+                            ),
+                            SizedBox(height: 35.h),
+                            MyCartButton(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
             } else if (state.status == MyCartStatus.error) {
               return Center(
                 child: Text(
@@ -55,57 +110,17 @@ class MyCartView extends StatelessWidget {
                   ),
                 ),
               );
-            } else if (state.cart == null || state.cart!.items.isEmpty) {
-              return StoreNullBody(
-                image: "assets/icons/cart.svg",
-                title: "Your Cart Is Empty!",
-                subTitle: "When you add products, they’ll appear here.",
-              );
             }
-            return Column(
-              children: [
-                SizedBox(
-                  width: double.infinity.w,
-                  height: 363.h,
-                  child: ListView.builder(
-                    itemCount: state.cart!.items.length,
-                    padding: EdgeInsets.symmetric(horizontal: 24.w),
-                    itemBuilder:
-                        (context, index) =>
-                            MyCartItem(item: state.cart!.items[index]),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  child: Column(
-                    spacing: 16.h,
-                    children: [
-                      MyCartPriceItem(
-                        price: state.cart!.subTotal,
-                        title: 'Sub-total',
-                      ),
-                      MyCartPriceItem(price: state.cart!.vat, title: "VAT (%)"),
-                      MyCartPriceItem(
-                        price: state.cart!.shippingFee,
-                        title: 'Shipping fee',
-                      ),
-                      Divider(color: AppColors.whiteSub),
-                      MyCartPriceItem(
-                        price: state.cart!.total,
-                        title: 'Total',
-                        titleColor: AppColors.blackMain,
-                      ),
-                      SizedBox(height: 35.h),
-                      MyCartButton(),
-                    ],
-                  ),
-                ),
-              ],
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                backgroundColor: AppColors.white,
+              ),
             );
           },
         ),
-        bottomNavigationBar: StoreBottomNavigationBar(select: 4),
       ),
+      bottomNavigationBar: StoreBottomNavigationBar(select: 4),
     );
   }
 }

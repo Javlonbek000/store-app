@@ -4,7 +4,7 @@ import '../../../data/model/my_cart/cart_model.dart';
 
 part 'my_cart_state.freezed.dart';
 
-enum MyCartStatus { loading, success, error, deleted }
+enum MyCartStatus { loading, success, error, deleted, canceled}
 
 @freezed
 abstract class MyCartState with _$MyCartState {
