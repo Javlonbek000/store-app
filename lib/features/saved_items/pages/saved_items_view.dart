@@ -17,37 +17,44 @@ class SavedItemsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      color: AppColors.blackMain,
-      onRefresh:
-          () async => context.read<SavedItemsBloc>().add(SavedItemsLoad()),
-      child: Scaffold(
-        appBar: StoreAppBar(
-          title: "Saved Items",
-          actions: [
-            StoreIconButtonContainer(
-              image: "assets/icons/notification.svg",
-              callback: () => context.push(Routes.notification),
-            ),
-          ],
-          bottom: PreferredSize(
-            preferredSize: Size(double.infinity, 24.h),
-            child: Divider(color: AppColors.greySub),
+    return Scaffold(
+      appBar: StoreAppBar(
+        title: "Saved Items",
+        actions: [
+          StoreIconButtonContainer(
+            image: "assets/icons/notification.svg",
+            callback: () => context.push(Routes.notification),
           ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: Size(double.infinity, 24.h),
+          child: Divider(color: AppColors.greySub),
         ),
-        body: BlocBuilder<SavedItemsBloc, SavedItemsState>(
+      ),
+      body: RefreshIndicator(
+        color: AppColors.blackMain,
+        onRefresh:
+            () async => context.read<SavedItemsBloc>().add(SavedItemsLoad()),
+        child: BlocBuilder<SavedItemsBloc, SavedItemsState>(
           builder: (context, state) {
             if (state.status == SavedItemsStatus.success) {
-              return GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10.h
-                ),
-                itemCount: state.savedItems.length,
-                itemBuilder:
-                    (context, index) =>
-                        SavedCategoryItem(product: state.savedItems[index]),
-              );
+              return state.savedItems.isEmpty
+                  ? StoreNullBody(
+                    image: "assets/icons/no_saved.svg",
+                    title: "No Saved Items!",
+                    subTitle:
+                        "You don’t have any saved items. Go to home and add some.",
+                  )
+                  : GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10.h,
+                    ),
+                    itemCount: state.savedItems.length,
+                    itemBuilder:
+                        (context, index) =>
+                            SavedCategoryItem(product: state.savedItems[index]),
+                  );
             } else if (state.status == SavedItemsStatus.error) {
               return Center(
                 child: Text(
@@ -59,21 +66,14 @@ class SavedItemsView extends StatelessWidget {
                   ),
                 ),
               );
-            } else if (state.savedItems.isEmpty) {
-              return StoreNullBody(
-                image: "assets/icons/no_saved.svg",
-                title: "No Saved Items!",
-                subTitle:
-                    "You don’t have any saved items. Go to home and add some.",
-              );
             }
             return Center(
               child: CircularProgressIndicator(color: AppColors.blackMain),
             );
           },
         ),
-        bottomNavigationBar: StoreBottomNavigationBar(select: 3),
       ),
+      bottomNavigationBar: StoreBottomNavigationBar(select: 3),
     );
   }
 }

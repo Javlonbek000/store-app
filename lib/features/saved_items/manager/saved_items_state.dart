@@ -3,7 +3,7 @@ import 'package:store_app/data/model/product/product_model.dart';
 
 part 'saved_items_state.freezed.dart';
 
-enum SavedItemsStatus { idle, loading, error, success }
+enum SavedItemsStatus { loading, error, success }
 
 @freezed
 abstract class SavedItemsState with _$SavedItemsState {
@@ -16,7 +16,7 @@ abstract class SavedItemsState with _$SavedItemsState {
   factory SavedItemsState.initial() {
     return SavedItemsState(
       savedItems: [],
-      status: SavedItemsStatus.idle,
+      status: SavedItemsStatus.loading,
       errorMessage: null,
     );
   }
