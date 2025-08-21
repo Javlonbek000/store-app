@@ -6,10 +6,16 @@ import 'package:store_app/features/address/managers/new_address/new_address_bloc
 import 'package:store_app/features/address/managers/new_address/new_address_events.dart';
 
 class NewAddressMap extends StatelessWidget {
-  const NewAddressMap({super.key, required this.markers, required this.address});
+  const NewAddressMap({
+    super.key,
+    required this.markers,
+    required this.address,
+    required this.currentLocation,
+  });
 
   final List<Marker> markers;
   final String? address;
+  final LatLng? currentLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,7 @@ class NewAddressMap extends StatelessWidget {
           child: FlutterMap(
             mapController: context.read<NewAddressBloc>().controller,
             options: MapOptions(
-              initialCenter: LatLng(41.285799883900715, 69.20363493014382),
+              initialCenter: currentLocation ?? LatLng(41.285799883900715, 69.20363493014382),
               onTap: (tapPosition, point) {
                 context.read<NewAddressBloc>().add(
                   NewAddressChooseLocation(chosenLocation: point),
@@ -28,7 +34,8 @@ class NewAddressMap extends StatelessWidget {
             ),
             children: [
               TileLayer(
-                urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+                urlTemplate:
+                    'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
                 subdomains: ['a', 'b', 'c', 'd'],
                 userAgentPackageName: 'com.example.store_app_v2',
               ),
