@@ -28,9 +28,9 @@ class NewAddressMap extends StatelessWidget {
             ),
             children: [
               TileLayer(
-                urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                subdomains: ['a', 'b', 'c'],
-                userAgentPackageName: 'com.example.app',
+                urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+                subdomains: ['a', 'b', 'c', 'd'],
+                userAgentPackageName: 'com.example.store_app_v2',
               ),
               MarkerLayer(markers: markers),
             ],
