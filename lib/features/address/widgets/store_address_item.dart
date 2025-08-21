@@ -36,13 +36,37 @@ class StoreAddressItem extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  address.title,
-                  style: TextStyle(
-                    color: AppColors.blackMain,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+                Row(
+                  spacing: 5.w,
+                  children: [
+                    Text(
+                      address.title,
+                      style: TextStyle(
+                        color: AppColors.blackMain,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    address.isDefault
+                        ? Container(
+                      alignment: Alignment.center,
+                          width: 52.w,
+                          height: 20.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.greySub,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            "Default",
+                            style: TextStyle(
+                              color: AppColors.blackMain,
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        )
+                        : SizedBox.shrink(),
+                  ],
                 ),
                 SizedBox(
                   width: 255.w,
