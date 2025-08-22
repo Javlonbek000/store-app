@@ -69,8 +69,9 @@ class _LoginViewState extends State<LoginView> {
                           setState(() {});
                           return "This field is required.";
                         }
-                        final emailRegex =
-                            RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                        final emailRegex = RegExp(
+                          r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$',
+                        );
                         if (!emailRegex.hasMatch(value)) {
                           bloc.emailValid = false;
                           setState(() {});
@@ -110,8 +111,9 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   TextSpan(
                     text: "Reset your password",
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () => context.push(Routes.forgotPass),
+                    recognizer:
+                        TapGestureRecognizer()
+                          ..onTap = () => context.push(Routes.forgotPass),
                     style: TextStyle(
                       color: AppColors.blackMain,
                       fontSize: 14.r,
@@ -163,13 +165,16 @@ class _LoginViewState extends State<LoginView> {
                 child: RichText(
                   text: TextSpan(
                     text: "Don't have an account? ",
-                    style:
-                        TextStyle(color: AppColors.blackMain, fontSize: 14.r),
+                    style: TextStyle(
+                      color: AppColors.blackMain,
+                      fontSize: 14.r,
+                    ),
                     children: [
                       TextSpan(
                         text: "Join",
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => context.go(Routes.signUp),
+                        recognizer:
+                            TapGestureRecognizer()
+                              ..onTap = () => context.go(Routes.signUp),
                         style: TextStyle(
                           color: AppColors.blackMain,
                           fontSize: 14.r,
