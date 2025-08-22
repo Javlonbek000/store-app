@@ -57,6 +57,19 @@ class ApiClient {
     }
   }
 
+  Future<bool> genericPatchRequest(
+      String path, {
+        Map<String, dynamic>? queryParams,
+        Map<String, dynamic>? data,
+      }) async {
+    final response = await dio.patch(path, queryParameters: queryParams, data: data);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return true;
+    } else {
+      throw Exception(response.data);
+    }
+  }
+
   Future<bool> genericPostRequestV2(
     String path, {
     Map<String, dynamic>? data,

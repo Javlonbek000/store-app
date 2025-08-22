@@ -4,17 +4,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/utils/colors.dart';
 
 class StoreGenderBox extends StatefulWidget {
-  const StoreGenderBox({super.key});
+  const StoreGenderBox({
+    super.key,
+    this.initialSelection,
+    required this.callback,
+    required this.items,
+  });
+
+  final String? initialSelection;
+  final Function(String? value) callback;
+  final List<String> items;
 
   @override
   State<StoreGenderBox> createState() => _StoreGenderBoxState();
 }
 
 class _StoreGenderBoxState extends State<StoreGenderBox> {
-  String? select;
-
-  List<String> item = ['Male', "Female"];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,20 +37,19 @@ class _StoreGenderBoxState extends State<StoreGenderBox> {
         DropdownMenu<String>(
           width: double.infinity,
           inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: AppColors.grey),),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: AppColors.grey),
+            ),
             constraints: BoxConstraints.tight(Size(double.infinity, 52)),
           ),
-          initialSelection: select,
+          initialSelection: widget.initialSelection,
           hintText: "Gender",
-          onSelected: (String? value) {
-            setState(() {
-              select = value;
-            });
-          },
+          onSelected: widget.callback,
           dropdownMenuEntries:
-          item.map((String value) {
-            return DropdownMenuEntry<String>(value: value, label: value);
-          }).toList(),
+              widget.items.map((String value) {
+                return DropdownMenuEntry<String>(value: value, label: value);
+              }).toList(),
         ),
       ],
     );

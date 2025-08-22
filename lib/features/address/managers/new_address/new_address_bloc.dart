@@ -53,52 +53,40 @@ class NewAddressBloc extends Bloc<NewAddressEvents, NewAddressState> {
   }
 
   Future<void> _onGoToCurrentLocation(
-    GoToCurrentLocation event,
-    Emitter<NewAddressState> emit,
-  ) async {
+      GoToCurrentLocation event,
+      Emitter<NewAddressState> emit,
+      ) async {
     var status = await Permission.locationWhenInUse.status;
 
-    if (status.isDenied) {
+    if (status.isDenied || status.isRestricted) {
       status = await Permission.locationWhenInUse.request();
     }
 
-    if (status.isPermanentlyDenied) {
-      await openAppSettings();
+    if (!status.isGranted) {
+      return;
     }
 
-    if (status.isGranted) {
-      Position position = await Geolocator.getCurrentPosition(
-        locationSettings: AndroidSettings(accuracy: LocationAccuracy.best),
-      );
-      final currentPosition = LatLng(position.latitude, position.longitude);
-      controller.move(currentPosition, controller.camera.zoom);
-      emit(
-        state.copyWith(
-          currentLocation: currentPosition,
-          markers: [
-            Marker(
-              point: currentPosition,
-              width: 40.w,
-              height: 40.h,
-              child: Icon(Icons.location_on, color: Colors.red, size: 40),
-            ),
-          ],
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    final currentPosition = LatLng(position.latitude, position.longitude);
+
+    controller.move(currentPosition, 15);
+
+    emit(state.copyWith(
+      currentLocation: currentPosition,
+      markers: [
+        Marker(
+          point: currentPosition,
+          width: 40.w,
+          height: 40.h,
+          child: Icon(Icons.location_on, color: Colors.red, size: 40),
         ),
-      );
-
-      final placeMarks = await placemarkFromCoordinates(
-        currentPosition.latitude,
-        currentPosition.longitude,
-      );
-
-      if (placeMarks.isNotEmpty) {
-        Placemark p = placeMarks.first;
-        final addressString =
-            '${p.country}, ${p.administrativeArea}, ${p.locality}, ${p.street}, ${p.name}';
-        emit(state.copyWith(address: addressString));
-      }
-    }
+      ],
+    ));
   }
+
 
   Future<void> _onChosenLocation(
     NewAddressChooseLocation event,

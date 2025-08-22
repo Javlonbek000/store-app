@@ -17,8 +17,19 @@ import 'package:store_app/features/common/widgets/store_app_bar.dart';
 import 'package:store_app/features/common/widgets/store_app_button.dart';
 import 'package:store_app/features/common/widgets/store_icon_button_container.dart';
 
-class NewAddress extends StatelessWidget {
+class NewAddress extends StatefulWidget {
   const NewAddress({super.key});
+
+  @override
+  State<NewAddress> createState() => _NewAddressState();
+}
+
+class _NewAddressState extends State<NewAddress> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<NewAddressBloc>().add(GoToCurrentLocation());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +169,13 @@ class NewAddress extends StatelessWidget {
             );
           }
         },
-        builder: (context, state) => NewAddressMap(markers: state.markers, address: state.address,),
+        builder: (context, state) {
+          return NewAddressMap(
+            markers: state.markers,
+            address: state.address,
+            currentLocation: state.currentLocation,
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed:

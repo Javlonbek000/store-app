@@ -1,39 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 
 import '../../../core/utils/colors.dart';
 
 class StoreDateOfBirth extends StatefulWidget {
-  const StoreDateOfBirth({super.key, required this.title});
+  const StoreDateOfBirth({
+    super.key,
+    required this.title,
+    required this.callback,
+    required this.controller,
+    required this.validator,
+  });
 
   final String title;
+  final VoidCallback callback;
+  final TextEditingController controller;
+  final String? Function(String? value) validator;
 
   @override
   State<StoreDateOfBirth> createState() => _StoreDateOfBirthState();
 }
 
 class _StoreDateOfBirthState extends State<StoreDateOfBirth> {
-  DateTime? selectedDate;
-  final TextEditingController _controller = TextEditingController();
-
-  Future<void> _pickDate() async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate ?? DateTime(2000),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-
-    if (picked != null) {
-      setState(() {
-        selectedDate = picked;
-        _controller.text = DateFormat('dd/MM/yyyy').format(picked);
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -49,19 +38,22 @@ class _StoreDateOfBirthState extends State<StoreDateOfBirth> {
         ),
         SizedBox(height: 3.h),
         GestureDetector(
-          onTap: _pickDate,
+          onTap: widget.callback,
           child: AbsorbPointer(
             child: TextFormField(
-              controller: _controller,
+              validator: widget.validator,
+              controller: widget.controller,
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
               ),
               decoration: InputDecoration(
-                hintText: 'dd/mm/yyyy',
+                hintText: 'yyyy-MM-dd',
                 contentPadding: EdgeInsets.symmetric(
-                    horizontal: 10.w, vertical: 15.h),
+                  horizontal: 10.w,
+                  vertical: 15.h,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.r),
                   borderSide: BorderSide(color: AppColors.grey),

@@ -30,6 +30,7 @@ import 'package:store_app/features/home/manager/home_bloc.dart';
 import 'package:store_app/features/home/pages/home_view.dart';
 import 'package:store_app/features/my_cart/manager/my_cart_bloc.dart';
 import 'package:store_app/features/my_cart/pages/my_cart_view.dart';
+import 'package:store_app/features/my_details/manager/my_detail_bloc.dart';
 import 'package:store_app/features/my_details/pages/my_details_view.dart';
 import 'package:store_app/features/notification/manager/notification_bloc.dart';
 import 'package:store_app/features/notification/pages/notification_view.dart';
@@ -231,7 +232,14 @@ final router = GoRouter(
       builder: (context, state) => HelpCenterView(),
     ),
     GoRoute(path: Routes.faqs, builder: (context, state) => FAQSView()),
-    GoRoute(path: Routes.myDetail, builder: (context, state) => MyDetailView()),
+    GoRoute(
+      path: Routes.myDetail,
+      builder:
+          (context, state) => BlocProvider(
+            create: (context) => MyDetailBloc(repo: context.read()),
+            child: MyDetailView(),
+          ),
+    ),
     GoRoute(
       path: Routes.customerService,
       builder:
