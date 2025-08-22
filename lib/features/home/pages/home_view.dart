@@ -27,9 +27,6 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          print(
-            "${state.status}        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          );
           if (state.status == HomeStatus.success) {
             return RefreshIndicator(
               color: AppColors.blackMain,
@@ -41,7 +38,6 @@ class _HomeViewState extends State<HomeView> {
                     orderBy: state.orderBy,
                   ),
                 );
-                print("${state.orderBy} nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
               },
               child: Padding(
                 padding: EdgeInsets.only(right: 24.w, left: 24.w, top: 10.h),

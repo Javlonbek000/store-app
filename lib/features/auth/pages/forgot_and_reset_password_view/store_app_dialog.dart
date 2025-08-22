@@ -49,6 +49,8 @@ class StoreAppDialog extends StatelessWidget {
               fit: BoxFit.cover,
             ),
             Text(
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               title,
               style: TextStyle(
                 color: AppColors.blackMain,
@@ -58,6 +60,8 @@ class StoreAppDialog extends StatelessWidget {
               ),
             ),
             Text(
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               subTitle,
               style: TextStyle(
@@ -81,10 +85,7 @@ class StoreAppDialog extends StatelessWidget {
                 text: hideButtonTitle,
                 callback: () => context.pop(),
                 containerColor: AppColors.white,
-                border: Border.all(
-                  color: AppColors.blackMain,
-                  width: 1.w,
-                ),
+                border: Border.all(color: AppColors.blackMain, width: 1.w),
               ),
           ],
         ),
