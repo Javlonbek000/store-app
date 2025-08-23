@@ -17,6 +17,7 @@ import 'package:store_app/features/auth/pages/forgot_and_reset_password_view/res
 import 'package:store_app/features/auth/pages/forgot_and_reset_password_view/verification_code_view.dart';
 import 'package:store_app/features/auth/pages/login_view.dart';
 import 'package:store_app/features/auth/pages/onboarding/onboarding.dart';
+import 'package:store_app/features/auth/pages/onboarding/splash_screen.dart';
 import 'package:store_app/features/auth/pages/sign_up_view.dart';
 import 'package:store_app/features/checkout/manager/checkout_bloc.dart';
 import 'package:store_app/features/checkout/pages/checkout_view.dart';
@@ -50,8 +51,9 @@ import '../../data/model/address/address_model.dart';
 import '../../features/payment/managers/payment/payment_bloc.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.home,
+  initialLocation: Routes.splash,
   routes: [
+    GoRoute(path: Routes.splash, builder: (context, state) => SplashScreen()),
     GoRoute(path: Routes.onboarding, builder: (context, state) => Onboarding()),
     GoRoute(
       path: Routes.login,
