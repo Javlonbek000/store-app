@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:store_app/core/routing/routes.dart';
 
+import '../../../../core/secure_storage.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -14,9 +16,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 5), () {
+    _navigate();
+  }
+
+  Future<void> _navigate() async {
+    await Future.delayed(const Duration(seconds: 3));
+
+    final firstTime = await SecureStorage.isFirstTime();
+
+    final token = await SecureStorage.getToken();
+
+    if (!mounted) return;
+
+    if (firstTime) {
+      await SecureStorage.setFirstTime(false);
       context.go(Routes.onboarding);
-    });
+    } else if (token != null && token.isNotEmpty) {
+      context.go(Routes.home);
+    } else {
+      context.go(Routes.login);
+    }
   }
 
   @override

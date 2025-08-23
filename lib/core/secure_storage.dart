@@ -6,6 +6,7 @@ class SecureStorage {
   static final String _loginKey = "login",
       _passwordKey = "password",
       _tokenKey = "token";
+  static const _firstTimeKey = "first_time";
 
   static Future<void> saveCredentials(
       {required String login, required String password}) async {
@@ -37,5 +38,14 @@ class SecureStorage {
 
   static Future<void> deleteToken() async {
     await _storage.delete(key: _tokenKey);
+  }
+
+  static Future<void> setFirstTime(bool isFirst) async {
+    await _storage.write(key: _firstTimeKey, value: isFirst.toString());
+  }
+
+  static Future<bool> isFirstTime() async {
+    final value = await _storage.read(key: _firstTimeKey);
+    return value == null || value == "true";
   }
 }
